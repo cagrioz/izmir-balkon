@@ -9,7 +9,7 @@
   let loaded = false;
   try { consent = localStorage.getItem(preferenceKey) || ''; } catch {}
   window.dataLayer = window.dataLayer || [];
-  const gtag = (...args) => window.dataLayer.push(args);
+  function gtag() { window.dataLayer.push(arguments); }
   const banner = document.getElementById('consent-banner');
   const settings = document.getElementById('cookie-settings');
 
