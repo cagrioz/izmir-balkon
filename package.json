@@ -1,0 +1,12 @@
+{
+  "name": "izmir-balkon",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "dev": "node scripts/serve.mjs",
+    "test": "node --test scripts/*.test.mjs"
+  },
+  "engines": { "node": ">=22" }
+}
