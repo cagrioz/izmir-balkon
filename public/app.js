@@ -73,7 +73,7 @@
     if (!event.currentTarget.reportValidity()) return;
     const district = document.getElementById('district').value;
     const system = document.getElementById('system').value;
-    const message = `Merhaba, İzmir ${district} ilçesinde cam balkon için ücretsiz keşif istiyorum. İlgilendiğim sistem: ${system}. Bilgi alabilir miyim?`;
+    const message = `Merhaba, İzmir ${district} ilçesinde ücretsiz keşif ve fiyat bilgisi almak istiyorum. İlgilendiğim hizmet: ${system}. Bilgi alabilir miyim?`;
     const url = 'https://wa.me/905423551213?text=' + encodeURIComponent(message);
     contactEvent('whatsapp', 'quote_form');
     const status = document.getElementById('form-status');

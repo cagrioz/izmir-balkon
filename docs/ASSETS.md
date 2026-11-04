@@ -1,16 +1,25 @@
 # Asset provenance
 
-## Hero
+## Application photographs
 
-Generated with the built-in Imagegen tool on 4 November 2026. It is an illustrative balcony concept, not a completed customer installation. The page caption and privacy page state that fact.
+The owner supplied these original photographs on 4 November 2026 for publication. They are delivered as metadata-free, resized WebP derivatives, with no AI retouching, scene changes, invented locations or before/after claims. CSS controls the framing of thumbnails. Full views preserve the supplied composition, including source collages.
 
-Files: `public/assets/balcony-hero.webp` and `public/assets/balcony-hero.jpg`, derived by compression from the generated 1536 × 1024 PNG. No visual edits were applied after generation.
+| Public file stem under `public/assets/work/` | Owner-supplied original | Subject |
+| --- | --- | --- |
+| cam-balkon-montaj | WhatsApp Image 2026-10-16 at 20.38.36.jpeg | Frameless glass balcony installation |
+| dograma-uygulamasi | WhatsApp Image 2026-10-16 at 20.39.45.jpeg | Three-photo glazed door collage |
+| villa-cam | WhatsApp Image 2026-10-16 at 20.39.45 (1).jpeg | Villa glazing and installation collage |
+| cam-bolme | WhatsApp Image 2026-10-17 at 15.52.35.jpeg | Interior aluminum and glass partition |
+| cam-bolme-detay | WhatsApp Image 2026-10-17 at 15.52.36.jpeg | Second view of the partition |
+| cam-bolme-ic | WhatsApp Image 2026-10-17 at 15.52.56.jpeg | Inside view of the partition |
 
-Prompt:
+Full images have a maximum 1600px edge; `-sm.webp` has a maximum 760px edge. The balcony photograph also has a JPEG social-sharing version. Internet image references were researched, but no third-party contractor images are presented as this business's work. The previous generated hero is retired.
 
-> Use case: photorealistic-natural. Asset type: premium landing page hero photograph for a local Turkish glass balcony installation service. Create a wide landscape editorial architectural photograph, 3:2 aspect ratio. Inside a believable well kept apartment balcony in Izmir Turkey, entirely enclosed with beautiful clear frameless folding glass panels, subtle silver aluminum lower and upper tracks, some stacked folding panes at right. Large unobstructed clear glass must be unmistakable main subject, not ordinary heavy frame windows. Warm afternoon Aegean sunlight, soft blue sky and Izmir coastal apartment rooftops with distant bay glimpses, no iconic landmarks. Foreground left a small round light wood cafe table with two authentic slim Turkish tea glasses on saucers and a small bowl, right a natural woven chair and olive plant. Warm off-white limestone floor, pale textured walls. Architectural photography shot from inside facing corner glazing, straight vertical lines, elegant natural composition with spatial depth. Aspirational but attainable Turkish family home, not a luxury palace. Color palette ivory, coastal muted blue, natural oak, touches terracotta. No people, no text, no logos, no watermarks. This is an illustrative design concept, not a completed customer project.
+## Customer reviews
 
-## Other assets
+Transcribed from owner-supplied Armut screenshots dated 16 October 2026 (files 20.30.02, 20.30.02 (1), (2), (3), and 20.30.03). Each displayed rating of five stars is visible on that individual review. Names remain as abbreviated in the source. Service categories and review dates are preserved. Long quotes use disclosed excerpts with an expandable full text. These reviews cover windows, glass replacement and flyscreens; they are not represented as cam balkon reviews. No aggregate rating is inferred from the selection or the screenshot's total review count. No Armut profile link has been supplied yet.
 
-- The logo and system diagrams are original inline/vector artwork created for this site.
-- Manrope variable WOFF2 files were downloaded from Google Fonts, with the SIL Open Font License from `google/fonts/ofl/manrope/OFL.txt`.
+## Typography and vector assets
+
+- DM Sans variable WOFF2, Latin and Latin Extended subsets, downloaded from Google Fonts. License: `public/assets/OFL-DM-Sans.txt` (SIL Open Font License).
+- The logo and outline SVG symbols are original vector artwork for this site.

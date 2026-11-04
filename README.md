@@ -20,12 +20,13 @@ Import this repository into Vercel. `vercel.json` specifies the build command an
 
 ## Content and interaction
 
-- Six telephone links, including the persistent mobile call action.
+- Prominent click-to-call actions, including the persistent mobile call/WhatsApp dock.
 - Direct WhatsApp links and a district/system message composer. This opens a draft; it does not send a message or save a lead.
-- Free survey offer, system explanations, process, district selection and accessible native FAQ disclosures.
+- Free survey offer, concise service information, district selection and accessible native FAQ disclosures.
+- Real application photography with an accessible gallery and customer reviews transcribed from owner-supplied Armut screenshots.
 - Local image/font assets, WebP hero, no third-party dependencies on initial page load.
 - No invented reviews, customer counts, guarantee duration, discounts or installation times.
-- The AI-generated balcony image is visibly labelled illustrative. Replace it with owned customer work when available.
+- Individual review ratings, categories and dates match the supplied screenshots; no aggregate rating is invented.
 
 ## GetSidely measurement
 
@@ -37,4 +38,4 @@ The canonical domain is `izmirbalkon.com`, registered in the owner's GoDaddy acc
 
 ## Assets
 
-Manrope is self-hosted under the SIL Open Font License; see `public/assets/OFL-Manrope.txt`. Hero artwork and prompt provenance are documented in [docs/ASSETS.md](docs/ASSETS.md).
+DM Sans is self-hosted under the SIL Open Font License; see `public/assets/OFL-DM-Sans.txt`. Photo and review provenance are documented in [docs/ASSETS.md](docs/ASSETS.md).
