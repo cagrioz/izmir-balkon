@@ -2,6 +2,10 @@
 
 Mobile-first Turkish landing page for İzmir cam balkon enquiries. A real-business pilot destination for GetSidely. Phone: **0542 355 12 13**.
 
+Production: https://izmirbalkon.com · Vercel fallback: https://izmir-balkon.vercel.app
+
+`www.izmirbalkon.com` is configured to redirect permanently to the apex domain. DNS and deployment notes are in [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).
+
 ## Run
 
 Requires Node 22+. No package installation or runtime dependencies.
@@ -29,7 +33,7 @@ Measurement hooks are implemented, but **no live Google Ads/GA4 account is confi
 
 Set public IDs only in `public/tracking-config.js`. Google scripts load only after opt-in. Never commit credentials, developer tokens, customer lists, or `.env` files.
 
-Target canonical domain is `izmirbalkon.com`. Domain ownership and DNS must be verified before using it as an ad destination. The Vercel deployment can be reviewed independently.
+The canonical domain is `izmirbalkon.com`, registered in the owner's GoDaddy account and connected to the Vercel project. Verify HTTPS and both domain variants before using the site as an ad destination.
 
 ## Assets
 
