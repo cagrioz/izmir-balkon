@@ -96,7 +96,7 @@
     // DataFast automatically records external link URLs. Keep WhatsApp drafts
     // away from its delegated click/Enter handlers; our explicit goal has no data.
     link.addEventListener('keydown', event => {
-      if (datafastId && event.key === 'Enter') event.stopPropagation();
+      if (datafastId && (event.key === 'Enter' || event.key === ' ')) event.stopPropagation();
     });
     link.addEventListener('click', event => {
       if (datafastId) event.stopPropagation();

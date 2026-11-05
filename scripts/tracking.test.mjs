@@ -129,8 +129,10 @@ test('three DataFast contact goals fire once without draft data or automatic out
     assert.equal(event.stopped,true);
     assert.equal(s.window.datafast.q.at(-1)[0],goal);
     assert.equal(s.window.datafast.q.at(-1).length,1);
-    const enter=clickEvent(); enter.key='Enter'; s.handlers.get(key+':keydown')(enter);
-    assert.equal(enter.stopped,true);
+    for (const keyboardKey of ['Enter',' ']) {
+      const keyboard=clickEvent(); keyboard.key=keyboardKey; s.handlers.get(key+':keydown')(keyboard);
+      assert.equal(keyboard.stopped,true);
+    }
   }
   assert.equal(s.window.datafast.q.length,3);
   assert.ok(!JSON.stringify(s.window.datafast.q).includes('private'));
