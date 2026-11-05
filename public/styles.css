@@ -140,6 +140,8 @@ summary::-webkit-details-marker { display: none; }
 .service .icon { width: 1.125rem; height: 1.125rem; color: var(--muted); transition: color .15s; }
 .service:hover strong, .service:hover .icon { color: var(--blue); }
 .service-addon { margin-top: 1.5rem; color: var(--muted); font-size: .9375rem; }
+.service-addon a { display: inline-block; padding-block: .75rem; margin-block: -.75rem; color: var(--ink); font-weight: 600; text-decoration: underline; text-underline-offset: .2em; }
+.service-addon a:hover { color: var(--blue); }
 
 /* Gallery */
 .gallery, .gallery-more-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem .75rem; }

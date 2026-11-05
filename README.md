@@ -23,6 +23,7 @@ Import this repository into Vercel. `vercel.json` specifies the build command an
 - One primary click-to-call action in the hero. The call/WhatsApp dock appears only after scrolling past that action and hides while the contact action is visible.
 - Direct WhatsApp links and a district/system message composer. This opens a draft; it does not send a message or save a lead.
 - Free survey offer, concise service information, district selection and accessible native FAQ disclosures.
+- Owner-confirmed pergola and winter garden services appear as secondary links and message-composer options; the hero remains focused on cam balkon and joinery.
 - A manual three-photo hero slider, finished-work gallery and expandable installation photographs. No autoplay.
 - Seven customer reviews transcribed from owner-supplied screenshots, with window and joinery work first. Photo-to-review associations are not invented.
 - Local image/font assets, WebP hero, no third-party dependencies on initial page load.
