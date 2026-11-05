@@ -23,3 +23,11 @@ Legal identity/address, profiles and verification tokens were not supplied; none
 ## Subsequent activation
 
 The owner supplied the genuine base tag and completed onboarding. The three action labels are now configured in public/tracking-config.js. Account settings: phone and wizard WhatsApp primary, other WhatsApp secondary; One; zero value; enhanced conversions off. The earlier empty-ID blocker is resolved. Actual attributed conversion registration and tags-on LCP/CLS still require verification; do not interpret the unit tests as that verification.
+
+## Live check after activation
+
+The deployed tracking-config.js, app.js and ui.js were fetched from izmirbalkon.com and matched local source. In Chrome DOM inspection, no Google tag script was present before consent or after reject/reload; acceptance added one real Google tag script. Revocation returned to zero scripts. This is a script-loading check, not a comprehensive network capture.
+
+Tag Assistant connected to the live domain and found one Google tag. One phone-link click produced one Conversion hit with the matching phone label, alongside the page-view hit. Hit details showed the conversion destination, `gcs=G111`, `gcd=13t3t3p3p7l1`, `npa=1`, and the clean page location without the debug query. `ad_user_data` and `ad_personalization` remain denied in source. This confirms a sent hit, not an ad-attributed conversion in reporting.
+
+The normal live wizard progressed through all three steps. In the Tag Assistant-opened debug page it did not advance during this session; the full wizard/other-WhatsApp hit checks remain incomplete. No WhatsApp message was sent. Tags-on LCP/CLS and physical-device call/WhatsApp tests remain outstanding. Conversion rows initially show Inactive; do not claim account-side validation has passed.
