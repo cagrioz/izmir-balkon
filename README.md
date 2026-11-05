@@ -24,7 +24,7 @@ Content lives in `scripts/facts.mjs` and `public/reviews-data.js`. Templates liv
 
 ## Content and interaction
 
-- **One task per screen.** The hero holds a quote wizard with the page's service already selected and one blue button. Two more questions (size, district) open a ready WhatsApp draft. Nothing is sent or stored by the site.
+- **One task per screen.** The hero holds a photo-led quote wizard that keeps one size through every step with the page's service already selected and one blue button. Two more questions (size, district) open a ready WhatsApp draft. Nothing is sent or stored by the site.
 - **CTA rules.** Blue starts the quote, green opens WhatsApp, outlined calls. The mobile dock appears only after the wizard scrolls away and hides wherever a section on screen has its own action. Buttons further down open the same wizard in a sheet, so visitors keep their place.
 - **Service pages.** `/cam-balkon`, `/kis-bahcesi`, `/pergola` and `/dograma` each have their own title, headline, photo, summary and FAQ. Point each ad group at its own page. `/bilgi` is the plain answer page for search engines and agents.
 - **Proof.** Selling points are customers' own words, checked against `public/reviews-data.js` by `npm test`. All 21 reviews are published verbatim: 6 first, 15 behind a native disclosure.
@@ -50,4 +50,4 @@ The canonical domain is `izmirbalkon.com`, registered in the owner's GoDaddy acc
 
 ## Assets
 
-DM Sans is self-hosted under the SIL Open Font License; see `public/assets/OFL-DM-Sans.txt`. Photo and review provenance are documented in [docs/ASSETS.md](docs/ASSETS.md).
+Manrope is self-hosted under the SIL Open Font License; see `public/assets/OFL-Manrope.txt`. Photo and review provenance are documented in [docs/ASSETS.md](docs/ASSETS.md).

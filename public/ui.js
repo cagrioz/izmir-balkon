@@ -81,8 +81,9 @@
     const steps = Object.fromEntries([...wiz.querySelectorAll('[data-step]')].map(step => [step.dataset.step, step]));
     const order = ['service', 'size', 'district'];
     const serviceName = wiz.querySelector('[data-wiz-service]');
+    const summary = wiz.querySelector('[data-wiz-summary]');
+    const photos = [...wiz.querySelectorAll('[data-wiz-photo]')];
     const district = wiz.querySelector('#district');
-    const finish = wiz.querySelector('[data-wiz-finish]');
     const bubble = wiz.querySelector('[data-wiz-bubble]');
     const send = wiz.querySelector('#wiz-send');
     const tiles = [...wiz.querySelectorAll('[data-pick-service]')];
@@ -93,11 +94,11 @@
       document.dispatchEvent(new CustomEvent('izmir:funnel', { detail: { step } }));
     }
     function refreshFinish() {
-      finish.hidden = !district.value;
-      if (!district.value) return;
-      const text = draftMessage(state.service, state.size, district.value);
+      const text = draftMessage(state.service, state.size, district.value || '…');
       bubble.textContent = text;
-      send.href = draftLink(text);
+      // Without an href the button stays visible but inert, so nothing moves when a district is chosen.
+      if (district.value) send.href = draftLink(text);
+      else send.removeAttribute('href');
     }
     function currentQuestion() {
       return wiz.querySelector('[data-step]:not([hidden]) .wiz-sizes:not([hidden]) .wiz-q, [data-step="service"]:not([hidden]) .wiz-q, [data-step="district"]:not([hidden]) .wiz-q');
@@ -110,13 +111,20 @@
         serviceName.textContent = SERVICES[state.service].label;
         wiz.querySelectorAll('.wiz-sizes').forEach(group => { group.hidden = group.dataset.for !== state.service; });
       }
-      if (step === 'district') refreshFinish();
+      if (step === 'district') {
+        summary.textContent = state.size ? `${SERVICES[state.service].label} · ${state.size}` : SERVICES[state.service].label;
+        refreshFinish();
+      }
       currentQuestion()?.focus({ preventScroll: true });
     }
     function chooseService(service) {
       state.service = service;
       state.size = '';
-      tiles.forEach(tile => tile.setAttribute('aria-pressed', String(tile.dataset.pickService === service)));
+      tiles.forEach(tile => {
+        const picked = tile.dataset.pickService === service;
+        tile.setAttribute('aria-pressed', String(picked));
+        if (picked) photos.forEach(photo => { photo.src = tile.querySelector('img').getAttribute('src'); });
+      });
     }
 
     wiz.addEventListener('click', event => {
@@ -140,7 +148,7 @@
     district.addEventListener('change', () => {
       if (district.value) funnel('district');
       refreshFinish();
-      if (!finish.hidden) send.scrollIntoView({ block: 'nearest' });
+      if (district.value) send.scrollIntoView({ block: 'nearest' });
     });
 
     return { focusCurrent: () => currentQuestion()?.focus({ preventScroll: true }) };
@@ -212,6 +220,51 @@
     schedule();
   }
 
+  // Customer words in the hero change by themselves. Hovering, keyboard focus, an open dialog or
+  // a hidden tab holds them still, the pause button stops them, and reduced motion never starts them.
+  function initQuotes() {
+    const box = document.querySelector('[data-quotes]');
+    if (!box) return;
+    const slides = [...box.querySelectorAll('.quote')];
+    const dots = [...box.querySelectorAll('[data-quote]')];
+    const pause = box.querySelector('[data-quote-pause]');
+    const icon = pause.querySelector('use');
+    const stage = box.querySelector('.quotes');
+    let index = 0;
+    let timer = 0;
+    let held = false;
+    let onScreen = true;
+
+    function show(next) {
+      index = (next + slides.length) % slides.length;
+      slides.forEach((slide, position) => slide.classList.toggle('is-on', position === index));
+      dots.forEach((dot, position) => {
+        if (position === index) dot.setAttribute('aria-current', 'true');
+        else dot.removeAttribute('aria-current');
+      });
+    }
+    function setRunning(running) {
+      clearInterval(timer);
+      timer = running ? setInterval(() => {
+        if (!held && onScreen && !document.hidden && !document.querySelector('dialog[open]')) show(index + 1);
+      }, 6000) : 0;
+      stage.setAttribute('aria-live', running ? 'off' : 'polite');
+      icon.setAttribute('href', running ? '#i-pause' : '#i-play');
+      pause.setAttribute('aria-label', running ? 'Yorumların dönmesini durdur' : 'Yorumları döndür');
+    }
+
+    dots.forEach((dot, position) => dot.addEventListener('click', () => show(position)));
+    pause.addEventListener('click', () => setRunning(!timer));
+    box.addEventListener('mouseenter', () => { held = true; });
+    box.addEventListener('mouseleave', () => { held = false; });
+    box.addEventListener('focusin', () => { held = true; });
+    box.addEventListener('focusout', () => { held = false; });
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(entries => { onScreen = entries[entries.length - 1].isIntersecting; }).observe(box);
+    }
+    setRunning(!window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  }
+
   // WebMCP: lets an in-browser AI agent read the facts and prepare a draft directly. The API is
   // experimental, so browsers without it simply skip this and the page behaves the same.
   function initAgentTools() {
@@ -274,5 +327,6 @@
   initSheet(initWizard());
   initContactShortcuts();
   initReviewClamp();
+  initQuotes();
   initAgentTools();
 })();

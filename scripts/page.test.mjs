@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { existsSync, readFileSync } from 'node:fs';
 import { renderAll, reviews } from './render.mjs';
 import { prefersMarkdown } from '../middleware.js';
-import { SERVICES, HOME, VOC, HERO_QUOTE, PROCESS_QUOTE, DISTRICTS, ALL_FAQ, BUSINESS } from './facts.mjs';
+import { SERVICES, HOME, VOC, HERO_QUOTES, PROCESS_QUOTE, DISTRICTS, ALL_FAQ, BUSINESS, GALLERY } from './facts.mjs';
 
 const files = renderAll();
 const htmlPages = [...files].filter(([path]) => path.endsWith('.html'));
@@ -81,18 +81,54 @@ test('all reviews are published verbatim with matching counts', () => {
     assert.ok(page.includes(review.service), review.name);
     assert.ok(page.includes(`datetime="${review.date}"`), review.name);
   }
-  assert.ok(home.includes(`Müşterilerimizden ${reviews.length} yorum`));
-  assert.ok(home.includes(`${reviews.length - 6} yorum daha`));
+  assert.ok(home.includes('Tüm yorumları göster'));
 });
 
 test('customer quotes used as selling points are real words from that customer', () => {
-  const quotes = [...VOC.map(([, quote, name]) => [quote, name]), HERO_QUOTE, PROCESS_QUOTE];
+  const quotes = [...VOC.map(([, quote, name]) => [quote, name]), ...HERO_QUOTES, PROCESS_QUOTE];
   for (const [quote, name] of quotes) {
     const source = reviews.find(review => review.name === name);
     assert.ok(source, name);
     assert.ok(source.text.includes(quote), `${name}: ${quote}`);
     assert.ok(decode(home).includes(quote), `shown: ${quote}`);
   }
+});
+
+test('pages never advertise a review count', () => {
+  for (const [path, html] of htmlPages) assert.ok(!new RegExp(`\\b${reviews.length} (?:müşteri )?yorum`, 'i').test(visibleText(html)), path);
+});
+
+test('the hero rotates several real quotes, with one shown when JavaScript is off', () => {
+  assert.ok(HERO_QUOTES.length >= 3);
+  assert.equal((home.match(/class="quote is-on"/g) || []).length, 1);
+  assert.equal((home.match(/class="quote[ "]/g) || []).length, HERO_QUOTES.length);
+  assert.equal((home.match(/data-quote="\d"/g) || []).length, HERO_QUOTES.length);
+  assert.ok(home.includes('data-quote-pause'));
+});
+
+test('the wizard offers a photo for every service and reserves room for its longest draft', () => {
+  for (const [key] of Object.entries(SERVICES)) assert.ok(new RegExp(`data-pick-service="${key}"[^>]*><img src="/assets/tiles/${key}\\.webp"`).test(home), key);
+  const ui = readFileSync(new URL('../public/ui.js', import.meta.url), 'utf8');
+  assert.ok(ui.includes('ücretsiz keşif ve fiyat almak istiyorum.'), 'draft wording');
+  const ghost = home.match(/data-ghost="([^"]+)"/)[1];
+  const longestLabel = Math.max(...Object.keys(SERVICES).map(key => ui.match(new RegExp(`'?${key}'?: \\{ label: '[^']+', phrase: '([^']+)'`))[1].length));
+  const unknown = 'Ölçüyü bilmiyorum, keşifte alınabilir.';
+  const longestDistrict = Math.max(...DISTRICTS.map(name => name.length));
+  assert.ok(ghost.length >= `Merhaba,  ilçesinde  için ücretsiz keşif ve fiyat almak istiyorum. ${unknown}`.length + longestLabel + longestDistrict);
+});
+
+test('gallery tiles keep each photo’s own shape and never use stock', () => {
+  const css = readFileSync(new URL('../public/styles.css', import.meta.url), 'utf8');
+  assert.ok(css.includes('aspect-ratio: var(--r)'));
+  for (const item of GALLERY.flat()) {
+    assert.ok(home.includes(`style="--r:${(item.w / item.h).toFixed(3)}" href="/assets/work/${item.file}.webp"`), item.file);
+  }
+});
+
+test('headings use the modern sans font, with no serif family left', () => {
+  const css = readFileSync(new URL('../public/styles.css', import.meta.url), 'utf8');
+  assert.ok(!/serif'|--serif|Georgia/.test(css.replace(/sans-serif/g, '')));
+  assert.ok(css.includes("--sans: 'Manrope'"));
 });
 
 test('structured data is valid, truthful and matches the visible page', () => {

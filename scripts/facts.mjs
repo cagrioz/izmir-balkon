@@ -57,6 +57,8 @@ const FAQ = {
 };
 const COMMON = [FAQ.send, FAQ.free, FAQ.areas, FAQ.time, FAQ.pay];
 
+const VILLA_HERO = { lg: '/assets/work/villa-kose.webp', sm: '/assets/work/villa-kose-sm.webp', w: 1419, h: 716, og: '/assets/work/villa-kose.jpg', ogW: 1419, ogH: 716, pos: '42% 50%', alt: 'Çimenli bahçeye bakan villanın köşesinde koyu çerçeveli, geniş sürme doğrama camları' };
+
 export const SERVICES = {
   'cam-balkon': {
     label: 'Cam balkon', phrase: 'cam balkon', fact: 'Yaklaşık ölçü', photoNoun: 'Balkonumun',
@@ -68,8 +70,8 @@ export const SERVICES = {
     card: 'Katlanır veya sürme. Rüzgârı, yağmuru ve tozu dışarıda bırakır, istediğinizde açılır.',
     faqTitle: 'Cam balkon hakkında sık sorulanlar',
     faq: [FAQ.price, FAQ.use, FAQ.fold, FAQ.permit, ...COMMON],
-    hero: { lg: '/assets/stock/cam-balkon.webp', sm: '/assets/stock/cam-balkon-sm.webp', w: 1600, h: 1066, og: '/assets/stock/cam-balkon.jpg', ogW: 1200, ogH: 800, alt: 'Ahşap terası çerçevesiz cam panellerle kapatılmış balkon; camların ardında dağ manzarası' },
-    cardImg: { src: '/assets/stock/cam-balkon-sm.webp', w: 800, h: 533 }
+    hero: { lg: '/assets/work/cam-balkon-genis.webp', sm: '/assets/work/cam-balkon-genis-sm.webp', w: 1086, h: 796, og: '/assets/work/cam-balkon-genis.jpg', ogW: 1086, ogH: 796, pos: '50% 72%', alt: 'Usta, balkon girişine taktığı çerçevesiz cam panellerin üst kısmında son ayarı yapıyor' },
+    cardImg: { src: '/assets/stock/balkon-sm.webp', w: 800, h: 533, pos: '66% 50%' }
   },
   'kis-bahcesi': {
     label: 'Kış bahçesi', phrase: 'kış bahçesi', fact: 'Yaklaşık alan', photoNoun: 'Terasımın',
@@ -81,8 +83,8 @@ export const SERVICES = {
     card: 'Terasınız ya da bahçeniz, çatısıyla birlikte camla kapalı bir oturma alanına dönüşür.',
     faqTitle: 'Kış bahçesi hakkında sık sorulanlar',
     faq: [FAQ.gardenWhat, FAQ.gardenPrice, FAQ.gardenVsPergola, FAQ.gardenPermit, ...COMMON],
-    hero: { lg: '/assets/stock/kis-bahcesi.webp', sm: '/assets/stock/kis-bahcesi-sm.webp', w: 1600, h: 900, og: '/assets/stock/kis-bahcesi.jpg', ogW: 1200, ogH: 675, alt: 'Cam çatılı kış bahçesinde hasır koltuk takımı; camların ardında yeşil bahçe görünüyor' },
-    cardImg: { src: '/assets/stock/kis-bahcesi-sm.webp', w: 800, h: 450 }
+    hero: { lg: '/assets/stock/sunroom.webp', sm: '/assets/stock/sunroom-sm.webp', w: 1600, h: 1066, og: '/assets/stock/sunroom.jpg', ogW: 1200, ogH: 800, pos: '50% 90%', alt: 'Bahçeli evin yanına eklenmiş, açık renk çerçeveli camlı kış bahçesi; önünde çimen ve ağaçlar' },
+    cardImg: { src: '/assets/stock/sunroom-sm.webp', w: 800, h: 533, pos: '58% 60%' }
   },
   pergola: {
     label: 'Pergola', phrase: 'pergola', fact: 'Yaklaşık alan', photoNoun: 'Terasımın',
@@ -94,8 +96,8 @@ export const SERVICES = {
     card: 'Teras ve bahçeniz için gölge ve yağmur koruması.',
     faqTitle: 'Pergola hakkında sık sorulanlar',
     faq: [FAQ.pergolaUse, FAQ.pergolaPrice, FAQ.gardenVsPergola, ...COMMON],
-    hero: { lg: '/assets/stock/pergola.webp', sm: '/assets/stock/pergola-sm.webp', w: 1600, h: 1066, og: '/assets/stock/pergola.jpg', ogW: 1200, ogH: 800, alt: 'Taş döşemeli terasta beyaz pergola altında yemek masası; ötede gün batımında bahçe' },
-    cardImg: { src: '/assets/stock/pergola-sm.webp', w: 800, h: 533 }
+    hero: { lg: '/assets/stock/pergola.webp', sm: '/assets/stock/pergola-sm.webp', w: 1600, h: 1066, og: '/assets/stock/pergola.jpg', ogW: 1200, ogH: 800, pos: '70% 45%', alt: 'Taş döşemeli terasta beyaz pergola altında yemek masası; ötede gün batımında bahçe' },
+    cardImg: { src: '/assets/stock/pergola-sm.webp', w: 800, h: 533, pos: '72% 50%' }
   },
   dograma: {
     label: 'Pencere ve kapı', phrase: 'pencere ve kapı doğraması', fact: 'Yaklaşık adet', photoNoun: 'Pencerelerimin',
@@ -108,8 +110,8 @@ export const SERVICES = {
     card: 'Pencere, kapı, sürme sistem, sineklik ve cam değişimi.',
     faqTitle: 'Doğrama hakkında sık sorulanlar',
     faq: [FAQ.pvcVsAlu, FAQ.pvcPrice, FAQ.small, ...COMMON],
-    hero: { lg: '/assets/work/villa-kose.webp', sm: '/assets/work/villa-kose-sm.webp', w: 1419, h: 716, og: '/assets/work/villa-kose.jpg', ogW: 1419, ogH: 716, alt: 'Çimenli bahçeye bakan villanın köşesinde koyu çerçeveli, geniş sürme doğrama camları' },
-    cardImg: { src: '/assets/work/villa-kose-sm.webp', w: 800, h: 404 }
+    hero: VILLA_HERO,
+    cardImg: { src: '/assets/work/villa-kose-sm.webp', w: 800, h: 404, pos: '42% 50%' }
   }
 };
 
@@ -120,6 +122,7 @@ export const HOME = {
   h1Key: 'İzmir’de cam balkon ve kış bahçesi',
   lead: 'Cam balkon, kış bahçesi, pergola ve doğrama. Ücretsiz keşifte ölçünüzü alır, net fiyatı söyleriz.',
   summary: SUMMARY,
+  hero: VILLA_HERO,
   faqTitle: 'Sık sorulanlar',
   faq: [FAQ.price, FAQ.fold, FAQ.gardenVsPergola, FAQ.permit, ...COMMON]
 };
@@ -138,6 +141,30 @@ export const VOC = [
   ['Temizlik', 'Montaj sonrası etrafı tertemiz bırakmaları da ayrı bir incelikti.', 'Enes D.'],
   ['Fiyat', 'şişirilmiş, keyfi fiyatlar da vermiyor, ödeme konusunda da yardımcı oluyor.', 'Buse D.']
 ];
-export const HERO_QUOTE = ['İşçilik kalitesi tek kelimeyle muazzam; insan kendi evine yapsa ancak bu kadar özenir.', 'Erdem E.'];
+export const HERO_QUOTES = [
+  ['İşçilik kalitesi tek kelimeyle muazzam; insan kendi evine yapsa ancak bu kadar özenir.', 'Erdem E.'],
+  ['İşini özenle ve titizlikle yapan, söz verdiği zamanda gelen ve işini hakkıyla yapan bir usta.', 'Dilek A.'],
+  ['Zamanında geldi, hızlı çalıştı ve ortaya gerçekten temiz ve kaliteli bir iş çıkardı.', 'Dilfuza S.'],
+  ['Eğitim kurumunuzun camlarını 3 günde bitirdi. Hem kaliteli hem de hızlı bir işçilik.', 'Ebru C.'],
+  ['Gerçekten işini hakkıyla yapan, ilgili ve saygılı bir usta.', 'Özkan K.']
+];
 export const PROCESS_QUOTE = ['Ustam geldi ölçü aldı. Fiyat çıkardı. Acelemiz vardı. Sağolsun dediği günde de bitirdi.', 'Mustafa Kürşat A.'];
 export const FEATURED_REVIEWS = ['Erdem E.', 'Enes D.', 'Mustafa Kürşat A.', 'Ebru C.', 'Metin B.', 'Dilek A.'];
+
+// The owner's own photographs only. Each keeps its own ratio; rows are justified by these ratios.
+export const GALLERY = [
+  [
+    { file: 'villa-kose', sm: 800, w: 1419, h: 716, title: 'Köşe sürme doğrama', note: 'Villa, tamamlanmış uygulama', alt: 'Çimenli bahçeye bakan villanın köşesinde koyu çerçeveli, geniş sürme doğrama camları', vw: 62 },
+    { file: 'cam-balkon-usta', sm: 520, w: 786, h: 760, title: 'Çerçevesiz cam', note: 'Montajda son ayar', alt: 'Usta, çerçevesiz camın üst kısmında elini uzatmış ayar yapıyor', vw: 33 }
+  ],
+  [
+    { file: 'villa-detay', sm: 480, w: 685, h: 1000, title: 'Sürme doğrama ve sineklik', note: 'Aynı villadan yakın plan', alt: 'Koyu çerçeveli sürme doğramanın yakından görünümü; camda bahçe yansıyor, sağda sineklik kanadı', vw: 20 },
+    { file: 'cam-bolme-tamam', sm: 600, w: 1200, h: 1600, title: 'Alüminyum cam bölme', note: 'İç mekân, tamamlanmış', alt: 'Koyu alüminyum çerçeveli, camlı kapısı olan köşe cam bölme', vw: 22 },
+    { file: 'dis-kapi', w: 828, h: 465, title: 'Dış kapı doğraması', note: 'Koyu çerçeve, çift kanat', alt: 'Taş duvarlı evde koyu çerçeveli, çift kanatlı camlı dış kapı', vw: 52 }
+  ],
+  [
+    { file: 'cam-korkuluk', sm: 600, w: 1200, h: 1600, title: 'Cam korkuluk', note: 'İç mekân, tamamlanmış', alt: 'Resepsiyon alanında cam korkuluk', vw: 22 },
+    { file: 'villa-dis', w: 774, h: 390, title: 'Villa doğramaları', note: 'İki katlı villa, dış görünüm', alt: 'İki katlı beyaz villanın koyu çerçeveli geniş pencereleri; önünde havuz', vw: 54 },
+    { file: 'cam-bolme-tamam-ic', sm: 600, w: 1200, h: 1600, title: 'Cam bölme, iç görünüm', note: 'İç mekân, tamamlanmış', alt: 'Koyu çerçeveli cam bölmenin içinde masalar ve sandalyeler', vw: 22 }
+  ]
+];

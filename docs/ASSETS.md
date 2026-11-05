@@ -21,7 +21,7 @@ The previous redesign's `-thumb.webp` previews are retained as 320px-edge WebP d
 
 The verified review inventory is retained in `public/reviews-data.js`; the page renders the 21 reviews into the initial HTML at build time, so they are readable without JavaScript. On 5 November 2026 the complete set of relevant owner-provided screenshots in Downloads was re-audited, including 23 files named `WhatsApp Image 2026-11-04 at 22.54.*.jpeg`. Fourteen previously omitted, distinct full reviews were found, bringing the published selection from seven to **21**. Each included five-star rating was checked visually on that review. The screenshot interface says 25 total, but four older full reviews are not available in the supplied images, so the page uses the actual published count of 21 and does not infer an overall rating.
 
-Original spelling, abbreviated/masked names, service labels and dates are retained. Funda S.’s full comment is reconstructed from two consecutive overlapping screenshots; no missing words are guessed. A partly visible Mustafa B. record is excluded because its full text/rating are unavailable. Fatma T.’s original quote mentions the platform; the source text is preserved without introducing platform branding elsewhere. Project photos are not attributed to individual reviewers without evidence. Long comments can be expanded. The page shows six reviews first; the “15 yorum daha” disclosure makes every included review reachable.
+Original spelling, abbreviated/masked names, service labels and dates are retained. Funda S.’s full comment is reconstructed from two consecutive overlapping screenshots; no missing words are guessed. A partly visible Mustafa B. record is excluded because its full text/rating are unavailable. Fatma T.’s original quote mentions the platform; the source text is preserved without introducing platform branding elsewhere. Project photos are not attributed to individual reviewers without evidence. Long comments can be expanded. The page shows six reviews first; the “Tüm yorumları göster” disclosure makes every included review reachable. At the owner's request (5 November 2026) the visible pages do not state the number of reviews. The machine-readable files still state the published count, so agents do not confuse it with the owner's customer figure.
 
 The original seven remain Erdem E., Enes D., Yüksel K., Ömer Mobil Oto Mekanik Servis Ö., Alper K., Dilfuza S. and Zehra Rezzan Ş., from the 16 October screenshots and repeated 4 November screenshots. The 14 added records are:
 
@@ -46,11 +46,13 @@ The original seven remain Erdem E., Enes D., Yüksel K., Ömer Mobil Oto Mekanik
 
 The owner has no finished-job photos of an enclosed balcony, winter garden or pergola, and on 5 November 2026 approved using realistic images from the internet. These are used under the [Unsplash License](https://unsplash.com/license), which allows commercial use without attribution. On 5 November 2026 the owner also asked to remove the "Temsili görsel" labels from the page, so they carry no label. The privacy page discloses them in one sentence. They are never described as this business's work, and the "Kendi işlerimizden" gallery contains only the owner's photos. Replace them as soon as real finished-job photos exist. Do not use them in ads as if they were the owner's own jobs.
 
-| Public stem under `public/assets/stock/` | Source | Photographer |
-| --- | --- | --- |
-| cam-balkon | https://unsplash.com/photos/brown-wooden-table-near-glass-window-S9WzYYBxL-E | Lissete Laverde |
-| kis-bahcesi | https://unsplash.com/photos/wicker-armchairs-in-sunlit-conservatory-ljX2si20Vek | KAUDIA ESTATE |
-| pergola | https://unsplash.com/photos/black-metal-table-and-chairs-on-green-grass-field-during-daytime-Kwg6xKwBNGA | Florian Schmidinger |
+| Public stem under `public/assets/stock/` | Source | Photographer | Camera shown on Unsplash |
+| --- | --- | --- | --- |
+| balkon | https://unsplash.com/photos/a-balcony-with-a-view-of-a-city-bgVCbeS9X4w | Lisa Anna | Nikon Z 8 |
+| sunroom | https://unsplash.com/photos/modern-sunroom-attached-to-a-house-surrounded-by-trees-ThdNMFMk2V4 | Kyan Tijhuis | Fujifilm X-T3 |
+| pergola | https://unsplash.com/photos/black-metal-table-and-chairs-on-green-grass-field-during-daytime-Kwg6xKwBNGA | Florian Schmidinger | Not shown; published 31 January 2020 |
+
+On 5 November 2026 the owner said the earlier hero looked AI-generated. Unsplash also hosts 3D renders, so prefer photographs with camera data or an older publication date, and check the page before adding one. The earlier stock photographs were removed. The home, cam balkon and doğrama heroes now use the owner's photographs. The kış bahçesi and pergola heroes, the wizard tiles and three service cards use the photographs above, or crops of them. The wizard's Pencere ve kapı tile and the doğrama service card use the owner's villa photograph.
 
 ## Owner-stated figures
 
@@ -58,19 +60,20 @@ The owner has no finished-job photos of an enclosed balcony, winter garden or pe
 
 ## Crops of owner photographs
 
-Crops only, no retouching. They remove distractions (a broom, a dustpan, water containers) from the frame.
+Crops only, no retouching. They remove distractions (a broom, a dustpan, water containers) from the frame. `public/assets/tiles/` holds square crops for the wizard, taken from the balkon, sunroom and pergola stock photographs and from villa-kose.
 
 | Public stem under `public/assets/work/` | Cropped from | Removed from frame |
 | --- | --- | --- |
 | villa-kose | villa-surme-genis | Broom in the foreground |
-| villa-detay-crop | villa-surme-detay | Broom and dustpan on the lawn |
+| villa-detay | villa-surme-detay | Broom and dustpan on the lawn; the top and bottom are trimmed so the full gallery tile shows the glass |
+| cam-balkon-genis | cam-balkon-montaj (corrected version) | Water containers and a bin bag; wider than cam-balkon-usta for the hero |
+| villa-dis | villa-cam | The other photo and the collage background |
 | cam-balkon-usta | cam-balkon-montaj (corrected version) | Water containers and a bin bag |
 | dis-kapi | dograma-uygulamasi | The other two photos in the collage |
 
 ## Typography and vector assets
 
-- DM Sans variable WOFF2, Latin and Latin Extended subsets, downloaded from Google Fonts. License: `public/assets/OFL-DM-Sans.txt` (SIL Open Font License).
-- DM Serif Display WOFF2, Latin and Latin Extended subsets, downloaded from Google Fonts. License: `public/assets/OFL-DM-Serif-Display.txt` (SIL Open Font License).
+- Manrope variable WOFF2, Latin and Latin Extended subsets, downloaded from Google Fonts. License: `public/assets/OFL-Manrope.txt` (SIL Open Font License).
 - The logo and outline SVG symbols are original vector artwork for this site.
 
 ## Photographs added on 5 November 2026

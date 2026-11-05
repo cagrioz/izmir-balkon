@@ -23,12 +23,11 @@
   <meta property="og:image:width" content="{{ogW}}">
   <meta property="og:image:height" content="{{ogH}}">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="preload" href="/assets/dm-serif-display-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="/assets/dm-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="/assets/dm-sans-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/manrope-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
   {{preload}}
   <link rel="stylesheet" href="/styles.css">
-  <noscript><style>.wiz-step,.wiz-bar,.wiz-meta,.wiz-call{display:none!important}</style></noscript>
+  <noscript><style>.wiz-steps,.wiz-bar,.wiz-meta,.wiz-call,.quote-nav{display:none!important}</style></noscript>
   <script src="/tracking-config.js" defer></script>
   <script src="/app.js" defer></script>
   <script src="/ui.js" defer></script>
@@ -41,8 +40,8 @@
 
   <main id="icerik">
     <section class="hero" aria-labelledby="hero-title">
-      <div class="hero-photo">{{heroImg}}</div>
       <div class="wrap hero-inner">
+        <div class="hero-photo">{{heroImg}}</div>
         <div class="hero-copy">
           <h1 id="hero-title"><span class="h1-key">{{h1Key}}</span> <span class="h1-line">{{h1Line}}</span></h1>
           <p class="hero-lead">{{lead}}</p>
@@ -61,31 +60,31 @@
               <div class="wiz-bar" aria-hidden="true"><span></span></div>
             </div>
 
-            <div class="wiz-step" data-step="service">
-              <p class="wiz-q" id="q-service" tabindex="-1">Ne yaptırmak istiyorsunuz?</p>
-              <div class="wiz-tiles" role="group" aria-labelledby="q-service">{{tiles}}</div>
-              <button class="btn btn-primary btn-lg wiz-next" type="button" data-wiz-next>Ücretsiz keşif ve fiyat al<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button>
-            </div>
-
-            <div class="wiz-step" data-step="size" hidden>
-              <p class="wiz-picked"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span data-wiz-service>{{picked}}</span> <button class="wiz-link" type="button" data-wiz-go="service">Değiştir</button></p>
-              {{sizes}}
-            </div>
-
-            <div class="wiz-step" data-step="district" hidden>
-              <button class="wiz-link wiz-back" type="button" data-wiz-go="size"><svg class="icon" aria-hidden="true"><use href="#i-back"/></svg>Geri</button>
-              <label class="wiz-q" for="district" id="q-district" tabindex="-1">Hangi ilçedesiniz?</label>
-              <div class="select">
-                <select id="district" name="district">
-                  <option value="">İlçenizi seçin</option>
-                  {{districtOptions}}
-                </select>
-                <svg class="icon" aria-hidden="true"><use href="#i-chevron-down"/></svg>
+            <div class="wiz-steps">
+              <div class="wiz-step" data-step="service">
+                <p class="wiz-q" id="q-service" tabindex="-1">Ne yaptırmak istiyorsunuz?</p>
+                <div class="wiz-tiles" role="group" aria-labelledby="q-service">{{tiles}}</div>
+                <button class="btn btn-primary btn-lg wiz-next" type="button" data-wiz-next>Ücretsiz keşif ve fiyat al<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button>
               </div>
-              <div class="wiz-finish" data-wiz-finish hidden>
-                <p class="wiz-bubble" data-wiz-bubble></p>
-                <a id="wiz-send" class="btn btn-wa btn-lg" href="https://wa.me/905423551213" target="_blank" rel="noopener noreferrer" data-contact="whatsapp" data-position="wizard"><svg class="icon" aria-hidden="true"><use href="#i-whatsapp"/></svg>WhatsApp’ta mesajı açın</a>
-                <p class="wiz-note">Mesajı siz göndermeden bize ulaşmaz. Fotoğraf eklerseniz fiyat daha net çıkar.</p>
+
+              <div class="wiz-step" data-step="size" hidden>
+                <div class="wiz-sel"><img data-wiz-photo src="{{pickedPhoto}}" width="480" height="480" decoding="async" alt=""><span class="wiz-sel-text" data-wiz-service>{{picked}}</span><button class="wiz-link" type="button" data-wiz-go="service">Değiştir</button></div>
+                <div class="wiz-size-stack">{{sizes}}</div>
+              </div>
+
+              <div class="wiz-step" data-step="district" hidden>
+                <div class="wiz-sel"><img data-wiz-photo src="{{pickedPhoto}}" width="480" height="480" decoding="async" alt=""><span class="wiz-sel-text" data-wiz-summary>{{picked}}</span><button class="wiz-link" type="button" data-wiz-go="size">Geri</button></div>
+                <label class="wiz-q" for="district" id="q-district" tabindex="-1">Hangi ilçedesiniz?</label>
+                <div class="select">
+                  <select id="district" name="district">
+                    <option value="">İlçenizi seçin</option>
+                    {{districtOptions}}
+                  </select>
+                  <svg class="icon" aria-hidden="true"><use href="#i-chevron-down"/></svg>
+                </div>
+                <p class="wiz-bubble" data-ghost="{{longestDraft}}"><span data-wiz-bubble></span></p>
+                <a id="wiz-send" class="btn btn-wa btn-lg" target="_blank" rel="noopener noreferrer" data-contact="whatsapp" data-position="wizard"><svg class="icon" aria-hidden="true"><use href="#i-whatsapp"/></svg>WhatsApp’ta mesajı açın</a>
+                <p class="wiz-note">Mesajı siz gönderirsiniz. Fotoğraf eklerseniz fiyat netleşir.</p>
               </div>
             </div>
 
@@ -94,11 +93,13 @@
           </section>
         </div>
 
-        <figure class="hero-quote">
-          <svg class="stars" role="img" aria-label="5 üzerinden 5 yıldız"><use href="#i-stars"/></svg>
-          <blockquote>“{{heroQuote}}”</blockquote>
-          <figcaption>{{heroQuoteBy}}</figcaption>
-        </figure>
+        <section class="hero-quotes" data-quotes aria-label="Müşteri yorumlarından">
+          <div class="quote-top">
+            <svg class="stars" role="img" aria-label="5 üzerinden 5 yıldız"><use href="#i-stars"/></svg>
+            <div class="quote-nav">{{quoteDots}}<button class="quote-pause" type="button" data-quote-pause aria-label="Yorumların dönmesini durdur"><svg class="icon" aria-hidden="true"><use href="#i-pause"/></svg></button></div>
+          </div>
+          <div class="quotes">{{heroQuotes}}</div>
+        </section>
       </div>
     </section>
 
@@ -115,28 +116,7 @@
           <h2 id="work-title">Kendi işlerimizden</h2>
           <p>Bu bölümdeki fotoğrafların hepsi kendi uygulamalarımız. Büyütmek için dokunun.</p>
         </div>
-        <div class="work-track">
-          <a class="work work-a" href="/assets/work/villa-kose.webp" data-gallery data-title="Köşe sürme doğrama" data-note="Villa, tamamlanmış uygulama.">
-            <span class="work-media"><img src="/assets/work/villa-kose-sm.webp" srcset="/assets/work/villa-kose-sm.webp 800w, /assets/work/villa-kose.webp 1419w" sizes="(min-width: 60rem) 58vw, 85vw" width="1419" height="716" loading="lazy" decoding="async" alt="Çimenli bahçeye bakan villanın köşesinde koyu çerçeveli, geniş sürme doğrama camları"></span>
-            <span class="work-label"><strong>Köşe sürme doğrama</strong><small>Villa, tamamlanmış uygulama</small></span>
-          </a>
-          <a class="work work-b" href="/assets/work/cam-balkon-usta.webp" data-gallery data-title="Çerçevesiz cam" data-note="Montajda son ayar.">
-            <span class="work-media"><img src="/assets/work/cam-balkon-usta-sm.webp" srcset="/assets/work/cam-balkon-usta-sm.webp 520w, /assets/work/cam-balkon-usta.webp 786w" sizes="(min-width: 60rem) 34vw, 85vw" width="786" height="760" loading="lazy" decoding="async" alt="Usta, çerçevesiz camın üst kısmında elini uzatmış ayar yapıyor"></span>
-            <span class="work-label"><strong>Çerçevesiz cam</strong><small>Montajda son ayar</small></span>
-          </a>
-          <a class="work work-c" href="/assets/work/cam-bolme-tamam.webp" data-gallery data-title="Alüminyum cam bölme" data-note="İç mekân, tamamlanmış uygulama.">
-            <span class="work-media"><img src="/assets/work/cam-bolme-tamam-sm.webp" srcset="/assets/work/cam-bolme-tamam-sm.webp 600w, /assets/work/cam-bolme-tamam.webp 1200w" sizes="(min-width: 60rem) 30vw, 85vw" width="1200" height="1600" loading="lazy" decoding="async" alt="Koyu alüminyum çerçeveli, camlı kapısı olan köşe cam bölme"></span>
-            <span class="work-label"><strong>Alüminyum cam bölme</strong><small>İç mekân, tamamlanmış</small></span>
-          </a>
-          <a class="work work-d" href="/assets/work/villa-detay-crop.webp" data-gallery data-title="Sürme doğrama ve sineklik" data-note="Aynı villadan yakın plan.">
-            <span class="work-media"><img src="/assets/work/villa-detay-crop.webp" width="685" height="1280" loading="lazy" decoding="async" alt="Koyu çerçeveli sürme doğramanın yakından görünümü; camda bahçe yansıyor, sağda sineklik kanadı"></span>
-            <span class="work-label"><strong>Sürme doğrama ve sineklik</strong><small>Aynı villadan yakın plan</small></span>
-          </a>
-          <a class="work work-e" href="/assets/work/dis-kapi.webp" data-gallery data-title="Dış kapı doğraması" data-note="Koyu çerçeve, çift kanat.">
-            <span class="work-media"><img src="/assets/work/dis-kapi.webp" width="828" height="465" loading="lazy" decoding="async" alt="Taş duvarlı evde koyu çerçeveli, çift kanatlı camlı dış kapı"></span>
-            <span class="work-label"><strong>Dış kapı doğraması</strong><small>Koyu çerçeve, çift kanat</small></span>
-          </a>
-        </div>
+        <div class="work-track">{{gallery}}</div>
       </div>
     </section>
 
@@ -189,12 +169,12 @@
     <section id="yorumlar" class="section" aria-labelledby="reviews-title">
       <div class="wrap">
         <div class="section-head">
-          <h2 id="reviews-title">Müşterilerimizden {{reviewCount}} yorum</h2>
+          <h2 id="reviews-title">Müşteri yorumları</h2>
           <p>Pencere, kapı, cam ve sineklik işlerimizden sonra bırakılan yorumlar.</p>
         </div>
         <div class="review-track">{{reviewsFeatured}}</div>
         <details class="more-reviews">
-          <summary class="btn btn-outline">{{restCount}} yorum daha<svg class="icon" aria-hidden="true"><use href="#i-chevron-down"/></svg></summary>
+          <summary class="btn btn-outline">Tüm yorumları göster<svg class="icon" aria-hidden="true"><use href="#i-chevron-down"/></svg></summary>
           <div class="review-grid">{{reviewsRest}}</div>
         </details>
       </div>

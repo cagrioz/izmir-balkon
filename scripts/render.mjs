@@ -1,7 +1,7 @@
 // Renders every page and machine-readable file from scripts/facts.mjs and public/reviews-data.js.
 import { readFileSync } from 'node:fs';
 import { runInNewContext } from 'node:vm';
-import { SITE, UPDATED, UPDATED_TR, BUSINESS, DISTRICTS, SUMMARY, SUMMARY_EN, PRICE_FACTORS, QUOTE_QUESTIONS, STEPS, SERVICES, HOME, ALL_FAQ, VOC, HERO_QUOTE, PROCESS_QUOTE, FEATURED_REVIEWS } from './facts.mjs';
+import { SITE, UPDATED, UPDATED_TR, BUSINESS, DISTRICTS, SUMMARY, SUMMARY_EN, PRICE_FACTORS, QUOTE_QUESTIONS, STEPS, SERVICES, HOME, ALL_FAQ, VOC, HERO_QUOTES, PROCESS_QUOTE, FEATURED_REVIEWS, GALLERY } from './facts.mjs';
 
 const read = path => readFileSync(new URL(`../${path}`, import.meta.url), 'utf8');
 const context = { window: {} };
@@ -18,12 +18,25 @@ const serviceList = Object.entries(SERVICES);
 const pathFor = key => (key === 'home' ? '/' : `/${key}`);
 const mdFor = key => (key === 'home' ? '/index.md' : `/${key}.md`);
 
-const ICONS = {
-  'cam-balkon': '<path d="M3 5h18v14H3zM9 5v14m6-14v14M3 15h18"/>',
-  'kis-bahcesi': '<path d="M3 11 12 4l9 7v9H3zM12 4v16M3 14h18"/>',
-  pergola: '<path d="M2 8h20M5 8v12m14-12v12M7 4v4m5-4v4m5-4v4"/>',
-  dograma: '<path d="M5 3h14v18H5zM12 3v18M5 12h14"/>'
+const tilePhoto = id => `/assets/tiles/${id}.webp`;
+// Kept open in the wizard so the card does not grow with the message. Same wording as draftMessage in public/ui.js.
+const LONGEST_DRAFT = 'Merhaba, Seferihisar ilçesinde pencere ve kapı doğraması için ücretsiz keşif ve fiyat almak istiyorum. Ölçüyü bilmiyorum, keşifte alınabilir.';
+
+// Small size pictures for the wizard: glass panels for a balcony, a growing grid for area and count.
+const artFrame = body => `<svg class="opt-art" viewBox="0 0 48 32" aria-hidden="true">${body}</svg>`;
+const paneArt = count => {
+  const cell = 6, gap = 2, width = count * cell + (count - 1) * gap, start = (48 - width) / 2;
+  return artFrame(Array.from({ length: count }, (_, i) => `<rect x="${start + i * (cell + gap)}" y="4" width="${cell}" height="24" rx="1"/>`).join(''));
 };
+const gridArt = (cols, rows) => {
+  const cell = 8, gap = 2, left = (48 - (cols * cell + (cols - 1) * gap)) / 2, top = (32 - (rows * cell + (rows - 1) * gap)) / 2;
+  const cells = [];
+  for (let r = 0; r < rows; r += 1) for (let c = 0; c < cols; c += 1) cells.push(`<rect x="${left + c * (cell + gap)}" y="${top + r * (cell + gap)}" width="${cell}" height="${cell}" rx="1"/>`);
+  return artFrame(cells.join(''));
+};
+const UNKNOWN_ART = artFrame('<rect x="9" y="3" width="30" height="26" rx="3" stroke-dasharray="3 2.5"/><text x="24" y="21.5">?</text>');
+const GRID_ART = [gridArt(2, 1), gridArt(3, 2), gridArt(4, 3)];
+const SIZE_ART = { 'cam-balkon': [paneArt(2), paneArt(4), paneArt(6)], 'kis-bahcesi': GRID_ART, pergola: GRID_ART, dograma: GRID_ART };
 const SIZE_OPTIONS = {
   'cam-balkon': ['Balkonunuz yaklaşık kaç metre?', ['3 m’ye kadar', '3–6 m', '6 m’den fazla']],
   'kis-bahcesi': ['Alan yaklaşık kaç metrekare?', ['15 m²’ye kadar', '15–30 m²', '30 m²’den fazla']],
@@ -41,6 +54,8 @@ const sprite = `<svg class="sprite" xmlns="http://www.w3.org/2000/svg" aria-hidd
     <symbol id="i-chevron-left" viewBox="0 0 24 24"><path d="m15 6-6 6 6 6"/></symbol>
     <symbol id="i-chevron-right" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></symbol>
     <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><path d="M8 5v14m8-14v14"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="m7 4 13 8-13 8Z"/></symbol>
     <symbol id="i-stars" viewBox="0 0 120 24"><g id="i-star-one"><path d="m12 2.6 2.9 5.9 6.5.95-4.7 4.6 1.1 6.5L12 17.5l-5.8 3.05 1.1-6.5-4.7-4.6 6.5-.95L12 2.6Z"/></g><use href="#i-star-one" x="24"/><use href="#i-star-one" x="48"/><use href="#i-star-one" x="72"/><use href="#i-star-one" x="96"/></symbol>
   </defs></svg>`;
 
@@ -89,6 +104,19 @@ const factsList = [
   ['Müşteri', `${BUSINESS.customers} müşteri`],
   ['Telefon ve WhatsApp', `<a href="tel:${BUSINESS.phone}" data-contact="phone" data-position="facts">${BUSINESS.phoneDisplay}</a>`]
 ].map(([term, value]) => `<div><dt>${term}</dt><dd>${value}</dd></div>`).join('');
+
+const heroQuotes = HERO_QUOTES.map(([quote, name], index) => {
+  const source = reviews.find(review => review.name === name);
+  return `<figure class="quote${index === 0 ? ' is-on' : ''}"><blockquote>“${esc(quote)}”</blockquote><figcaption>${esc(name)} · ${esc(source.service)}</figcaption></figure>`;
+}).join('');
+const quoteDots = HERO_QUOTES.map((_, index) => `<button class="quote-dot" type="button" data-quote="${index}" aria-label="${index + 1}. yorum"${index === 0 ? ' aria-current="true"' : ''}></button>`).join('');
+
+const galleryItem = item => {
+  const full = `/assets/work/${item.file}.webp`;
+  const srcset = item.sm ? ` srcset="/assets/work/${item.file}-sm.webp ${item.sm}w, ${full} ${item.w}w" sizes="(min-width: 60rem) ${item.vw}vw, 84vw"` : '';
+  return `<a class="work" style="--r:${(item.w / item.h).toFixed(3)}" href="${full}" data-gallery data-title="${esc(item.title)}" data-note="${esc(item.note)}."><span class="work-media"><img src="${item.sm ? `/assets/work/${item.file}-sm.webp` : full}"${srcset} width="${item.w}" height="${item.h}" loading="lazy" decoding="async" alt="${esc(item.alt)}"></span><span class="work-label"><strong>${esc(item.title)}</strong><small>${esc(item.note)}</small></span></a>`;
+};
+const gallery = GALLERY.map(row => `<div class="work-row">${row.map(galleryItem).join('')}</div>`).join('');
 
 const faqHtml = items => items.map(([q, a], index) => `<details${index === 0 ? ' open' : ''}><summary><h3>${esc(q)}</h3><svg class="icon" aria-hidden="true"><use href="#i-chevron-down"/></svg></summary><p>${esc(a)}</p></details>`).join('');
 
@@ -143,34 +171,35 @@ export function renderPage(key) {
     ogImage: `${SITE}${hero.og}`,
     ogW: hero.ogW,
     ogH: hero.ogH,
-    preload: `<link rel="preload" as="image" href="${hero.lg}" imagesrcset="${hero.sm} 800w, ${hero.lg} ${hero.w}w" imagesizes="(min-width: 60rem) 56vw, 100vw" fetchpriority="high">`,
+    preload: `<link rel="preload" as="image" href="${hero.lg}" imagesrcset="${hero.sm} 800w, ${hero.lg} ${hero.w}w" imagesizes="(min-width: 60rem) 62vw, 100vw" fetchpriority="high">`,
     jsonld: graph(nodes),
     sprite,
     header: header(''),
     footer,
     service: selected,
-    heroImg: `<img class="hero-img" src="${hero.lg}" srcset="${hero.sm} 800w, ${hero.lg} ${hero.w}w" sizes="(min-width: 60rem) 56vw, 100vw" width="${hero.w}" height="${hero.h}" fetchpriority="high" alt="${esc(hero.alt)}">`,
+    heroImg: `<img class="hero-img" src="${hero.lg}" srcset="${hero.sm} 800w, ${hero.lg} ${hero.w}w" sizes="(min-width: 60rem) 62vw, 100vw" width="${hero.w}" height="${hero.h}" fetchpriority="high"${hero.pos ? ` style="object-position:${hero.pos}"` : ''} alt="${esc(hero.alt)}">`,
     h1Key: esc(data.h1Key),
     h1Line: esc(data.h1Line),
     lead: esc(data.lead),
-    tiles: serviceList.map(([id, s]) => `<button class="tile" type="button" data-pick-service="${id}" aria-pressed="${id === selected}"><svg class="tile-icon" viewBox="0 0 24 24" aria-hidden="true">${ICONS[id]}</svg><span>${esc(s.label)}</span></button>`).join(''),
+    tiles: serviceList.map(([id, s]) => `<button class="tile" type="button" data-pick-service="${id}" aria-pressed="${id === selected}"><img src="${tilePhoto(id)}" width="480" height="480" decoding="async" alt=""><span class="tile-label">${esc(s.label)}</span><svg class="icon tile-check" aria-hidden="true"><use href="#i-check"/></svg></button>`).join(''),
     picked: esc(SERVICES[selected].label),
+    pickedPhoto: tilePhoto(selected),
+    longestDraft: esc(LONGEST_DRAFT),
     sizes: serviceList.map(([id]) => {
       const [question, options] = SIZE_OPTIONS[id];
-      return `<div class="wiz-sizes" data-for="${id}" hidden><p class="wiz-q" id="q-size-${id}" tabindex="-1">${esc(question)}</p><div class="wiz-opts" role="group" aria-labelledby="q-size-${id}">${options.map(option => `<button class="opt" type="button" data-pick-size="${esc(option)}">${esc(option)}</button>`).join('')}<button class="opt" type="button" data-pick-size="">Bilmiyorum</button></div></div>`;
+      return `<div class="wiz-sizes" data-for="${id}" hidden><p class="wiz-q" id="q-size-${id}" tabindex="-1">${esc(question)}</p><div class="wiz-opts" role="group" aria-labelledby="q-size-${id}">${options.map((option, index) => `<button class="opt" type="button" data-pick-size="${esc(option)}">${SIZE_ART[id][index]}<span>${esc(option)}</span></button>`).join('')}<button class="opt" type="button" data-pick-size="">${UNKNOWN_ART}<span>Bilmiyorum</span></button></div></div>`;
     }).join(''),
     districtOptions: DISTRICTS.map(name => `<option>${esc(name)}</option>`).join(''),
-    heroQuote: esc(HERO_QUOTE[0]),
-    heroQuoteBy: esc(HERO_QUOTE[1]),
+    heroQuotes,
+    quoteDots,
+    gallery,
     voc: VOC.map(([label, quote, name]) => `<li><strong>${esc(label)}</strong><blockquote>“${quote[0] === quote[0].toLocaleUpperCase('tr') ? '' : '… '}${esc(quote)}”</blockquote><cite>${esc(name)}</cite></li>`).join(''),
-    svcCards: serviceList.map(([id, s]) => `<a class="svc svc-${id}${id === key ? ' is-current' : ''}" href="${pathFor(id)}"${id === key ? ' data-open-wizard' : ''}><img src="${s.cardImg.src}" width="${s.cardImg.w}" height="${s.cardImg.h}" loading="lazy" decoding="async" alt=""><span class="svc-body"><strong>${esc(s.cardLabel || s.label)}</strong><small>${esc(s.card)}</small><span class="svc-go">Fiyat alın<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span></span></a>`).join(''),
+    svcCards: serviceList.map(([id, s]) => `<a class="svc svc-${id}${id === key ? ' is-current' : ''}" href="${pathFor(id)}"${id === key ? ' data-open-wizard' : ''}><img src="${s.cardImg.src}" width="${s.cardImg.w}" height="${s.cardImg.h}" loading="lazy" decoding="async"${s.cardImg.pos ? ` style="object-position:${s.cardImg.pos}"` : ''} alt=""><span class="svc-body"><strong>${esc(s.cardLabel || s.label)}</strong><small>${esc(s.card)}</small><span class="svc-go">Fiyat alın<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span></span></a>`).join(''),
     priceList: PRICE_FACTORS.map(([name, text]) => `<li><strong>${esc(name)}</strong><span>${esc(text)}</span></li>`).join(''),
     askList: QUOTE_QUESTIONS.map(text => `<li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>${esc(text)}</li>`).join(''),
     steps: STEPS.map(([name, text]) => `<li><strong>${esc(name)}</strong><span>${esc(text)}</span></li>`).join(''),
     processQuote: esc(PROCESS_QUOTE[0]),
     processQuoteBy: esc(PROCESS_QUOTE[1]),
-    reviewCount: reviews.length,
-    restCount: otherReviews.length,
     reviewsFeatured: featuredReviews.map(reviewCard).join(''),
     reviewsRest: otherReviews.map(reviewCard).join(''),
     faqTitle: esc(data.faqTitle),
@@ -208,7 +237,6 @@ export function renderBilgi() {
     stepsDoc: STEPS.map(([name, text]) => `<li><strong>${esc(name)}:</strong> ${esc(text)}</li>`).join(''),
     faqDoc: ALL_FAQ.map(([group, items]) => `<h2>${esc(group)}</h2>${items.map(([q, a]) => `<h3>${esc(q)}</h3><p>${esc(a)}</p>`).join('')}`).join(''),
     districtList: esc(DISTRICTS.join(', ')),
-    reviewCount: reviews.length,
     reviewsAll: reviews.map(reviewCard).join(''),
     updated: UPDATED,
     updatedTr: UPDATED_TR
@@ -312,7 +340,7 @@ ${ALL_FAQ.map(([group, items]) => `## ${group}\n\n${faqMd(items)}`).join('\n\n')
 
 ${DISTRICTS.join(', ')}
 
-## Müşteri yorumları (${reviews.length})
+## Müşteri yorumları
 
 Pencere, kapı, cam ve sineklik işlerinden sonra bırakılan yorumlar, kelimesi kelimesine.
 
@@ -354,7 +382,7 @@ ${serviceList.map(([id, s]) => `- [${s.cardLabel || s.label}](${SITE}${mdFor(id)
 
 export function renderSitemap() {
   const entry = (loc, images = []) => `<url><loc>${loc}</loc><lastmod>${UPDATED}</lastmod>${images.map(([src, caption]) => `<image:image><image:loc>${SITE}${src}</image:loc><image:caption>${esc(caption)}</image:caption></image:image>`).join('')}</url>`;
-  const ownWork = [['/assets/work/villa-kose.jpg', 'İzmir Balkon uygulaması: villada köşe sürme doğrama'], ['/assets/work/cam-balkon-usta.webp', 'İzmir Balkon uygulaması: çerçevesiz cam montajı'], ['/assets/work/cam-bolme-tamam.webp', 'İzmir Balkon uygulaması: alüminyum cam bölme'], ['/assets/work/dis-kapi.webp', 'İzmir Balkon uygulaması: dış kapı doğraması']];
+  const ownWork = GALLERY.flat().map(item => [`/assets/work/${item.file}.webp`, `İzmir Balkon uygulaması: ${item.title}`]);
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">${entry(`${SITE}/`, ownWork)}${serviceList.map(([id]) => entry(`${SITE}/${id}`)).join('')}${entry(`${SITE}/bilgi`)}</urlset>
 `;
