@@ -24,8 +24,8 @@ Import this repository into Vercel. `vercel.json` specifies the build command an
 - Direct WhatsApp links and a district/system message composer. This opens a draft; it does not send a message or save a lead.
 - Free survey offer, concise service information, district selection and accessible native FAQ disclosures.
 - Owner-confirmed pergola and winter garden services appear as secondary links and message-composer options; the hero remains focused on cam balkon and joinery.
-- A manual five-photo hero slider, job-grouped portfolio, photo-led service cards and installation photographs. No autoplay.
-- 21 distinct customer reviews transcribed from owner-supplied screenshots, with window and joinery work first. Photo-to-review associations are not invented.
+- A manual three-photo hero slider, finished-work gallery and expandable installation photographs. No autoplay.
+- 21 distinct customer reviews transcribed from owner-supplied screenshots: three visible initially and 18 behind a native disclosure. Photo-to-review associations are not invented. The previous blue-and-white design is restored at the owner’s request.
 - Local image/font assets, WebP hero, no third-party dependencies on initial page load.
 - No invented reviews, customer counts, guarantee duration, discounts or installation times.
 - Individual review ratings, categories and dates match the supplied screenshots; no aggregate rating is invented.
