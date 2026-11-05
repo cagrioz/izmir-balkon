@@ -6,6 +6,8 @@ The site is the acquisition destination. GetSidely manages the connected Google 
 
 ## Activation
 
+Live verification on 5 November 2026 confirmed the phone hit (earlier session), both distinct WhatsApp labels with one hit per click, DataFast contact goals and its saved wizard WhatsApp #1 KPI. Auto-tagging is already on. Google Ads still reports the actions as unverified; its UI allows up to three hours for tag verification. See [the latest validation record](ads/VALIDATION.md) for the exact evidence and outstanding checks. The owner will connect Sidely personally. Do not recreate the three existing actions or assume test hits are attributed leads.
+
 1. Connect the intended Google Ads account in getsidely.com and use the verified site domain as the final URL.
 2. Create three separately named Google Ads website conversion actions: phone click (primary, `callClickLabel`), wizard WhatsApp click (primary, `wizardWhatsappClickLabel`), and all other WhatsApp clicks (secondary, `whatsappClickLabel`). Use Count=One for each. Supply each action’s real label and the `AW-…` ID in `public/tracking-config.js`. Never map a missing wizard label to the secondary label. Add a real GA4 `G-…` ID only if wanted. The labels in tests are fictitious and never shipped as configuration.
 3. Check consent acceptance and denial in Google Tag Assistant on the live domain. Confirm one action per real click, correct destination/label, and no Google requests before consent. Ads account-side validation cannot be completed without the actual account and identifiers.
