@@ -7,7 +7,7 @@ The site is the acquisition destination. GetSidely manages the connected Google 
 ## Activation
 
 1. Connect the intended Google Ads account in getsidely.com and use the verified site domain as the final URL.
-2. Create separately named Google Ads website conversion actions for `phone_click` and `whatsapp_click`; keep them secondary intent signals during initial validation. Supply each action's real label and the `AW-…` ID in `public/tracking-config.js`. Add a real GA4 `G-…` ID only if wanted. The labels in tests are fictitious and never shipped as configuration.
+2. Create three separately named Google Ads website conversion actions: phone click (primary, `callClickLabel`), wizard WhatsApp click (primary, `wizardWhatsappClickLabel`), and all other WhatsApp clicks (secondary, `whatsappClickLabel`). Use Count=One for each. Supply each action’s real label and the `AW-…` ID in `public/tracking-config.js`. Never map a missing wizard label to the secondary label. Add a real GA4 `G-…` ID only if wanted. The labels in tests are fictitious and never shipped as configuration.
 3. Check consent acceptance and denial in Google Tag Assistant on the live domain. Confirm one action per real click, correct destination/label, and no Google requests before consent. Ads account-side validation cannot be completed without the actual account and identifiers.
 4. Enable Google Ads auto-tagging. Keep query parameters through any domain redirects. Optional final-URL suffix: `utm_source=google&utm_medium=cpc&utm_campaign={campaignid}&utm_content={creative}&utm_term={keyword}`. Review the suffix and location targeting inside the real campaign before launch.
 5. The chosen deployment must be eligible for commercial use. No paid hosting upgrade is made automatically.
@@ -65,3 +65,33 @@ Reviewed again on 5 November 2026 at phone width. Observations only, not claims 
 - Used as openings: one task on the first screen, a three-tap draft instead of a long form, customers' own words as selling points, and answering the apartment-permission worry raised by 2026 news coverage of court-ordered removals.
 
 Agent-readiness choices follow Vercel and Ora's study of 1,033 agent runs: https://vercel.com/kb/guide/make-your-site-readable-by-ai-agents
+
+
+## Preparation status — 5 November 2026
+
+The code preserves only `gclid`, `gbraid`, `wbraid` and lowercase `utm_*` attribution parameters in `page_location`; unrelated parameters and the fragment are stripped. These allowed values can still contain user-entered data: never put names, phone numbers or email addresses into UTM values. The site does not implement WhatsApp-to-click-ID matching, cross-page identifier storage or a server-side lead database.
+
+Wizard WhatsApp (`data-position="wizard"`) and phone clicks are **primary intent conversions**; other WhatsApp clicks are **secondary**. Primary is a bidding configuration, not proof of a lead. `quote_step` remains diagnostic. A WhatsApp draft opening is not a sent message. Do not import the same GA4 event as another primary conversion alongside the Google Ads tag.
+
+`ad_user_data` and `ad_personalization` remain `denied` after measurement consent. Do not change either without owner approval. Google's [consent reference](https://support.google.com/google-ads/answer/13802165?hl=en) states that ad-user-data consent affects tag-based measurement and click-ID exports. A local `gtag` command or successful request does not prove Google Ads recorded an attributed conversion. Tag Assistant/account-side acceptance remains a separate required check.
+
+Public IDs are still blank until genuine account-generated IDs are available. No fake test identifiers are shipped in the live config. The owner has not supplied a legal name, address, public profiles, Search Console or Bing verification tokens and authorized proceeding with the basic trade name “İzmir Balkon”. Identity expansion is deferred; do not call that trade name a verified legal identity or invent an address/sameAs/token.
+
+Campaign drafts and length checks are in [ads/README.md](ads/README.md). The outcome template is [lead-log-template.csv](lead-log-template.csv): keep only date, channel, district, qualified, survey_booked, quote, sale, value. Use YYYY-MM-DD, yes/no/unknown, and TRY for value; keep unfilled rows blank, not fabricated examples. Completed logs belong in a private operational system, never this public repo. The owner must choose budget, bid cap, contact hours and who handles enquiries.
+
+## Proposal only: offline attribution
+
+Matching WhatsApp enquiries back to gclid/gbraid/wbraid requires a backend, identifier retention, consent handling, access controls, deletion/retention rules and a reliable way to join a conversation to a click. This conflicts with the present privacy statement that the site stores no enquiry record. Before implementation, approve a new data flow and update the privacy notice; assess a suitable legal basis and retention period. No such matching, server storage, personal-data upload or enhanced conversion has been implemented.
+
+## Launch verification still required
+
+With real IDs: check the live domain in Tag Assistant before consent, after rejection, after acceptance and after revocation. Test phone, wizard WhatsApp and other WhatsApp separately: one tag event per click, the correct destination/label, and conversion acceptance under `ad_user_data=denied`. Never report the mocked unit-test result as an account-side pass. Measure LCP and CLS with tags enabled, compare all wizard-step heights at 320, 390 and 1440 px, and test the banner with the wizard sheet open. Finally run actual phone/WhatsApp flows on an iPhone and Android; desktop emulation is not a substitute.
+
+
+## Turkey call reporting check
+
+On 5 November 2026, Turkey is not listed in Google's [supported forwarding-number countries](https://support.google.com/google-ads/answer/2382961?hl=en). Do not promise connected-call or call-duration conversion reporting via a Google forwarding number in Turkey. Keep call reporting off for the call asset unless the real account establishes supported functionality. Website `phone_click` measures only the opening of a dialler; ad call clicks are separate from that website event.
+
+## Account setup and promotion status
+
+A new-account onboarding record was reached under the requested Google login; setup has not yet been confirmed complete. No campaign was created or funded. The shown account-specific offer was “spend TRY8,000, get TRY8,000”, pending confirmation at payment, for new advertisers only. The separate 65,000 TL marketing offer was not verified for this account. No promotional terms were accepted or budget committed. Confirm actual eligibility, qualifying spend, deadline and activation with the owner before claiming an offer.

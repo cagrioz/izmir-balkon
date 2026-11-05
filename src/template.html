@@ -34,6 +34,10 @@
   <script type="application/ld+json">{{jsonld}}</script>
 </head>
 <body data-service="{{service}}">
+  <aside id="consent-banner" class="consent-banner" aria-label="Çerez tercihi" hidden>
+    <p>Ziyaretleri ve iletişim tıklamalarını Google araçlarıyla ölçmemize izin verir misiniz? <a href="/gizlilik">Ayrıntılar</a></p>
+    <div class="consent-actions"><button type="button" id="reject-cookies">Yalnızca gerekli</button><button type="button" id="accept-cookies">İzin ver</button></div>
+  </aside>
   <a class="skip-link" href="#icerik">İçeriğe geç</a>
   {{sprite}}
   {{header}}
@@ -244,9 +248,6 @@
     </div>
   </dialog>
 
-  <aside id="consent-banner" class="consent-banner" aria-label="Çerez tercihi" hidden>
-    <p>Ziyaretleri ve iletişim tıklamalarını Google araçlarıyla ölçmemize izin verir misiniz? <a href="/gizlilik">Ayrıntılar</a></p>
-    <div class="consent-actions"><button type="button" id="reject-cookies">Yalnızca gerekli</button><button type="button" id="accept-cookies">İzin ver</button></div>
-  </aside>
+
 </body>
 </html>

@@ -492,3 +492,14 @@ ol.doc-list { list-style: decimal; }
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition: none !important; animation: none !important; }
 }
+
+/* Consent remains in document flow: it cannot cover the wizard or its sheet actions. */
+.consent-banner, .dock:not([hidden]) ~ .consent-banner {
+  position: relative; inset: auto; width: auto; max-width: none;
+  margin: 0; border-radius: 0; box-shadow: none;
+  padding: .75rem max(1rem, calc((100% - 78rem) / 2));
+}
+@media (min-width: 48rem) {
+  .consent-banner { grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 1rem; }
+  .consent-actions { min-width: 20rem; }
+}

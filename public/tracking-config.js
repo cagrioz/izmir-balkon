@@ -3,5 +3,6 @@ window.IZMIR_TRACKING = Object.freeze({
   googleAdsId: '',
   ga4Id: '',
   callClickLabel: '',
-  whatsappClickLabel: ''
+  wizardWhatsappClickLabel: '', // Primary: completed wizard opens a WhatsApp draft.
+  whatsappClickLabel: '' // Secondary: other WhatsApp links.
 });

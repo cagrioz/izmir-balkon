@@ -19,7 +19,11 @@
     gtag('consent', 'default', { ad_storage: 'granted', analytics_storage: 'granted', ad_user_data: 'denied', ad_personalization: 'denied' });
     gtag('js', new Date());
     // Do not send arbitrary URL query strings or form selections to analytics.
-    const pageLocation = location.origin + location.pathname;
+    const pageUrl = new URL(location.origin + location.pathname);
+    for (const [key, value] of new URLSearchParams(location.search || '')) {
+      if (/^(gclid|gbraid|wbraid|utm_[a-z0-9_]+)$/.test(key)) pageUrl.searchParams.append(key, value);
+    }
+    const pageLocation = pageUrl.href;
     if (adsId) gtag('config', adsId, { allow_ad_personalization_signals: false, page_location: pageLocation });
     if (ga4Id) gtag('config', ga4Id, { allow_google_signals: false, allow_ad_personalization_signals: false, page_location: pageLocation });
     const script = document.createElement('script');
@@ -44,7 +48,8 @@
     document.dispatchEvent(new CustomEvent('izmir:contact', { detail: { event, position } }));
     if (!hasTracking || consent !== 'granted') return;
     window.dataLayer.push({ event, contact_channel: channel, cta_position: position });
-    const label = channel === 'phone' ? config.callClickLabel : config.whatsappClickLabel;
+    const label = channel === 'phone' ? config.callClickLabel
+      : position === 'wizard' ? config.wizardWhatsappClickLabel : config.whatsappClickLabel;
     if (ga4Id) gtag('event', event, { send_to: ga4Id, contact_channel: channel, cta_position: position });
     if (adsId && /^[\w-]+$/.test(label || '')) {
       gtag('event', 'conversion', { send_to: adsId + '/' + label, transport_type: 'beacon' });
@@ -58,7 +63,9 @@
   }
   document.getElementById('accept-cookies')?.addEventListener('click', () => chooseConsent('granted'));
   document.getElementById('reject-cookies')?.addEventListener('click', () => chooseConsent('denied'));
-  settings?.addEventListener('click', () => { if (banner) banner.hidden = false; });
+  settings?.addEventListener('click', () => {
+    if (banner) { banner.hidden = false; banner.scrollIntoView?.({ block: 'start' }); }
+  });
   document.querySelectorAll('[data-contact]').forEach(link => {
     link.addEventListener('click', () => contactEvent(link.dataset.contact, link.dataset.position));
   });
