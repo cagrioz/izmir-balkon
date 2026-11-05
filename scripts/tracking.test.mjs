@@ -15,7 +15,8 @@ function setup(config = {}, stored = '') {
     getElementById:id=>nodes[id] || null,
     querySelectorAll:selector=>selector === '[data-contact]' ? [link] : [],
     dispatchEvent:event=>events.push(event.detail),
-    createElement:()=>({}), head:{append:script=>appended.push(script)}
+    createElement:()=>({}), head:{append:script=>appended.push(script)},
+    addEventListener:(name,fn)=>handlers.set('document:'+name,fn)
   };
   runInNewContext(source, {window, document, localStorage:{getItem:key=>storage.get(key),setItem:(key,value)=>storage.set(key,value)},location:{origin:'https://izmirbalkon.com',pathname:'/',reload:()=>events.push('reload')},CustomEvent:class{constructor(_,options){this.detail=options.detail}},Date,encodeURIComponent});
   return {window,nodes,appended,events,handlers,storage};
@@ -55,4 +56,15 @@ test('revoking a saved grant updates consent and reloads into blocked state',()=
 test('malformed public measurement IDs cannot load a third party script',()=>{
   const s=setup({googleAdsId:'https://other.example',ga4Id:'G-<script>'},'granted');
   assert.equal(s.appended.length,0);
+});
+test('wizard progress reports the step only, and nothing without consent',()=>{
+  const blocked=setup(configured); blocked.handlers.get('document:izmir:funnel')({detail:{step:'size'}});
+  assert.equal(blocked.window.dataLayer.length,0);
+  const s=setup(configured); s.handlers.get('accept-cookies:click')();
+  s.handlers.get('document:izmir:funnel')({detail:{step:'size',service:'pergola',district:'Bornova'}});
+  const step=s.window.dataLayer.find(e=>e.event==='quote_step');
+  assert.deepEqual(Object.keys(step).sort(),['event','quote_step']);
+  assert.equal(step.quote_step,'size');
+  const sent=JSON.stringify(s.window.dataLayer);
+  assert.ok(!sent.includes('Bornova')); assert.ok(!sent.includes('pergola'));
 });

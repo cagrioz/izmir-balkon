@@ -1,6 +1,14 @@
 (() => {
   'use strict';
 
+  const WHATSAPP = 'https://wa.me/905423551213';
+  const SERVICES = {
+    'cam-balkon': { label: 'Cam balkon', phrase: 'cam balkon', fact: 'Yaklaşık ölçü' },
+    'kis-bahcesi': { label: 'Kış bahçesi', phrase: 'kış bahçesi', fact: 'Yaklaşık alan' },
+    pergola: { label: 'Pergola', phrase: 'pergola', fact: 'Yaklaşık alan' },
+    dograma: { label: 'Pencere ve kapı', phrase: 'pencere ve kapı doğraması', fact: 'Yaklaşık adet' }
+  };
+
   function initLightbox() {
     const dialog = document.getElementById('lightbox');
     const links = [...document.querySelectorAll('a[data-gallery]')];
@@ -58,94 +66,147 @@
     dialog.addEventListener('close', () => opener?.focus());
   }
 
-  // Manual only, no autoplay. Without JS the first slide simply stays as a static photo.
-  function initSlider() {
-    const slider = document.querySelector('[data-slider]');
-    if (!slider) return;
-    const slides = [...slider.querySelectorAll('.slider-slide')];
-    const frame = slider.querySelector('.slider-frame');
-    const controls = slider.querySelector('.slider-controls');
-    const counter = slider.querySelector('.slider-counter');
-    const position = slider.querySelector('[data-slider-position]');
-    const title = slider.querySelector('[data-slider-title]');
-    const note = slider.querySelector('[data-slider-note]');
-    const warmed = new Set([0]);
-    const pad = number => String(number).padStart(2, '0');
-    let index = 0;
-    let swipe = null;
+  // Three taps build a WhatsApp draft. Nothing is sent or stored: the visitor sends it themselves.
+  function initWizard() {
+    const wiz = document.getElementById('teklif');
+    if (!wiz) return {};
+    const count = wiz.querySelector('[data-wiz-count]');
+    const steps = Object.fromEntries([...wiz.querySelectorAll('[data-step]')].map(step => [step.dataset.step, step]));
+    const order = ['service', 'size', 'district'];
+    const serviceName = wiz.querySelector('[data-wiz-service]');
+    const district = wiz.querySelector('#district');
+    const finish = wiz.querySelector('[data-wiz-finish]');
+    const bubble = wiz.querySelector('[data-wiz-bubble]');
+    const send = wiz.querySelector('#wiz-send');
+    const state = { service: document.body.dataset.service || '', size: '' };
 
-    function wrap(target) {
-      return (target + slides.length) % slides.length;
+    function funnel(step) {
+      // Step names only. Service, size and district never leave the browser through analytics.
+      document.dispatchEvent(new CustomEvent('izmir:funnel', { detail: { step } }));
     }
-    // Load a neighbour only once the visitor shows interest, so unused slides cost nothing.
-    function warm(target) {
-      const next = wrap(target);
-      if (warmed.has(next)) return;
-      warmed.add(next);
-      const source = slides[next].querySelector('img');
-      const preload = new Image();
-      preload.sizes = source.sizes;
-      preload.srcset = source.srcset;
-      preload.src = source.src;
+    function message() {
+      const service = SERVICES[state.service];
+      const detail = state.size ? `${service.fact}: ${state.size}.` : 'Ölçüyü bilmiyorum, keşifte alınabilir.';
+      return `Merhaba, ${district.value} ilçesinde ${service.phrase} için ücretsiz keşif ve fiyat almak istiyorum. ${detail}`;
     }
-    function warmNeighbours() {
-      warm(index + 1);
-      warm(index - 1);
+    function refreshFinish() {
+      finish.hidden = !district.value;
+      if (!district.value) return;
+      const text = message();
+      bubble.textContent = text;
+      send.href = `${WHATSAPP}?text=${encodeURIComponent(text)}`;
     }
-    function show(target) {
-      slides[index].hidden = true;
-      index = wrap(target);
-      const slide = slides[index];
-      slider.classList.add('is-switching');
-      slide.hidden = false;
-      counter.textContent = `${pad(index + 1)} / ${pad(slides.length)}`;
-      position.textContent = `Fotoğraf ${index + 1} / ${slides.length}: `;
-      title.textContent = slide.dataset.title;
-      note.textContent = slide.dataset.note;
-      warmNeighbours();
+    function go(step, { focus = true } = {}) {
+      order.forEach(name => { steps[name].hidden = name !== step; });
+      wiz.dataset.at = step;
+      count.textContent = `Adım ${order.indexOf(step) + 1} / ${order.length}`;
+      if (step === 'size') {
+        serviceName.textContent = SERVICES[state.service].label;
+        wiz.querySelectorAll('.wiz-sizes').forEach(group => { group.hidden = group.dataset.for !== state.service; });
+      }
+      if (step === 'district') refreshFinish();
+      if (focus) {
+        const target = step === 'size' ? steps.size.querySelector('.wiz-sizes:not([hidden]) .wiz-q') : steps[step].querySelector('.wiz-q');
+        target?.focus({ preventScroll: true });
+      }
+    }
+    function pickService(service) {
+      if (!SERVICES[service]) return;
+      state.service = service;
+      state.size = '';
+      funnel('service');
     }
 
-    controls.hidden = false;
-    slider.querySelector('[data-slider-prev]').addEventListener('click', () => show(index - 1));
-    slider.querySelector('[data-slider-next]').addEventListener('click', () => show(index + 1));
-    slider.addEventListener('keydown', event => {
-      if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') event.preventDefault();
-      if (event.key === 'ArrowLeft') show(index - 1);
-      if (event.key === 'ArrowRight') show(index + 1);
+    wiz.addEventListener('click', event => {
+      const serviceButton = event.target.closest('[data-pick-service]');
+      if (serviceButton) {
+        pickService(serviceButton.dataset.pickService);
+        go('size');
+        return;
+      }
+      const sizeButton = event.target.closest('[data-pick-size]');
+      if (sizeButton) {
+        state.size = sizeButton.dataset.pickSize;
+        funnel('size');
+        go('district');
+        return;
+      }
+      const backButton = event.target.closest('[data-wiz-go]');
+      if (backButton) go(backButton.dataset.wizGo);
     });
-    slider.addEventListener('pointerenter', warmNeighbours, { once: true });
-    slider.addEventListener('focusin', warmNeighbours, { once: true });
-    frame.addEventListener('pointerdown', event => {
-      warmNeighbours();
-      swipe = event.pointerType === 'mouse' || event.target.closest('.slider-controls') ? null : { x: event.clientX, y: event.clientY };
+    district.addEventListener('change', () => {
+      if (district.value) funnel('district');
+      refreshFinish();
+      if (!finish.hidden) send.scrollIntoView({ block: 'nearest' });
     });
-    frame.addEventListener('pointerup', event => {
-      if (!swipe) return;
-      const dx = event.clientX - swipe.x;
-      const dy = event.clientY - swipe.y;
-      swipe = null;
-      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.5) show(index + (dx < 0 ? 1 : -1));
-    });
-    frame.addEventListener('pointercancel', () => { swipe = null; });
+
+    if (state.service && SERVICES[state.service]) go('size', { focus: false });
+    else go('service', { focus: false });
+
+    return {
+      preselect(service) {
+        if (SERVICES[service]) {
+          pickService(service);
+          go('size', { focus: false });
+        }
+      },
+      focusCurrent() {
+        wiz.querySelector('[data-step]:not([hidden]) .wiz-sizes:not([hidden]) .wiz-q, [data-step="service"]:not([hidden]) .wiz-q, [data-step="district"]:not([hidden]) .wiz-q')?.focus({ preventScroll: true });
+      }
+    };
   }
 
-  // Contact shortcuts wait until the hero phone has really scrolled above the viewport,
-  // not merely because it starts below the fold on a short screen.
+  // Keeps visitors where they are: the one wizard moves into a sheet, then back to the hero.
+  function initSheet(wizard) {
+    const sheet = document.getElementById('teklif-sheet');
+    const card = document.getElementById('teklif');
+    const home = document.getElementById('teklif-yuva');
+    // Without <dialog> support the links remain jumps to the wizard in the hero.
+    if (!sheet || !card || !home || typeof sheet.showModal !== 'function') return;
+    const body = sheet.querySelector('.sheet-body');
+    let opener = null;
+
+    document.querySelectorAll('[data-open-wizard]').forEach(link => {
+      link.addEventListener('click', event => {
+        if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+        event.preventDefault();
+        opener = link;
+        // Hold the hero's height before anything changes, so the page behind does not jump.
+        home.style.minHeight = `${home.offsetHeight}px`;
+        if (link.dataset.service) wizard.preselect?.(link.dataset.service);
+        body.append(card);
+        sheet.showModal();
+        wizard.focusCurrent?.();
+      });
+    });
+    sheet.querySelector('[data-sheet-close]').addEventListener('click', () => sheet.close());
+    sheet.addEventListener('click', event => {
+      if (event.target === sheet) sheet.close();
+    });
+    sheet.addEventListener('close', () => {
+      home.append(card);
+      home.style.minHeight = '';
+      opener?.focus({ preventScroll: true });
+    });
+  }
+
+  // The wizard is the page's action until it scrolls away. Only then do shortcuts appear,
+  // and they step aside again when the closing section carries its own action.
   function initContactShortcuts() {
-    const heroCall = document.getElementById('hero-call');
-    const contact = document.getElementById('kesif');
+    const slot = document.getElementById('teklif-yuva');
+    const closing = document.getElementById('son-adim');
     const dock = document.querySelector('.dock');
     const header = document.querySelector('.site-header');
-    if (!heroCall || !contact || !dock || !header) return;
+    if (!slot || !closing || !dock || !header) return;
     let scheduled = 0;
 
     function update() {
       scheduled = 0;
-      const pastHero = heroCall.getBoundingClientRect().bottom <= 0;
-      const box = contact.getBoundingClientRect();
-      const contactVisible = box.top < window.innerHeight && box.bottom > 0;
+      const pastHero = slot.getBoundingClientRect().bottom <= 0;
+      const box = closing.getBoundingClientRect();
+      const closingVisible = box.top < window.innerHeight && box.bottom > 0;
       header.classList.toggle('is-past-hero', pastHero);
-      dock.hidden = !pastHero || contactVisible;
+      dock.hidden = !pastHero || closingVisible;
     }
     function schedule() {
       if (!scheduled) scheduled = requestAnimationFrame(update);
@@ -153,8 +214,8 @@
 
     if ('IntersectionObserver' in window) {
       const observer = new IntersectionObserver(schedule);
-      observer.observe(heroCall);
-      observer.observe(contact);
+      observer.observe(slot);
+      observer.observe(closing);
     } else {
       window.addEventListener('scroll', schedule, { passive: true });
     }
@@ -163,7 +224,28 @@
     schedule();
   }
 
+  // Long comments are clamped, never rewritten: the full text is one tap away.
+  function initReviewClamp() {
+    document.querySelectorAll('blockquote.review-text').forEach(text => {
+      const lines = parseFloat(getComputedStyle(text).lineHeight) * 6;
+      if (text.scrollHeight <= lines + 2) return;
+      text.classList.add('is-clamped');
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'review-more';
+      button.textContent = 'Devamını oku';
+      button.setAttribute('aria-expanded', 'false');
+      button.addEventListener('click', () => {
+        const open = text.classList.toggle('is-clamped');
+        button.textContent = open ? 'Devamını oku' : 'Daha az göster';
+        button.setAttribute('aria-expanded', String(!open));
+      });
+      text.after(button);
+    });
+  }
+
   initLightbox();
-  initSlider();
+  initSheet(initWizard());
   initContactShortcuts();
+  initReviewClamp();
 })();

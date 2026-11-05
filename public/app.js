@@ -62,29 +62,12 @@
   document.querySelectorAll('[data-contact]').forEach(link => {
     link.addEventListener('click', () => contactEvent(link.dataset.contact, link.dataset.position));
   });
-  document.querySelectorAll('[data-system]').forEach(link => {
-    link.addEventListener('click', () => {
-      const select = document.getElementById('system');
-      if (select) select.value = link.dataset.system;
-    });
-  });
-  document.getElementById('quote-form')?.addEventListener('submit', event => {
-    event.preventDefault();
-    if (!event.currentTarget.reportValidity()) return;
-    const district = document.getElementById('district').value;
-    const system = document.getElementById('system').value;
-    const message = `Merhaba, İzmir ${district} ilçesinde ücretsiz keşif ve fiyat bilgisi almak istiyorum. İlgilendiğim hizmet: ${system}. Bilgi alabilir miyim?`;
-    const url = 'https://wa.me/905423551213?text=' + encodeURIComponent(message);
-    contactEvent('whatsapp', 'quote_form');
-    const status = document.getElementById('form-status');
-    status.replaceChildren(document.createTextNode('WhatsApp açılmazsa '));
-    const fallback = document.createElement('a');
-    fallback.href = url;
-    fallback.target = '_blank';
-    fallback.rel = 'noopener noreferrer';
-    fallback.textContent = 'mesajınızı buradan açın';
-    status.append(fallback, document.createTextNode('. Mesajı WhatsApp’ta sizin göndermeniz gerekir.'));
-    window.open(url, '_blank', 'noopener,noreferrer');
+  // Wizard progress. Step names only: the visitor's service, size and district stay in the browser.
+  document.addEventListener('izmir:funnel', event => {
+    if (!hasTracking || consent !== 'granted') return;
+    const step = event.detail.step;
+    window.dataLayer.push({ event: 'quote_step', quote_step: step });
+    if (ga4Id) gtag('event', 'quote_step', { send_to: ga4Id, quote_step: step });
   });
   const year = document.getElementById('year');
   if (year) year.textContent = String(new Date().getFullYear());

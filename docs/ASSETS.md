@@ -13,15 +13,15 @@ The owner supplied these original photographs on 4 November 2026 for publication
 | cam-bolme-detay | WhatsApp Image 2026-10-17 at 15.52.36.jpeg | Second view of the partition |
 | cam-bolme-ic | WhatsApp Image 2026-10-17 at 15.52.56.jpeg | Inside view of the partition |
 
-Full images have a maximum 1600px edge; older `-sm.webp` files have a maximum 760px edge, newer ones 800px. The corrected installation photograph is 1086 × 1448px. The balcony photograph also has a JPEG social-sharing version. Internet image references were researched, but no third-party contractor images are presented as this business's work. The previous generated hero is retired.
+Full images have a maximum 1600px edge; older `-sm.webp` files have a maximum 760px edge, newer ones 800px. The corrected installation photograph is 1086 × 1448px. The balcony photograph also has a JPEG social-sharing version. No third-party contractor images are presented as this business's work. The previous generated hero is retired.
 
 The previous redesign's `-thumb.webp` previews are retained as 320px-edge WebP derivatives but are not loaded by the restored three-photo hero.
 
 ## Customer reviews
 
-The verified review inventory is retained in `public/reviews-data.js`; the restored simple layout renders the 21 reviews directly in `public/index.html`, including without JavaScript. On 5 November 2026 the complete set of relevant owner-provided screenshots in Downloads was re-audited, including 23 files named `WhatsApp Image 2026-11-04 at 22.54.*.jpeg`. Fourteen previously omitted, distinct full reviews were found, bringing the published selection from seven to **21**. Each included five-star rating was checked visually on that review. The screenshot interface says 25 total, but four older full reviews are not available in the supplied images, so the page uses the actual published count of 21 and does not infer an overall rating.
+The verified review inventory is retained in `public/reviews-data.js`; the page renders the 21 reviews directly in `public/index.html`, including without JavaScript. On 5 November 2026 the complete set of relevant owner-provided screenshots in Downloads was re-audited, including 23 files named `WhatsApp Image 2026-11-04 at 22.54.*.jpeg`. Fourteen previously omitted, distinct full reviews were found, bringing the published selection from seven to **21**. Each included five-star rating was checked visually on that review. The screenshot interface says 25 total, but four older full reviews are not available in the supplied images, so the page uses the actual published count of 21 and does not infer an overall rating.
 
-Original spelling, abbreviated/masked names, service labels and dates are retained. Funda S.’s full comment is reconstructed from two consecutive overlapping screenshots; no missing words are guessed. A partly visible Mustafa B. record is excluded because its full text/rating are unavailable. Fatma T.’s original quote mentions the platform; the source text is preserved without introducing platform branding elsewhere. Project photos are not attributed to individual reviewers without evidence. Long comments can be expanded. The simple layout shows three reviews first; the “18 yorum daha” disclosure makes every included review reachable.
+Original spelling, abbreviated/masked names, service labels and dates are retained. Funda S.’s full comment is reconstructed from two consecutive overlapping screenshots; no missing words are guessed. A partly visible Mustafa B. record is excluded because its full text/rating are unavailable. Fatma T.’s original quote mentions the platform; the source text is preserved without introducing platform branding elsewhere. Project photos are not attributed to individual reviewers without evidence. Long comments can be expanded. The page shows six reviews first; the “15 yorum daha” disclosure makes every included review reachable.
 
 The original seven remain Erdem E., Enes D., Yüksel K., Ömer Mobil Oto Mekanik Servis Ö., Alper K., Dilfuza S. and Zehra Rezzan Ş., from the 16 October screenshots and repeated 4 November screenshots. The 14 added records are:
 
@@ -41,6 +41,27 @@ The original seven remain Erdem E., Enes D., Yüksel K., Ömer Mobil Oto Mekanik
 | Fatma T. | 22.54.52 (1) |
 | Nesrin K. | 22.54.52 |
 | Yunus S. | 22.54.52 |
+
+## Licensed stock photographs
+
+The owner has no finished-job photos of an enclosed balcony, winter garden or pergola, and on 5 November 2026 approved using realistic images from the internet. These are used under the [Unsplash License](https://unsplash.com/license), which allows commercial use without attribution. Each is labelled "Temsili" wherever it appears as a photo and is never presented as this business's work. Replace them as soon as real finished-job photos exist. Do not use them in ads as if they were the owner's own jobs.
+
+| Public stem under `public/assets/stock/` | Source | Photographer |
+| --- | --- | --- |
+| cam-balkon | https://unsplash.com/photos/a-balcony-with-a-view-of-a-city-bgVCbeS9X4w | Lisa Anna |
+| kis-bahcesi | https://unsplash.com/photos/wicker-armchairs-in-sunlit-conservatory-ljX2si20Vek | KAUDIA ESTATE |
+| pergola | https://unsplash.com/photos/black-metal-table-and-chairs-on-green-grass-field-during-daytime-Kwg6xKwBNGA | Florian Schmidinger |
+
+## Crops of owner photographs
+
+Crops only, no retouching. They remove distractions (a broom, a dustpan, water containers) from the frame.
+
+| Public stem under `public/assets/work/` | Cropped from | Removed from frame |
+| --- | --- | --- |
+| villa-kose | villa-surme-genis | Broom in the foreground |
+| villa-detay-crop | villa-surme-detay | Broom and dustpan on the lawn |
+| cam-balkon-usta | cam-balkon-montaj (corrected version) | Water containers and a bin bag |
+| dis-kapi | dograma-uygulamasi | The other two photos in the collage |
 
 ## Typography and vector assets
 

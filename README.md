@@ -12,7 +12,7 @@ Requires Node 22+. No package installation or runtime dependencies.
 
 ```sh
 npm run dev     # http://127.0.0.1:4173
-npm test        # consent and conversion behavior
+npm test        # consent, conversion, page and review checks
 npm run build  # static output in dist/
 ```
 
@@ -20,15 +20,13 @@ Import this repository into Vercel. `vercel.json` specifies the build command an
 
 ## Content and interaction
 
-- One primary click-to-call action in the hero. The call/WhatsApp dock appears only after scrolling past that action and hides while the contact action is visible.
-- Direct WhatsApp links and a district/system message composer. This opens a draft; it does not send a message or save a lead.
-- Free survey offer, concise service information, district selection and accessible native FAQ disclosures.
-- Owner-confirmed pergola and winter garden services appear as secondary links and message-composer options; the hero remains focused on cam balkon and joinery.
-- A manual three-photo hero slider, finished-work gallery and expandable installation photographs. No autoplay.
-- 21 distinct customer reviews transcribed from owner-supplied screenshots: three visible initially and 18 behind a native disclosure. Photo-to-review associations are not invented. The previous blue-and-white design is restored at the owner’s request.
-- Local image/font assets, WebP hero, no third-party dependencies on initial page load.
-- No invented reviews, customer counts, guarantee duration, discounts or installation times.
-- Individual review ratings, categories and dates match the supplied screenshots; no aggregate rating is invented.
+- **One task per screen.** The hero holds one thing to do: a three-tap quote wizard (service, approximate size, district) that opens a ready WhatsApp draft. The phone number stays visible as plain text. Nothing is sent or stored by the site.
+- **CTA rules.** Blue is the page's one action. Green appears only where WhatsApp actually opens. The mobile dock (WhatsApp + phone) appears only after the wizard scrolls away and hides at the closing section. On phones the dock replaces in-flow buttons; on desktop the sticky header button and the price card carry the action. Further-down buttons open the same wizard in a sheet, so visitors keep their place.
+- **Ad landing pages.** `/cam-balkon`, `/kis-bahcesi`, `/pergola` and `/dograma` render from `public/index.html` through `scripts/variants.mjs`, each with its own headline, hero photo, title and a wizard that starts on step 2. Point each ad group at its own page. Edit the page in `index.html`; `npm test` fails if a variant's markers go missing.
+- **Proof.** Selling points are customers' own words, checked against `public/reviews-data.js` by `npm test`. All 21 reviews are published verbatim: 6 first, 15 behind a native disclosure.
+- **Photos.** Stock photos carry a visible "Temsili" label. The "Yaptığımız işlerden" gallery holds only the owner's own work; a test enforces this.
+- Local image and font assets, no third-party dependencies on initial page load.
+- No invented reviews, customer counts, guarantee durations, discounts, response times or installation times. No aggregate rating is invented.
 
 ## GetSidely measurement
 

@@ -19,10 +19,23 @@ The site is the acquisition destination. GetSidely manages the connected Google 
 | --- | --- | --- |
 | `phone_click` | Visitor opened a telephone link | Answered call, qualified lead, sale |
 | `whatsapp_click` | Visitor opened WhatsApp or a message draft | Message sent, response, qualified lead |
+| `quote_step` | Visitor answered a wizard question | Any contact at all |
 
-CTA position is `header`, `hero`, `process`, `contact`, `closing`, `mobile_sticky`, or `quote_form`. The form district and system are not included in analytics events. The page does not collect names, visitor phone numbers or addresses.
+CTA position is `header`, `wizard`, `faq`, `closing`, or `mobile_sticky`. Wizard progress reaches analytics as `quote_step` (`service`, `size`, `district`), which shows where visitors drop out; treat it as a diagnostic, not a conversion. The chosen service, size and district are not included in analytics events. The page does not collect names, visitor phone numbers or addresses.
 
 For real pilot evaluation, keep a separate lead outcome log: enquiry date, channel, district, qualified/not qualified, survey booked/completed, quote, sale and value. Do not put personal lead information in this public repository. Import verified outcomes into Google Ads only once a suitable consent/attribution and CRM process is established. Sidely should optimize using confirmed business outcomes; button clicks are early funnel diagnostics.
+
+## Ad destinations
+
+Send each ad group to the page that matches it. The headline, hero photo and first wizard step follow the page.
+
+| Ad group | Final URL |
+| --- | --- |
+| Cam balkon, balkon kapatma | https://izmirbalkon.com/cam-balkon |
+| Kış bahçesi | https://izmirbalkon.com/kis-bahcesi |
+| Pergola | https://izmirbalkon.com/pergola |
+| PVC, alüminyum doğrama, pencere | https://izmirbalkon.com/dograma |
+| Brand or mixed | https://izmirbalkon.com/ |
 
 ## Research used for page structure
 
@@ -32,3 +45,10 @@ Reviewed on 4 November 2026. These are competitive observations, not claims abou
 - https://dcmyapi.com.tr/hizmetler/cam-balkon/katlanir-cam-balkon/ — WhatsApp photo request and system explanation.
 - https://izmircambalkon.org/ — direct phone access and free survey offer.
 - https://developers.google.com/tag-platform/security/guides/consent — consent-controlled Google tag loading.
+
+Reviewed again on 5 November 2026 at phone width. Observations only, not claims about İzmir Balkon:
+
+- İzmir: https://www.brkcambalkon.com/, https://www.karatascambalkon.com.tr/, https://www.izmirbioclimatic.com/, https://izmircambalkon.org/, https://www.bioclimaticpergola.com.tr/cam-balkon/.
+- National: https://www.realcambalkon.com/izmir-kis-bahcesi/, https://altaycambalkon.com/, https://www.eraycam.com.tr/hesaplama.html.
+- Common pattern: 4 to 6 phone and WhatsApp buttons in the first screen, and forms of 5 to 8 fields. Most also advertise 2 to 5 year warranties and some publish TL prices; İzmir Balkon has neither confirmed, so the page claims neither.
+- Used as openings: one task on the first screen, a three-tap draft instead of a long form, customers' own words as selling points, and answering the apartment-permission worry raised by 2026 news coverage of court-ordered removals.
