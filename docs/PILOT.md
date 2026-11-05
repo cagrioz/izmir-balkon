@@ -2,7 +2,7 @@
 
 ## Scope and current state
 
-The site is the acquisition destination. GetSidely manages the connected Google Ads account separately. No campaign has been created, enabled or funded by this repository. No Sidely API key or Google Ads credential is embedded. Live conversion measurement is off until the actual public tag ID and action labels are supplied.
+The site is the acquisition destination. GetSidely manages the connected Google Ads account separately. No campaign has been created, enabled or funded by this repository. No Sidely API key or Google Ads credential is embedded. The owner-supplied Google Ads base tag is configured in public/tracking-config.js and loads after opt-in. Conversion action labels remain blank; no click conversion is sent until they are configured. GA4 is off.
 
 ## Activation
 
@@ -75,7 +75,7 @@ Wizard WhatsApp (`data-position="wizard"`) and phone clicks are **primary intent
 
 `ad_user_data` and `ad_personalization` remain `denied` after measurement consent. Do not change either without owner approval. Google's [consent reference](https://support.google.com/google-ads/answer/13802165?hl=en) states that ad-user-data consent affects tag-based measurement and click-ID exports. A local `gtag` command or successful request does not prove Google Ads recorded an attributed conversion. Tag Assistant/account-side acceptance remains a separate required check.
 
-Public IDs are still blank until genuine account-generated IDs are available. No fake test identifiers are shipped in the live config. The owner has not supplied a legal name, address, public profiles, Search Console or Bing verification tokens and authorized proceeding with the basic trade name “İzmir Balkon”. Identity expansion is deferred; do not call that trade name a verified legal identity or invent an address/sameAs/token.
+The genuine base tag ID supplied by the owner is configured; action labels and GA4 remain blank. No fake test identifiers are shipped in the live config. The owner has not supplied a legal name, address, public profiles, Search Console or Bing verification tokens and authorized proceeding with the basic trade name “İzmir Balkon”. Identity expansion is deferred; do not call that trade name a verified legal identity or invent an address/sameAs/token.
 
 Campaign drafts and length checks are in [ads/README.md](ads/README.md). The outcome template is [lead-log-template.csv](lead-log-template.csv): keep only date, channel, district, qualified, survey_booked, quote, sale, value. Use YYYY-MM-DD, yes/no/unknown, and TRY for value; keep unfilled rows blank, not fabricated examples. Completed logs belong in a private operational system, never this public repo. The owner must choose budget, bid cap, contact hours and who handles enquiries.
 
@@ -94,4 +94,4 @@ On 5 November 2026, Turkey is not listed in Google's [supported forwarding-numbe
 
 ## Account setup and promotion status
 
-A new-account onboarding record was reached under the requested Google login; setup has not yet been confirmed complete. No campaign was created or funded. The shown account-specific offer was “spend TRY8,000, get TRY8,000”, pending confirmation at payment, for new advertisers only. The separate 65,000 TL marketing offer was not verified for this account. No promotional terms were accepted or budget committed. Confirm actual eligibility, qualifying spend, deadline and activation with the owner before claiming an offer.
+The owner completed further onboarding and supplied the Google Ads base tag. The screen now says ads will go live after review; campaign status must be checked in the account. The agent has not created, enabled or funded a campaign. The shown account-specific offer was “spend TRY8,000, get TRY8,000”, pending confirmation at payment, for new advertisers only. The separate 65,000 TL marketing offer was not verified for this account. No promotional terms were accepted or budget committed. Confirm actual eligibility, qualifying spend, deadline and activation with the owner before claiming an offer.
