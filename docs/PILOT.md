@@ -2,7 +2,7 @@
 
 ## Scope and current state
 
-The site is the acquisition destination. GetSidely manages the connected Google Ads account separately. No campaign has been created, enabled or funded by this repository. No Sidely API key or Google Ads credential is embedded. The owner-supplied Google Ads base tag is configured in public/tracking-config.js and loads after opt-in. Conversion action labels remain blank; no click conversion is sent until they are configured. GA4 is off.
+The site is the acquisition destination. GetSidely manages the connected Google Ads account separately. No campaign has been created, enabled or funded by this repository. No Sidely API key or Google Ads credential is embedded. The owner-supplied Google Ads base tag is configured in public/tracking-config.js and loads after opt-in. Three real conversion action labels are configured: phone and wizard WhatsApp primary, other WhatsApp secondary. Each uses Count=One and zero monetary value. GA4 is off.
 
 ## Activation
 
@@ -75,7 +75,7 @@ Wizard WhatsApp (`data-position="wizard"`) and phone clicks are **primary intent
 
 `ad_user_data` and `ad_personalization` remain `denied` after measurement consent. Do not change either without owner approval. Google's [consent reference](https://support.google.com/google-ads/answer/13802165?hl=en) states that ad-user-data consent affects tag-based measurement and click-ID exports. A local `gtag` command or successful request does not prove Google Ads recorded an attributed conversion. Tag Assistant/account-side acceptance remains a separate required check.
 
-The genuine base tag ID supplied by the owner is configured; action labels and GA4 remain blank. No fake test identifiers are shipped in the live config. The owner has not supplied a legal name, address, public profiles, Search Console or Bing verification tokens and authorized proceeding with the basic trade name “İzmir Balkon”. Identity expansion is deferred; do not call that trade name a verified legal identity or invent an address/sameAs/token.
+The genuine base tag ID supplied by the owner is configured; the three action labels are configured and GA4 remains blank. No fake test identifiers are shipped in the live config. The owner has not supplied a legal name, address, public profiles, Search Console or Bing verification tokens and authorized proceeding with the basic trade name “İzmir Balkon”. Identity expansion is deferred; do not call that trade name a verified legal identity or invent an address/sameAs/token.
 
 Campaign drafts and length checks are in [ads/README.md](ads/README.md). The outcome template is [lead-log-template.csv](lead-log-template.csv): keep only date, channel, district, qualified, survey_booked, quote, sale, value. Use YYYY-MM-DD, yes/no/unknown, and TRY for value; keep unfilled rows blank, not fabricated examples. Completed logs belong in a private operational system, never this public repo. The owner must choose budget, bid cap, contact hours and who handles enquiries.
 
@@ -95,3 +95,7 @@ On 5 November 2026, Turkey is not listed in Google's [supported forwarding-numbe
 ## Account setup and promotion status
 
 The owner completed further onboarding and supplied the Google Ads base tag. The screen now says ads will go live after review; campaign status must be checked in the account. The agent has not created, enabled or funded a campaign. The shown account-specific offer was “spend TRY8,000, get TRY8,000”, pending confirmation at payment, for new advertisers only. The separate 65,000 TL marketing offer was not verified for this account. No promotional terms were accepted or budget committed. Confirm actual eligibility, qualifying spend, deadline and activation with the owner before claiming an offer.
+
+## Account activation update
+
+The three website Contact actions were created in Google Ads. Phone and wizard WhatsApp are primary; other WhatsApp is secondary. Count is One; value is zero (intent is not revenue). Enhanced conversions remain off. The account overview showed zero campaigns; no campaign was created, enabled or funded by the agent. The promotion card shows 8,000 TRY qualifying spend by 4 January 2027 for 8,000 TRY credit, not an unconditional credit. Account-side conversion attribution remains unverified until real consented traffic and Tag Assistant testing.

@@ -2,7 +2,7 @@
 window.IZMIR_TRACKING = Object.freeze({
   googleAdsId: 'AW-18558387167',
   ga4Id: '',
-  callClickLabel: '',
-  wizardWhatsappClickLabel: '', // Primary: completed wizard opens a WhatsApp draft.
-  whatsappClickLabel: '' // Secondary: other WhatsApp links.
+  callClickLabel: 'xDOhCJm957IdEN-HqpFF',
+  wizardWhatsappClickLabel: '-YgNCJy957IdEN-HqpFF', // Primary: completed wizard opens a WhatsApp draft.
+  whatsappClickLabel: 'kPp-CJ-957IdEN-HqpFF' // Secondary: other WhatsApp links.
 });

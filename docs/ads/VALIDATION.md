@@ -19,3 +19,7 @@ These are desktop browser viewport checks, not physical iPhone/Android tests. Th
 Public IDs remain empty. Account onboarding is incomplete; no campaign was created, enabled or funded. Consequently real Tag Assistant conversion registration with ad_user_data=denied, consent network checks with real tags, and tags-on LCP/CLS measurements remain **unverified**. Do not activate ads based on the local stub checks. Keep enhanced conversions off unless the owner explicitly approves a privacy-policy change.
 
 Legal identity/address, profiles and verification tokens were not supplied; none were invented. The campaign pack excludes unproven 15+/200+ claims, but the existing website still contains them. Obtain evidence or revise the canonical facts and related tests before launch.
+
+## Subsequent activation
+
+The owner supplied the genuine base tag and completed onboarding. The three action labels are now configured in public/tracking-config.js. Account settings: phone and wizard WhatsApp primary, other WhatsApp secondary; One; zero value; enhanced conversions off. The earlier empty-ID blocker is resolved. Actual attributed conversion registration and tags-on LCP/CLS still require verification; do not interpret the unit tests as that verification.

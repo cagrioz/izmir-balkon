@@ -42,7 +42,7 @@ Content lives in `scripts/facts.mjs` and `public/reviews-data.js`. Templates liv
 
 ## GetSidely measurement
 
-The Google Ads base tag is configured and loads only after consent. **Conversion action labels are still pending; GA4 is not configured.** See [docs/PILOT.md](docs/PILOT.md) for the activation steps and what counts as a conversion. Do not tell Sidely that a button click is a qualified lead or a sale.
+The Google Ads base tag is configured and loads only after consent. Phone and wizard WhatsApp clicks are primary conversion actions; other WhatsApp clicks are secondary. GA4 is not configured. See [docs/PILOT.md](docs/PILOT.md) for the activation steps and what counts as a conversion. Do not tell Sidely that a button click is a qualified lead or a sale.
 
 Set public IDs only in `public/tracking-config.js`. Google scripts load only after opt-in. Never commit credentials, developer tokens, customer lists, or `.env` files.
 
