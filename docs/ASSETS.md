@@ -15,9 +15,32 @@ The owner supplied these original photographs on 4 November 2026 for publication
 
 Full images have a maximum 1600px edge; older `-sm.webp` files have a maximum 760px edge, newer ones 800px. The corrected installation photograph is 1086 × 1448px. The balcony photograph also has a JPEG social-sharing version. Internet image references were researched, but no third-party contractor images are presented as this business's work. The previous generated hero is retired.
 
+The manual hero's `-thumb.webp` previews are 320px-edge WebP derivatives of those same assets, with no content changes, so the thumbnail strip does not download multiple full-size images at page load.
+
 ## Customer reviews
 
-Transcribed from owner-supplied Armut screenshots dated 16 October 2026 (files 20.30.02, 20.30.02 (1), (2), (3), and 20.30.03). Each displayed rating of five stars is visible on that individual review. Names remain as abbreviated in the source. Service categories and review dates are preserved. Long quotes use disclosed excerpts with an expandable full text. These reviews cover windows, glass replacement and flyscreens; they are not represented as cam balkon reviews. No aggregate rating is inferred from the selection or the screenshot's total review count. The owner requested removal of public Armut branding. Source attribution is retained here. A further screenshot received on 5 November adds the Ömer Mobil Oto Mekanik Servis Ö. review (30 September 2026, Pimapen Pencere, 5 stars), making seven distinct full reviews. The repeated Enes review was not duplicated. The screenshot total is 25, but no claims about the unseen ratings or an overall average are made. Work photos are not attached to named reviews because their correspondence is unverified.
+Review data is in `public/reviews-data.js`. On 5 November 2026 the complete set of relevant owner-provided screenshots in Downloads was re-audited, including 23 files named `WhatsApp Image 2026-11-04 at 22.54.*.jpeg`. Fourteen previously omitted, distinct full reviews were found, bringing the published selection from seven to **21**. Each included five-star rating was checked visually on that review. The screenshot interface says 25 total, but four older full reviews are not available in the supplied images, so the page uses the actual published count of 21 and does not infer an overall rating.
+
+Original spelling, abbreviated/masked names, service labels and dates are retained. Funda S.’s full comment is reconstructed from two consecutive overlapping screenshots; no missing words are guessed. A partly visible Mustafa B. record is excluded because its full text/rating are unavailable. Fatma T.’s original quote mentions the platform; the source text is preserved without introducing platform branding elsewhere. Project photos are not attributed to individual reviewers without evidence. Long comments can be expanded, and service filters/show-all make every included review reachable.
+
+The original seven remain Erdem E., Enes D., Yüksel K., Ömer Mobil Oto Mekanik Servis Ö., Alper K., Dilfuza S. and Zehra Rezzan Ş., from the 16 October screenshots and repeated 4 November screenshots. The 14 added records are:
+
+| Reviewer | Source screenshot time suffix on 4 November 2026 |
+| --- | --- |
+| Mustafa Kürşat A. | 22.54.55 (7) |
+| Emir A. | 22.54.55 (7) |
+| a **** | 22.54.55 (5) |
+| Dilek A. | 22.54.55 (4) |
+| Metin B. | 22.54.55 (3) |
+| Ebru C. | 22.54.55 |
+| Özkan K. | 22.54.54 (2) |
+| Funda S. | 22.54.54 (2) + 22.54.53 (1) |
+| Buse D. | 22.54.53 (1) |
+| Eda S. | 22.54.53 |
+| Hüseyin Kurt k. | 22.54.52 (2) |
+| Fatma T. | 22.54.52 (1) |
+| Nesrin K. | 22.54.52 |
+| Yunus S. | 22.54.52 |
 
 ## Typography and vector assets
 

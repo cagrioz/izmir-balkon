@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#0b1b33">
+  <meta name="theme-color" content="#10211f">
   <title>İzmir Cam Balkon ve Doğrama | Ücretsiz Keşif · İzmir Balkon</title>
   <meta name="description" content="İzmir’de cam balkon ve PVC, alüminyum doğrama. Ücretsiz keşif ve ölçünüze özel teklif için 0542 355 12 13’ü arayın veya WhatsApp’tan yazın.">
   <link rel="canonical" href="https://izmirbalkon.com/">
@@ -20,10 +20,12 @@
   <meta name="twitter:card" content="summary_large_image">
   <link rel="preload" href="/assets/dm-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/assets/dm-sans-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" as="image" href="/assets/work/villa-surme-genis.webp" imagesrcset="/assets/work/villa-surme-genis-sm.webp 800w, /assets/work/villa-surme-genis.webp 1589w" imagesizes="(min-width: 56.25rem) 60vw, 100vw" fetchpriority="high">
+  <link rel="preload" as="image" href="/assets/work/villa-surme-genis.webp" imagesrcset="/assets/work/villa-surme-genis-sm.webp 800w, /assets/work/villa-surme-genis.webp 1589w" imagesizes="(min-width: 56.25rem) 58vw, 100vw" fetchpriority="high">
   <link rel="stylesheet" href="/styles.css">
+  <noscript><style>.slider-thumbs { display: none; } .slider { grid-template-columns: minmax(0, 1fr) !important; }</style></noscript>
   <script src="/tracking-config.js" defer></script>
   <script src="/app.js" defer></script>
+  <script src="/reviews-data.js" defer></script>
   <script src="/ui.js" defer></script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"HomeAndConstructionBusiness","name":"İzmir Balkon","url":"https://izmirbalkon.com/","telephone":"+905423551213","areaServed":{"@type":"City","name":"İzmir"},"description":"İzmir’de cam balkon ve doğrama hizmeti, ücretsiz keşif.","image":"https://izmirbalkon.com/assets/work/villa-surme-genis.jpg"}</script>
 </head>
@@ -38,10 +40,11 @@
     <symbol id="i-chevron-left" viewBox="0 0 24 24"><path d="m15 6-6 6 6 6"/></symbol>
     <symbol id="i-chevron-right" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></symbol>
     <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+    <symbol id="i-expand" viewBox="0 0 24 24"><path d="M14 4h6v6M10 20H4v-6M20 4l-7 7M4 20l7-7"/></symbol>
     <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 2.6 2.9 5.9 6.5.95-4.7 4.6 1.1 6.5L12 17.5l-5.8 3.05 1.1-6.5-4.7-4.6 6.5-.95L12 2.6Z"/></symbol>
   </defs></svg>
 
-  <header class="site-header">
+  <header class="site-header on-dark">
     <div class="wrap header-inner">
       <a class="brand" href="#" aria-label="İzmir Balkon ana sayfa"><img src="/assets/logo.svg" alt="" width="36" height="36"><span>izmir<span class="brand-light">balkon</span></span></a>
       <nav class="header-nav" aria-label="Ana menü">
@@ -58,188 +61,243 @@
   </header>
 
   <main id="icerik">
-    <section class="hero" aria-labelledby="hero-title">
+    <section class="hero on-dark" aria-labelledby="hero-title">
+      <h1 id="hero-title"><span class="hero-place">İzmir’de</span> <span class="hero-line">cam balkon</span> <span class="hero-line">ve doğrama</span></h1>
+
       <div class="hero-copy">
-        <h1 id="hero-title"><span class="hero-place">İzmir’de</span> <span class="hero-line">cam balkon</span> <span class="hero-line">ve doğrama</span></h1>
-        <p class="hero-lead">Ücretsiz keşifte yerinde ölçü alır, uygun sistemi anlatır, ölçünüze göre net teklif veririz.</p>
+        <p class="hero-lead">Yerinde ölçü alır, uygun sistemi anlatır, ölçünüze göre net teklif veririz.</p>
         <a id="hero-call" class="btn-call" href="tel:+905423551213" data-contact="phone" data-position="hero">
           <svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg>
           <span><small>Ücretsiz keşif için arayın</small><strong>0542 355 12 13</strong></span>
-        </a>
-        <a class="hero-reviews" href="#yorumlar">
-          <span class="stars" aria-hidden="true"><svg class="star"><use href="#i-star"/></svg><svg class="star"><use href="#i-star"/></svg><svg class="star"><use href="#i-star"/></svg><svg class="star"><use href="#i-star"/></svg><svg class="star"><use href="#i-star"/></svg></span>
-          <span>Müşteri yorumlarını okuyun</span>
         </a>
       </div>
 
       <div class="slider" data-slider role="group" aria-roledescription="carousel" aria-label="Uygulamalarımızdan fotoğraflar">
         <div class="slider-frame">
-          <div class="slider-slide slide-villa" role="group" aria-roledescription="slide" aria-label="1 / 3" data-title="Sürme doğrama" data-note="Tamamlanmış villa uygulaması">
-            <img src="/assets/work/villa-surme-genis.webp" srcset="/assets/work/villa-surme-genis-sm.webp 800w, /assets/work/villa-surme-genis.webp 1589w" sizes="(min-width: 56.25rem) 60vw, 100vw" width="1589" height="990" fetchpriority="high" alt="Çimenli bahçeye bakan villanın köşesinde koyu çerçeveli, geniş sürme doğrama camları; camlarda gökyüzü ve palmiyeler yansıyor">
+          <div class="slider-slide slide-villa" role="group" aria-roledescription="slide" aria-label="1 / 5" data-title="Sürme doğrama, villa" data-note="Tamamlanmış iş" data-full="/assets/work/villa-surme-genis.webp">
+            <img src="/assets/work/villa-surme-genis.webp" srcset="/assets/work/villa-surme-genis-sm.webp 800w, /assets/work/villa-surme-genis.webp 1589w" sizes="(min-width: 56.25rem) 58vw, 100vw" width="1589" height="990" fetchpriority="high" alt="Çimenli bahçeye bakan villanın köşesinde koyu çerçeveli, geniş sürme doğrama camları; camlarda gökyüzü ve palmiyeler yansıyor">
           </div>
-          <div class="slider-slide slide-balkon" role="group" aria-roledescription="slide" aria-label="2 / 3" data-title="Cam balkon" data-note="Çerçevesiz cam, montaj sırasında" hidden>
-            <img src="/assets/work/cam-balkon-montaj.webp" srcset="/assets/work/cam-balkon-montaj-sm.webp 570w, /assets/work/cam-balkon-montaj.webp 1086w" sizes="(min-width: 56.25rem) 60vw, 100vw" width="1086" height="1448" loading="lazy" decoding="async" alt="Lacivert tişörtlü usta, çerçevesiz cam balkonun üst kısmında elini uzatmış ayar yapıyor">
+          <div class="slider-slide slide-balkon" role="group" aria-roledescription="slide" aria-label="2 / 5" data-title="Cam balkon" data-note="Çerçevesiz sistem, montaj sırasında" data-full="/assets/work/cam-balkon-montaj.webp" hidden>
+            <img src="/assets/work/cam-balkon-montaj.webp" srcset="/assets/work/cam-balkon-montaj-sm.webp 570w, /assets/work/cam-balkon-montaj.webp 1086w" sizes="(min-width: 56.25rem) 58vw, 100vw" width="1086" height="1448" loading="lazy" decoding="async" alt="Lacivert tişörtlü usta, çerçevesiz cam balkonun üst kısmında elini uzatmış ayar yapıyor">
           </div>
-          <div class="slider-slide slide-bolme" role="group" aria-roledescription="slide" aria-label="3 / 3" data-title="Alüminyum cam bölme" data-note="Tamamlanmış iç mekân uygulaması" hidden>
-            <img src="/assets/work/cam-bolme-tamam.webp" srcset="/assets/work/cam-bolme-tamam-sm.webp 600w, /assets/work/cam-bolme-tamam.webp 1200w" sizes="(min-width: 56.25rem) 60vw, 100vw" width="1200" height="1600" loading="lazy" decoding="async" alt="Koyu alüminyum çerçeveli, camlı kapısı olan köşe cam bölme; içinde uzun masalar ve sandalyeler görünüyor">
+          <div class="slider-slide slide-bolme" role="group" aria-roledescription="slide" aria-label="3 / 5" data-title="Alüminyum cam bölme" data-note="Tamamlanmış iç mekân uygulaması" data-full="/assets/work/cam-bolme-tamam.webp" hidden>
+            <img src="/assets/work/cam-bolme-tamam.webp" srcset="/assets/work/cam-bolme-tamam-sm.webp 600w, /assets/work/cam-bolme-tamam.webp 1200w" sizes="(min-width: 56.25rem) 58vw, 100vw" width="1200" height="1600" loading="lazy" decoding="async" alt="Koyu alüminyum çerçeveli, camlı kapısı olan köşe cam bölme; içinde uzun masalar ve sandalyeler görünüyor">
           </div>
+          <div class="slider-slide slide-detay" role="group" aria-roledescription="slide" aria-label="4 / 5" data-title="Sürme doğrama detayı" data-note="Villa, kasa ve sineklik detayı" data-full="/assets/work/villa-surme-detay.webp" hidden>
+            <img src="/assets/work/villa-surme-detay.webp" srcset="/assets/work/villa-surme-detay-sm.webp 450w, /assets/work/villa-surme-detay.webp 900w" sizes="(min-width: 56.25rem) 58vw, 100vw" width="900" height="1600" loading="lazy" decoding="async" alt="Koyu çerçeveli sürme doğramanın yakından görünümü; solda geniş cam, sağda sineklik kanadı">
+          </div>
+          <div class="slider-slide slide-korkuluk" role="group" aria-roledescription="slide" aria-label="5 / 5" data-title="Cam korkuluk" data-note="İç mekân uygulaması" data-full="/assets/work/cam-korkuluk.webp" hidden>
+            <img src="/assets/work/cam-korkuluk.webp" srcset="/assets/work/cam-korkuluk-sm.webp 600w, /assets/work/cam-korkuluk.webp 1200w" sizes="(min-width: 56.25rem) 58vw, 100vw" width="1200" height="1600" loading="lazy" decoding="async" alt="Karşılama alanının yanında ince koyu profilli, köşeli şeffaf cam korkuluk">
+          </div>
+          <button class="slider-btn slider-expand" type="button" data-slider-expand aria-label="Fotoğrafı büyüt" hidden><svg class="icon" aria-hidden="true"><use href="#i-expand"/></svg></button>
           <div class="slider-controls" hidden>
             <button class="slider-btn" type="button" data-slider-prev aria-label="Önceki fotoğraf"><svg class="icon" aria-hidden="true"><use href="#i-chevron-left"/></svg></button>
-            <span class="slider-counter" aria-hidden="true">01 / 03</span>
+            <span class="slider-counter" aria-hidden="true">01 / 05</span>
             <button class="slider-btn" type="button" data-slider-next aria-label="Sonraki fotoğraf"><svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button>
           </div>
         </div>
-        <p class="slider-caption" aria-live="polite" aria-atomic="true"><span class="sr-only" data-slider-position></span><strong data-slider-title>Sürme doğrama</strong> <span data-slider-note>Tamamlanmış villa uygulaması</span></p>
+        <div class="slider-thumbs">
+          <button class="thumb thumb-villa" type="button" data-slider-thumb aria-current="true" aria-label="Fotoğraf 1: Sürme doğrama, villa"><img src="/assets/work/villa-surme-genis-thumb.webp" width="320" height="199" loading="lazy" decoding="async" alt=""><span class="thumb-text"><strong>Sürme doğrama</strong><small>Villa</small></span></button>
+          <button class="thumb thumb-balkon" type="button" data-slider-thumb aria-label="Fotoğraf 2: Cam balkon, montaj sırasında"><img src="/assets/work/cam-balkon-montaj-thumb.webp" width="240" height="320" loading="lazy" decoding="async" alt=""><span class="thumb-text"><strong>Cam balkon</strong><small>Montaj sırasında</small></span></button>
+          <button class="thumb thumb-bolme" type="button" data-slider-thumb aria-label="Fotoğraf 3: Alüminyum cam bölme"><img src="/assets/work/cam-bolme-tamam-thumb.webp" width="240" height="320" loading="lazy" decoding="async" alt=""><span class="thumb-text"><strong>Cam bölme</strong><small>İç mekân</small></span></button>
+          <button class="thumb thumb-detay" type="button" data-slider-thumb aria-label="Fotoğraf 4: Sürme doğrama detayı, aynı villa"><img src="/assets/work/villa-surme-detay-thumb.webp" width="180" height="320" loading="lazy" decoding="async" alt=""><span class="thumb-text"><strong>Sürme detayı</strong><small>Aynı villa</small></span></button>
+          <button class="thumb thumb-korkuluk" type="button" data-slider-thumb aria-label="Fotoğraf 5: Cam korkuluk, cam bölmeyle aynı mekân"><img src="/assets/work/cam-korkuluk-thumb.webp" width="240" height="320" loading="lazy" decoding="async" alt=""><span class="thumb-text"><strong>Cam korkuluk</strong><small>Cam bölmeyle aynı mekân</small></span></button>
+        </div>
+        <p class="slider-caption" aria-live="polite" aria-atomic="true"><span class="sr-only" data-slider-position></span><strong data-slider-title>Sürme doğrama, villa</strong> <span data-slider-note>Tamamlanmış iş</span></p>
       </div>
+
+      <a class="hero-proof" href="#yorumlar">
+        <span class="stars" role="img" aria-label="5 üzerinden 5 yıldız"><svg class="star" aria-hidden="true"><use href="#i-star"/></svg><svg class="star" aria-hidden="true"><use href="#i-star"/></svg><svg class="star" aria-hidden="true"><use href="#i-star"/></svg><svg class="star" aria-hidden="true"><use href="#i-star"/></svg><svg class="star" aria-hidden="true"><use href="#i-star"/></svg></span>
+        <span class="hero-proof-quote">“Ölçüler tam oturdu, kapı ve pencereler çok rahat çalışıyor …” Enes D.</span>
+        <span class="hero-proof-link" data-reviews-link>Müşteri yorumlarını okuyun</span>
+      </a>
+
+      <dl class="hero-facts">
+        <div><dt>Keşif</dt><dd>Ücretsiz</dd></div>
+        <div><dt>Bölge</dt><dd>İzmir’in 30 ilçesi</dd></div>
+        <div><dt>Teklif</dt><dd>Ölçünüze özel</dd></div>
+      </dl>
     </section>
 
-    <section id="sistemler" class="section section-gray" aria-labelledby="services-title">
+    <section id="sistemler" class="section" aria-labelledby="services-title">
       <div class="wrap">
         <div class="section-head">
-          <h2 id="services-title">Size uygun sistemi birlikte seçelim.</h2>
+          <h2 id="services-title">Cam balkon ve doğrama çözümleri</h2>
+          <p>Hangi sistemin uygun olduğuna keşifte birlikte bakarız.</p>
         </div>
         <div class="services">
-          <div class="service-group">
-            <h3>Cam balkon</h3>
-            <a class="service" href="#kesif" data-system="Katlanır cam balkon">
-              <span><strong>Katlanır cam balkon</strong><small>Kanatlar yana toplanır, balkon açık kalır.</small></span>
-              <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg>
-            </a>
-            <a class="service" href="#kesif" data-system="Sürme cam balkon">
-              <span><strong>Sürme cam balkon</strong><small>Paneller ray üzerinde kayar, içeride yer kaplamaz.</small></span>
-              <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg>
-            </a>
-          </div>
-          <div class="service-group">
-            <h3>Doğrama</h3>
-            <a class="service" href="#kesif" data-system="PVC doğrama">
-              <span><strong>PVC doğrama</strong><small>Pencere ve kapı, sineklik, cam değişimi.</small></span>
-              <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg>
-            </a>
-            <a class="service" href="#kesif" data-system="Alüminyum doğrama">
-              <span><strong>Alüminyum doğrama</strong><small>Sürme sistemler, mağaza girişleri, cam bölmeler.</small></span>
-              <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg>
-            </a>
+          <article class="svc svc-balkon">
+            <div class="svc-photo">
+              <img src="/assets/work/cam-balkon-montaj.webp" srcset="/assets/work/cam-balkon-montaj-sm.webp 570w, /assets/work/cam-balkon-montaj.webp 1086w" sizes="(min-width: 56.25rem) 48vw, 100vw" width="1086" height="1448" loading="lazy" decoding="async" alt="Usta, çerçevesiz cam balkonun üst kısmında ayar yapıyor">
+              <span class="svc-tag">Cam balkon montajı</span>
+            </div>
+            <div class="svc-body on-dark">
+              <h3>Cam balkon</h3>
+              <a class="svc-link" href="#kesif" data-system="Katlanır cam balkon">
+                <span><strong>Katlanır cam balkon</strong><small>Kanatlar yana toplanır, balkon açık kalır.</small></span>
+                <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg>
+              </a>
+              <a class="svc-link" href="#kesif" data-system="Sürme cam balkon">
+                <span><strong>Sürme cam balkon</strong><small>Paneller ray üzerinde kayar, içeride yer kaplamaz.</small></span>
+                <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg>
+              </a>
+            </div>
+          </article>
+
+          <article class="svc svc-dograma">
+            <div class="svc-photo tile-crop crop-door">
+              <img src="/assets/work/dograma-uygulamasi.webp" srcset="/assets/work/dograma-uygulamasi-sm.webp 427w, /assets/work/dograma-uygulamasi.webp 828w" sizes="(min-width: 56.25rem) 48vw, 100vw" width="828" height="1472" loading="lazy" decoding="async" alt="Koyu çerçeveli, çift kanatlı camlı dış kapı">
+              <span class="svc-tag">Dış kapı doğraması</span>
+            </div>
+            <div class="svc-body on-dark">
+              <h3>PVC ve alüminyum doğrama</h3>
+              <a class="svc-link" href="#kesif" data-system="PVC doğrama">
+                <span><strong>PVC doğrama</strong><small>Pencere ve kapı, sineklik, cam değişimi.</small></span>
+                <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg>
+              </a>
+              <a class="svc-link" href="#kesif" data-system="Alüminyum doğrama">
+                <span><strong>Alüminyum doğrama</strong><small>Sürme sistemler, mağaza girişleri, cam bölmeler.</small></span>
+                <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg>
+              </a>
+            </div>
+          </article>
+
+          <a class="svc-mini" href="#kesif" data-system="Alüminyum doğrama">
+            <span class="svc-mini-photo svc-mini-bolme"><img src="/assets/work/cam-bolme-tamam-sm.webp" width="600" height="800" loading="lazy" decoding="async" alt="Koyu alüminyum çerçeveli köşe cam bölme"></span>
+            <span class="svc-mini-text"><strong>Alüminyum cam bölme</strong><small>İç mekân ve iş yerleri</small></span>
+          </a>
+          <a class="svc-mini" href="#kesif" data-system="Cam değişimi veya sineklik">
+            <span class="svc-mini-photo svc-mini-detay"><img src="/assets/work/villa-surme-detay-sm.webp" width="450" height="800" loading="lazy" decoding="async" alt="Sürme doğramanın kasası ve sineklik kanadı"></span>
+            <span class="svc-mini-text"><strong>Cam değişimi ve sineklik</strong><small>Mevcut doğramanız için</small></span>
+          </a>
+        </div>
+
+        <div id="ek-hizmetler" class="service-addon">
+          <p>Teras ve bahçeniz için ayrıca</p>
+          <div class="service-addon-links">
+            <a href="#kesif" data-system="Pergola">Pergola<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+            <a href="#kesif" data-system="Kış bahçesi">Kış bahçesi<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
           </div>
         </div>
-        <p id="ek-hizmetler" class="service-addon">Teras ve bahçeniz için <a href="#kesif" data-system="Pergola">pergola</a> ve <a href="#kesif" data-system="Kış bahçesi">kış bahçesi</a> uygulamaları da yapıyoruz.</p>
       </div>
     </section>
 
-    <section id="uygulamalar" class="section" aria-labelledby="gallery-title">
+    <section id="uygulamalar" class="section section-ink on-dark" aria-labelledby="gallery-title">
       <div class="wrap">
         <div class="section-head">
           <h2 id="gallery-title">Yaptığımız işler</h2>
-          <p>Kendi uygulamalarımızdan fotoğraflar. Büyütmek için fotoğrafa dokunun.</p>
+          <p>Uygulamalarımızdan kareler. Büyütmek için fotoğrafa dokunun.</p>
         </div>
-        <div class="gallery">
-          <a class="tile tile-villa" href="/assets/work/villa-surme-genis.webp" data-gallery data-title="Sürme doğrama" data-note="Tamamlanmış villa uygulaması, koyu çerçeveli köşe camları.">
-            <span class="tile-media"><img src="/assets/work/villa-surme-genis.webp" srcset="/assets/work/villa-surme-genis-sm.webp 800w, /assets/work/villa-surme-genis.webp 1589w" sizes="(min-width: 48rem) 66vw, 100vw" width="1589" height="990" loading="lazy" decoding="async" alt="Çimenli bahçeye bakan villanın köşesinde koyu çerçeveli, geniş sürme doğrama camları"></span>
-            <span class="tile-label"><strong>Sürme doğrama</strong><small>Villa, tamamlanmış uygulama</small></span>
-          </a>
-          <a class="tile tile-balkon" href="/assets/work/cam-balkon-montaj.webp" data-gallery data-title="Cam balkon" data-note="Çerçevesiz cam balkonda montaj sırasında ayar yapan usta.">
-            <span class="tile-media"><img src="/assets/work/cam-balkon-montaj.webp" srcset="/assets/work/cam-balkon-montaj-sm.webp 570w, /assets/work/cam-balkon-montaj.webp 1086w" sizes="(min-width: 48rem) 46vw, 70vw" width="1086" height="1448" loading="lazy" decoding="async" alt="Usta, çerçevesiz cam balkonun üst kısmında ayar yapıyor"></span>
-            <span class="tile-label"><strong>Cam balkon</strong><small>Çerçevesiz cam, montaj sırasında</small></span>
-          </a>
-          <a class="tile" href="/assets/work/cam-bolme-tamam.webp" data-gallery data-title="Alüminyum cam bölme" data-note="Tamamlanmış iç mekân uygulaması, koyu alüminyum çerçeve.">
-            <span class="tile-media"><img src="/assets/work/cam-bolme-tamam.webp" srcset="/assets/work/cam-bolme-tamam-sm.webp 600w, /assets/work/cam-bolme-tamam.webp 1200w" sizes="(min-width: 48rem) 33vw, 50vw" width="1200" height="1600" loading="lazy" decoding="async" alt="Koyu alüminyum çerçeveli, camlı kapısı olan köşe cam bölme"></span>
-            <span class="tile-label"><strong>Alüminyum cam bölme</strong><small>İç mekân, tamamlanmış uygulama</small></span>
-          </a>
-          <a href="/assets/work/cam-bolme-tamam-ic.webp" hidden data-gallery data-title="Alüminyum cam bölme" data-note="Aynı işe başka bir açıdan bakış." data-alt="Koyu çerçeveli cam bölmenin mekânın içinden görünümü; içeride uzun masalar ve sandalyeler var"></a>
-          <a href="/assets/work/cam-bolme-tamam-yan.webp" hidden data-gallery data-title="Alüminyum cam bölme" data-note="Aynı iş, yan taraftan." data-alt="Koyu çerçeveli cam bölmeye yandan bakış; solda mekânda duran iki kişi görünüyor"></a>
-          <a class="tile tile-detay" href="/assets/work/villa-surme-detay.webp" data-gallery data-title="Sürme doğrama" data-note="Sürme kasa ve sineklik kanadına yakından bakış.">
-            <span class="tile-media"><img src="/assets/work/villa-surme-detay.webp" srcset="/assets/work/villa-surme-detay-sm.webp 450w, /assets/work/villa-surme-detay.webp 900w" sizes="(min-width: 48rem) 46vw, 70vw" width="900" height="1600" loading="lazy" decoding="async" alt="Koyu çerçeveli sürme doğramanın yakından görünümü; solda geniş cam, sağda sineklik kanadı"></span>
-            <span class="tile-label"><strong>Sürme doğrama detayı</strong><small>Kasa ve sineklik kanadı</small></span>
-          </a>
-          <a class="tile" href="/assets/work/cam-korkuluk.webp" data-gallery data-title="Cam korkuluk" data-note="İç mekânda ince koyu profilli, şeffaf cam korkuluk.">
-            <span class="tile-media"><img src="/assets/work/cam-korkuluk.webp" srcset="/assets/work/cam-korkuluk-sm.webp 600w, /assets/work/cam-korkuluk.webp 1200w" sizes="(min-width: 48rem) 33vw, 50vw" width="1200" height="1600" loading="lazy" decoding="async" alt="Karşılama alanının yanında ince koyu profilli, köşeli şeffaf cam korkuluk"></span>
-            <span class="tile-label"><strong>Cam korkuluk</strong><small>İç mekân, tamamlanmış uygulama</small></span>
-          </a>
+        <div class="jobs">
+          <article class="job job-villa">
+            <header class="job-head"><h3>Villa, sürme doğrama</h3><p>Tamamlanmış iş, 2 fotoğraf</p></header>
+            <div class="job-photos">
+              <a class="tile" href="/assets/work/villa-surme-genis.webp" data-gallery data-title="Sürme doğrama" data-note="Tamamlanmış villa uygulaması, koyu çerçeveli köşe camları.">
+                <img src="/assets/work/villa-surme-genis.webp" srcset="/assets/work/villa-surme-genis-sm.webp 800w, /assets/work/villa-surme-genis.webp 1589w" sizes="(min-width: 56.25rem) 62vw, 66vw" width="1589" height="990" loading="lazy" decoding="async" alt="Çimenli bahçeye bakan villanın köşesinde koyu çerçeveli, geniş sürme doğrama camları">
+              </a>
+              <a class="tile tile-detay" href="/assets/work/villa-surme-detay.webp" data-gallery data-title="Sürme doğrama" data-note="Aynı villa: sürme kasa ve sineklik kanadına yakından bakış.">
+                <img src="/assets/work/villa-surme-detay-sm.webp" width="450" height="800" loading="lazy" decoding="async" alt="Koyu çerçeveli sürme doğramanın yakından görünümü; solda geniş cam, sağda sineklik kanadı">
+              </a>
+            </div>
+          </article>
+
+          <article class="job job-mekan">
+            <header class="job-head"><h3>Cam bölme ve korkuluk</h3><p>Tamamlanmış iş, aynı mekândan 4 fotoğraf</p></header>
+            <div class="job-photos">
+              <a class="tile tile-bolme" href="/assets/work/cam-bolme-tamam.webp" data-gallery data-title="Alüminyum cam bölme" data-note="Tamamlanmış iç mekân uygulaması, koyu alüminyum çerçeve.">
+                <img src="/assets/work/cam-bolme-tamam.webp" srcset="/assets/work/cam-bolme-tamam-sm.webp 600w, /assets/work/cam-bolme-tamam.webp 1200w" sizes="(min-width: 56.25rem) 24vw, 100vw" width="1200" height="1600" loading="lazy" decoding="async" alt="Koyu alüminyum çerçeveli, camlı kapısı olan köşe cam bölme">
+              </a>
+              <a class="tile" href="/assets/work/cam-bolme-tamam-ic.webp" data-gallery data-title="Alüminyum cam bölme" data-note="Aynı işe başka bir açıdan bakış.">
+                <img src="/assets/work/cam-bolme-tamam-ic-sm.webp" width="600" height="800" loading="lazy" decoding="async" alt="Koyu çerçeveli cam bölmenin mekânın içinden görünümü; içeride uzun masalar ve sandalyeler var">
+              </a>
+              <a class="tile" href="/assets/work/cam-bolme-tamam-yan.webp" data-gallery data-title="Alüminyum cam bölme" data-note="Aynı iş, yan taraftan.">
+                <img src="/assets/work/cam-bolme-tamam-yan-sm.webp" width="600" height="800" loading="lazy" decoding="async" alt="Koyu çerçeveli cam bölmeye yandan bakış; solda mekânda duran iki kişi görünüyor">
+              </a>
+              <a class="tile tile-korkuluk" href="/assets/work/cam-korkuluk.webp" data-gallery data-title="Cam korkuluk" data-note="Aynı mekânda ince koyu profilli, şeffaf cam korkuluk.">
+                <img src="/assets/work/cam-korkuluk-sm.webp" width="600" height="800" loading="lazy" decoding="async" alt="Karşılama alanının yanında ince koyu profilli, köşeli şeffaf cam korkuluk">
+              </a>
+            </div>
+          </article>
+
+          <article class="job job-balkon">
+            <header class="job-head"><h3>Cam balkon</h3><p>Montaj sırasında</p></header>
+            <div class="job-photos">
+              <a class="tile tile-balkon" href="/assets/work/cam-balkon-montaj.webp" data-gallery data-title="Cam balkon" data-note="Çerçevesiz cam balkonda montaj sırasında ayar yapan usta.">
+                <img src="/assets/work/cam-balkon-montaj.webp" srcset="/assets/work/cam-balkon-montaj-sm.webp 570w, /assets/work/cam-balkon-montaj.webp 1086w" sizes="(min-width: 56.25rem) 32vw, 100vw" width="1086" height="1448" loading="lazy" decoding="async" alt="Usta, çerçevesiz cam balkonun üst kısmında ayar yapıyor">
+              </a>
+            </div>
+          </article>
+
+          <article class="job job-kapi">
+            <header class="job-head"><h3>Dış kapı doğraması</h3><p>Büyütünce üç fotoğraf</p></header>
+            <div class="job-photos">
+              <a class="tile tile-crop crop-door" href="/assets/work/dograma-uygulamasi.webp" data-gallery data-title="Doğrama uygulaması" data-note="Koyu çerçeveli dış kapı doğraması, üç ayrı fotoğraf." data-alt="Koyu çerçeveli, camlı dış kapı doğramasının üç ayrı fotoğrafı">
+                <img src="/assets/work/dograma-uygulamasi.webp" srcset="/assets/work/dograma-uygulamasi-sm.webp 427w, /assets/work/dograma-uygulamasi.webp 828w" sizes="(min-width: 56.25rem) 56vw, 100vw" width="828" height="1472" loading="lazy" decoding="async" alt="Koyu çerçeveli, çift kanatlı camlı dış kapı">
+              </a>
+            </div>
+          </article>
+
+          <aside class="job-cta">
+            <h3>İşinizi yerinde görelim.</h3>
+            <p>Keşif ücretsiz, İzmir’in tüm ilçelerine geliyoruz.</p>
+            <a class="job-cta-call" href="tel:+905423551213" data-contact="phone" data-position="gallery"><svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg>0542 355 12 13</a>
+          </aside>
         </div>
-        <details class="gallery-more">
-          <summary class="btn btn-outline">Montajdan kareler<svg class="icon" aria-hidden="true"><use href="#i-chevron-down"/></svg></summary>
-          <div class="gallery-more-grid">
-            <a class="tile" href="/assets/work/dograma-lazer-olcu.webp" data-gallery data-title="Yerinde ölçü" data-note="Mağaza girişinde doğrama için lazerle ölçü alınırken.">
-              <span class="tile-media"><img src="/assets/work/dograma-lazer-olcu.webp" srcset="/assets/work/dograma-lazer-olcu-sm.webp 600w, /assets/work/dograma-lazer-olcu.webp 1200w" sizes="(min-width: 48rem) 33vw, 50vw" width="1200" height="1600" loading="lazy" decoding="async" alt="Usta, mağaza girişindeki doğrama boşluğunda zemine koyduğu lazerle ölçü alıyor"></span>
-              <span class="tile-label"><strong>Yerinde ölçü</strong><small>Mağaza girişi, lazerle</small></span>
-            </a>
-            <a class="tile" href="/assets/work/dograma-montaj.webp" data-gallery data-title="Doğrama montajı" data-note="Mağaza doğramasında merdiven üzerinde üst kasa montajı.">
-              <span class="tile-media"><img src="/assets/work/dograma-montaj.webp" srcset="/assets/work/dograma-montaj-sm.webp 600w, /assets/work/dograma-montaj.webp 1200w" sizes="(min-width: 48rem) 33vw, 50vw" width="1200" height="1600" loading="lazy" decoding="async" alt="Usta, merdiven üzerinde mağaza doğramasının üst kasasında matkapla çalışıyor"></span>
-              <span class="tile-label"><strong>Doğrama montajı</strong><small>Üst kasa bağlantısı</small></span>
-            </a>
-            <a class="tile tile-dograma" href="/assets/work/dograma-uygulamasi.webp" data-gallery data-title="Doğrama uygulaması" data-note="Koyu çerçeveli dış kapı doğraması, üç ayrı fotoğraf." data-alt="Koyu çerçeveli, camlı dış kapı doğramasının üç ayrı fotoğrafı">
-              <span class="tile-media tile-crop"><img src="/assets/work/dograma-uygulamasi.webp" srcset="/assets/work/dograma-uygulamasi-sm.webp 427w, /assets/work/dograma-uygulamasi.webp 828w" sizes="(min-width: 48rem) 40vw, 100vw" width="828" height="1472" loading="lazy" decoding="async" alt="Koyu çerçeveli, çift kanatlı camlı dış kapı"></span>
-              <span class="tile-label"><strong>Dış kapı doğraması</strong><small>Koyu çerçeve, çift kanat</small></span>
-            </a>
-          </div>
-        </details>
       </div>
     </section>
 
-    <section id="yorumlar" class="section section-gray" aria-labelledby="reviews-title">
-      <div class="wrap">
-        <div class="section-head">
+    <section id="yorumlar" class="section" aria-labelledby="reviews-title">
+      <div class="wrap reviews-layout">
+        <div class="reviews-aside">
           <h2 id="reviews-title">Müşteri yorumları</h2>
-          <p>Pencere, cam değişimi ve sineklik işlerimiz için bırakılan yorumlardan bir seçki.</p>
+          <p class="reviews-count" data-reviews-count hidden><strong></strong><span>müşteri yorumu</span></p>
+          <p class="reviews-note">Pencere, kapı, cam ve sineklik işlerimizden müşteri deneyimleri.</p>
+          <div class="review-filters" role="group" aria-label="Yorumları hizmete göre süz" data-review-filters hidden></div>
         </div>
-        <div class="reviews">
-          <article class="review">
-            <span class="stars" role="img" aria-label="5 üzerinden 5 yıldız"><svg class="star" aria-hidden="true"><use href="#i-star"/></svg><svg class="star" aria-hidden="true"><use href="#i-star"/></svg><svg class="star" aria-hidden="true"><use href="#i-star"/></svg><svg class="star" aria-hidden="true"><use href="#i-star"/></svg><svg class="star" aria-hidden="true"><use href="#i-star"/></svg></span>
-            <p class="review-excerpt">“Harika bir esnaflık, kusursuz işçilik! … İşçilik kalitesi tek kelimeyle muazzam; insan kendi evine yapsa ancak bu kadar özenir. …”</p>
-            <details class="review-full"><summary>Yorumun tamamı</summary><blockquote>Harika bir esnaflık, kusursuz işçilik! Pimapen yaptırmak için usta ararken kendisiyle karşılaştık. İlk andan itibaren çok sevecen ve anlayışlı yaklaştı. İşçilik kalitesi tek kelimeyle muazzam; insan kendi evine yapsa ancak bu kadar özenir. Sattığı malzemenin her detayına hakim ve fiyatları da piyasaya göre oldukça uygun. Güvenilir ve dürüst bir usta arayanlar hiç düşünmeden tercih edebilir. Emeğinize, güler yüzünüze sağlık</blockquote></details>
-            <footer class="review-meta"><strong>Erdem E.</strong><span>Pimapen Pencere</span><time datetime="2026-10-08">08 Eki 2026</time></footer>
-          </article>
-          <article class="review">
-            <span class="stars" role="img" aria-label="5 üzerinden 5 yıldız"><svg class="star" aria-hidden="true"><use href="#i-star"/></svg><svg class="star" aria-hidden="true"><use href="#i-star"/></svg><svg class="star" aria-hidden="true"><use href="#i-star"/></svg><svg class="star" aria-hidden="true"><use href="#i-star"/></svg><svg class="star" aria-hidden="true"><use href="#i-star"/></svg></span>
-            <p class="review-excerpt">“Evim için doğrama, cam ve kapı montajı hizmeti aldım. … Montaj sonrası etrafı tertemiz bırakmaları da ayrı bir incelikti. …”</p>
-            <details class="review-full"><summary>Yorumun tamamı</summary><blockquote>Evim için doğrama, cam ve kapı montajı hizmeti aldım. İlk günden teslim anına kadar yaklaşımı son derece profesyoneldi. Ölçüler tam oturdu, kapı ve pencereler çok rahat çalışıyor, ne ısı ne de ses sızdırıyor. Montaj sonrası etrafı tertemiz bırakmaları da ayrı bir incelikti. Gönül rahatlığıyla tercih edebilirsiniz, elinize sağlık🙏</blockquote></details>
-            <footer class="review-meta"><strong>Enes D.</strong><span>Menteşeli Pencere Sinekliği</span><time datetime="2026-10-02">02 Eki 2026</time></footer>
-          </article>
-          <article class="review">
-            <span class="stars" role="img" aria-label="5 üzerinden 5 yıldız"><svg class="star" aria-hidden="true"><use href="#i-star"/></svg><svg class="star" aria-hidden="true"><use href="#i-star"/></svg><svg class="star" aria-hidden="true"><use href="#i-star"/></svg><svg class="star" aria-hidden="true"><use href="#i-star"/></svg><svg class="star" aria-hidden="true"><use href="#i-star"/></svg></span>
-            <blockquote>24 saat içinde işim çözüldü çok güzel vede düzgün çalışanlar mutlaka çalışmanızı tavsiye ediyorum ellerine sağlık bundan sonra her ne işim olursa olsun bu kişilerle devam</blockquote>
-            <footer class="review-meta"><strong>Yüksel K.</strong><span>Pimapen Cam Değişimi</span><time datetime="2026-10-03">03 Eki 2026</time></footer>
-          </article>
-        </div>
-        <details class="more-reviews">
-          <summary class="btn btn-outline">4 yorum daha<svg class="icon" aria-hidden="true"><use href="#i-chevron-down"/></svg></summary>
-          <div class="reviews">
+        <div class="reviews-main">
+          <p class="sr-only" role="status" data-reviews-status></p>
+          <div class="reviews" data-reviews-list>
             <article class="review">
               <span class="stars" role="img" aria-label="5 üzerinden 5 yıldız"><svg class="star" aria-hidden="true"><use href="#i-star"/></svg><svg class="star" aria-hidden="true"><use href="#i-star"/></svg><svg class="star" aria-hidden="true"><use href="#i-star"/></svg><svg class="star" aria-hidden="true"><use href="#i-star"/></svg><svg class="star" aria-hidden="true"><use href="#i-star"/></svg></span>
-              <blockquote>Öncelikle kendisi ve ekip arkadaşına teşekkür ediyorum, elinize sağlık kolaylıklar diliyorum 🙏</blockquote>
-              <footer class="review-meta"><strong>Ömer Mobil Oto Mekanik Servis Ö.</strong><span>Pimapen Pencere</span><time datetime="2026-09-30">30 Eyl 2026</time></footer>
+              <p class="review-text">“Harika bir esnaflık, kusursuz işçilik! … İşçilik kalitesi tek kelimeyle muazzam; insan kendi evine yapsa ancak bu kadar özenir. …”</p>
+              <details class="review-full"><summary>Yorumun tamamı</summary><blockquote>Harika bir esnaflık, kusursuz işçilik! Pimapen yaptırmak için usta ararken kendisiyle karşılaştık. İlk andan itibaren çok sevecen ve anlayışlı yaklaştı. İşçilik kalitesi tek kelimeyle muazzam; insan kendi evine yapsa ancak bu kadar özenir. Sattığı malzemenin her detayına hakim ve fiyatları da piyasaya göre oldukça uygun. Güvenilir ve dürüst bir usta arayanlar hiç düşünmeden tercih edebilir. Emeğinize, güler yüzünüze sağlık</blockquote></details>
+              <footer class="review-meta"><strong>Erdem E.</strong><span>Pimapen Pencere</span><time datetime="2026-10-08">08 Eki 2026</time></footer>
             </article>
             <article class="review">
               <span class="stars" role="img" aria-label="5 üzerinden 5 yıldız"><svg class="star" aria-hidden="true"><use href="#i-star"/></svg><svg class="star" aria-hidden="true"><use href="#i-star"/></svg><svg class="star" aria-hidden="true"><use href="#i-star"/></svg><svg class="star" aria-hidden="true"><use href="#i-star"/></svg><svg class="star" aria-hidden="true"><use href="#i-star"/></svg></span>
-              <p class="review-excerpt">“Çok memnun kaldım! … Zamanında geldi, hızlı çalıştı ve ortaya gerçekten temiz ve kaliteli bir iş çıkardı. …”</p>
-            <details class="review-full"><summary>Yorumun tamamı</summary><blockquote>Çok memnun kaldım! Sineklik değişimi için kendisiyle iletişime geçtim. İşini çok özenli ve profesyonel bir şekilde yaptı. Zamanında geldi, hızlı çalıştı ve ortaya gerçekten temiz ve kaliteli bir iş çıkardı. İletişimi de çok iyiydi. Kesinlikle tavsiye ederim, gönül rahatlığıyla tekrar tercih ederim. Emeği için çok teşekkür ederim!</blockquote></details>
-              <footer class="review-meta"><strong>Dilfuza S.</strong><span>Sürgülü Kapı Sinekliği</span><time datetime="2026-08-17">17 Ağu 2026</time></footer>
+              <p class="review-text">“Evim için doğrama, cam ve kapı montajı hizmeti aldım. … Montaj sonrası etrafı tertemiz bırakmaları da ayrı bir incelikti. …”</p>
+              <details class="review-full"><summary>Yorumun tamamı</summary><blockquote>Evim için doğrama, cam ve kapı montajı hizmeti aldım. İlk günden teslim anına kadar yaklaşımı son derece profesyoneldi. Ölçüler tam oturdu, kapı ve pencereler çok rahat çalışıyor, ne ısı ne de ses sızdırıyor. Montaj sonrası etrafı tertemiz bırakmaları da ayrı bir incelikti. Gönül rahatlığıyla tercih edebilirsiniz, elinize sağlık🙏</blockquote></details>
+              <footer class="review-meta"><strong>Enes D.</strong><span>Menteşeli Pencere Sinekliği</span><time datetime="2026-10-02">02 Eki 2026</time></footer>
             </article>
             <article class="review">
               <span class="stars" role="img" aria-label="5 üzerinden 5 yıldız"><svg class="star" aria-hidden="true"><use href="#i-star"/></svg><svg class="star" aria-hidden="true"><use href="#i-star"/></svg><svg class="star" aria-hidden="true"><use href="#i-star"/></svg><svg class="star" aria-hidden="true"><use href="#i-star"/></svg><svg class="star" aria-hidden="true"><use href="#i-star"/></svg></span>
-              <blockquote>Zamanında geldi. Ölçüsünü aldı hızlı bi şekilde problemsiz montajını yaptı. Tavsiye ediyorum.</blockquote>
-              <footer class="review-meta"><strong>Alper K.</strong><span>Sineklik</span><time datetime="2026-09-14">14 Eyl 2026</time></footer>
-            </article>
-            <article class="review">
-              <span class="stars" role="img" aria-label="5 üzerinden 5 yıldız"><svg class="star" aria-hidden="true"><use href="#i-star"/></svg><svg class="star" aria-hidden="true"><use href="#i-star"/></svg><svg class="star" aria-hidden="true"><use href="#i-star"/></svg><svg class="star" aria-hidden="true"><use href="#i-star"/></svg><svg class="star" aria-hidden="true"><use href="#i-star"/></svg></span>
-              <blockquote>Çok memnun kaldık.Çok kısa sürede takıldı.Ustalığı ve sonucu çok beğendik.Herkese tavsiye ederiz.</blockquote>
-              <footer class="review-meta"><strong>Zehra Rezzan Ş.</strong><span>Sineklik</span><time datetime="2026-07-04">04 Tem 2026</time></footer>
+              <blockquote class="review-text">24 saat içinde işim çözüldü çok güzel vede düzgün çalışanlar mutlaka çalışmanızı tavsiye ediyorum ellerine sağlık bundan sonra her ne işim olursa olsun bu kişilerle devam</blockquote>
+              <footer class="review-meta"><strong>Yüksel K.</strong><span>Pimapen Cam Değişimi</span><time datetime="2026-10-03">03 Eki 2026</time></footer>
             </article>
           </div>
-        </details>
+          <button class="btn btn-outline reviews-more" type="button" data-reviews-more hidden></button>
+        </div>
       </div>
     </section>
 
-    <section id="surec" class="section" aria-labelledby="process-title">
-      <div class="wrap">
-        <div class="section-head">
-          <h2 id="process-title">Nasıl ilerliyoruz?</h2>
+    <section id="surec" class="section section-sand" aria-labelledby="process-title">
+      <div class="wrap process">
+        <div class="process-copy">
+          <h2 id="process-title">Keşiften montaja üç adım</h2>
+          <ol class="steps">
+            <li><strong>Ücretsiz keşif</strong><span>Yerinde bakar, ölçü alırız.</span></li>
+            <li><strong>Net teklif</strong><span>Sistemi ve fiyatı netleştiririz.</span></li>
+            <li><strong>Planlı montaj</strong><span>Kararlaştırdığımız gün montajı yaparız.</span></li>
+          </ol>
         </div>
-        <ol class="steps">
-          <li><strong>Ücretsiz keşif</strong><span>Yerinde bakar, ölçü alırız.</span></li>
-          <li><strong>Net teklif</strong><span>Sistemi ve fiyatı netleştiririz.</span></li>
-          <li><strong>Planlı montaj</strong><span>Kararlaştırdığımız gün montajı yaparız.</span></li>
-        </ol>
+        <div class="process-photos">
+          <a class="tile tile-olcu" href="/assets/work/dograma-lazer-olcu.webp" data-gallery data-title="Yerinde ölçü" data-note="Mağaza girişinde doğrama için lazerle ölçü alınırken.">
+            <img src="/assets/work/dograma-lazer-olcu.webp" srcset="/assets/work/dograma-lazer-olcu-sm.webp 600w, /assets/work/dograma-lazer-olcu.webp 1200w" sizes="(min-width: 56.25rem) 34vw, 60vw" width="1200" height="1600" loading="lazy" decoding="async" alt="Usta, mağaza girişindeki doğrama boşluğunda zemine koyduğu lazerle ölçü alıyor">
+          </a>
+          <a class="tile tile-montaj" href="/assets/work/dograma-montaj.webp" data-gallery data-title="Doğrama montajı" data-note="Mağaza doğramasında merdiven üzerinde üst kasa montajı.">
+            <img src="/assets/work/dograma-montaj-sm.webp" width="600" height="800" loading="lazy" decoding="async" alt="Usta, merdiven üzerinde mağaza doğramasının üst kasasında matkapla çalışıyor">
+          </a>
+        </div>
       </div>
     </section>
 
@@ -248,7 +306,7 @@
         <div class="kesif-copy">
           <h2 id="contact-title">Ücretsiz keşif için arayın.</h2>
           <p>İzmir geneli hizmet veriyoruz. İşinizi yerinde görüp ölçünüze özel teklif hazırlıyoruz.</p>
-          <a class="btn-call btn-call-light" href="tel:+905423551213" data-contact="phone" data-position="contact">
+          <a class="btn-call" href="tel:+905423551213" data-contact="phone" data-position="contact">
             <svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg>
             <span><small>Hemen arayın</small><strong>0542 355 12 13</strong></span>
           </a>
@@ -316,7 +374,7 @@
     </section>
   </main>
 
-  <footer class="site-footer">
+  <footer class="site-footer on-dark">
     <div class="wrap footer-inner">
       <a class="brand" href="#" aria-label="İzmir Balkon ana sayfa"><img src="/assets/logo.svg" alt="" width="32" height="32"><span>izmir<span class="brand-light">balkon</span></span></a>
       <span>İzmir, Türkiye · © <span id="year">2026</span> İzmir Balkon</span>
