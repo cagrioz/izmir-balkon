@@ -99,3 +99,23 @@ The owner completed further onboarding and supplied the Google Ads base tag. The
 ## Account activation update
 
 The three website Contact actions were created in Google Ads. Phone and wizard WhatsApp are primary; other WhatsApp is secondary. Count is One; value is zero (intent is not revenue). Enhanced conversions remain off. The account overview showed zero campaigns; no campaign was created, enabled or funded by the agent. The promotion card shows 8,000 TRY qualifying spend by 4 January 2027 for 8,000 TRY credit, not an unconditional credit. Account-side conversion attribution remains unverified until real consented traffic and Tag Assistant testing.
+
+
+## DataFast setup — 5 November 2026
+
+A separate `izmirbalkon.com` website was created in the owner's DataFast account, timezone Europe/Istanbul. Its public website ID lives only in `public/tracking-config.js`. Cookieless/privacy mode is enabled in the dashboard and the site loads the matching `script.cookieless.js`, only after opt-in. Revenue/payment integrations and automatic payment capture are off. GA4 remains off.
+
+| DataFast goal | Meaning |
+| --- | --- |
+| `phone_click` | Opens the dialler; not a connected call |
+| `wizard_whatsapp_click` | Opens a completed wizard's WhatsApp draft; primary intent |
+| `whatsapp_click` | Other WhatsApp link; secondary intent |
+| `quote_step_service`, `quote_step_size`, `quote_step_district` | Wizard progress only; no selected values |
+
+Goals are emitted by the site, and appear in DataFast after the first accepted event. Do not add HTML `data-fast-goal` attributes to the same buttons: that would count twice. No personal/custom properties accompany these goals. Contact link click/Enter propagation is stopped before DataFast's automatic outbound-link listener, so the WhatsApp message URL is not collected. Incomplete wizard links without `href` generate no contact event. The script's automatic payment detection is explicitly disabled.
+
+DataFast reads the current URL directly. Before it loads, the site replaces the address with origin + pathname + the existing attribution allowlist (`gclid`, `gbraid`, `wbraid`, `utm_*`), removing other queries and the fragment. The site does not depend on query parameters for rendering. Incoming referrer and technical device metadata may still be processed by DataFast as described in the privacy notice. Cookieless mode limits multi-day attribution; do not equate its visitor counts with Google Ads attributed conversions.
+
+The consent preference is now v2: existing Google-only grants prompt again because DataFast is a new provider. Previous refusals remain refusals. Reject/revoke blocks both providers; revocation reloads the page to stop already-loaded code. Enhanced conversions and ad personalization remain off.
+
+References: [script configuration](https://datafa.st/docs/script-configuration), [custom goals](https://datafa.st/docs/custom-goals), [cookieless mode](https://datafa.st/docs/gdpr-cookieless-tracking).
