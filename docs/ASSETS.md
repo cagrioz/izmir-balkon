@@ -19,7 +19,7 @@ The previous redesign's `-thumb.webp` previews are retained as 320px-edge WebP d
 
 ## Customer reviews
 
-The verified review inventory is retained in `public/reviews-data.js`; the page renders the 21 reviews directly in `public/index.html`, including without JavaScript. On 5 November 2026 the complete set of relevant owner-provided screenshots in Downloads was re-audited, including 23 files named `WhatsApp Image 2026-11-04 at 22.54.*.jpeg`. Fourteen previously omitted, distinct full reviews were found, bringing the published selection from seven to **21**. Each included five-star rating was checked visually on that review. The screenshot interface says 25 total, but four older full reviews are not available in the supplied images, so the page uses the actual published count of 21 and does not infer an overall rating.
+The verified review inventory is retained in `public/reviews-data.js`; the page renders the 21 reviews into the initial HTML at build time, so they are readable without JavaScript. On 5 November 2026 the complete set of relevant owner-provided screenshots in Downloads was re-audited, including 23 files named `WhatsApp Image 2026-11-04 at 22.54.*.jpeg`. Fourteen previously omitted, distinct full reviews were found, bringing the published selection from seven to **21**. Each included five-star rating was checked visually on that review. The screenshot interface says 25 total, but four older full reviews are not available in the supplied images, so the page uses the actual published count of 21 and does not infer an overall rating.
 
 Original spelling, abbreviated/masked names, service labels and dates are retained. Funda S.’s full comment is reconstructed from two consecutive overlapping screenshots; no missing words are guessed. A partly visible Mustafa B. record is excluded because its full text/rating are unavailable. Fatma T.’s original quote mentions the platform; the source text is preserved without introducing platform branding elsewhere. Project photos are not attributed to individual reviewers without evidence. Long comments can be expanded. The page shows six reviews first; the “15 yorum daha” disclosure makes every included review reachable.
 
@@ -44,13 +44,17 @@ The original seven remain Erdem E., Enes D., Yüksel K., Ömer Mobil Oto Mekanik
 
 ## Licensed stock photographs
 
-The owner has no finished-job photos of an enclosed balcony, winter garden or pergola, and on 5 November 2026 approved using realistic images from the internet. These are used under the [Unsplash License](https://unsplash.com/license), which allows commercial use without attribution. Each is labelled "Temsili" wherever it appears as a photo and is never presented as this business's work. Replace them as soon as real finished-job photos exist. Do not use them in ads as if they were the owner's own jobs.
+The owner has no finished-job photos of an enclosed balcony, winter garden or pergola, and on 5 November 2026 approved using realistic images from the internet. These are used under the [Unsplash License](https://unsplash.com/license), which allows commercial use without attribution. On 5 November 2026 the owner also asked to remove the "Temsili görsel" labels from the page, so they carry no label. The privacy page discloses them in one sentence. They are never described as this business's work, and the "Kendi işlerimizden" gallery contains only the owner's photos. Replace them as soon as real finished-job photos exist. Do not use them in ads as if they were the owner's own jobs.
 
 | Public stem under `public/assets/stock/` | Source | Photographer |
 | --- | --- | --- |
-| cam-balkon | https://unsplash.com/photos/a-balcony-with-a-view-of-a-city-bgVCbeS9X4w | Lisa Anna |
+| cam-balkon | https://unsplash.com/photos/brown-wooden-table-near-glass-window-S9WzYYBxL-E | Lissete Laverde |
 | kis-bahcesi | https://unsplash.com/photos/wicker-armchairs-in-sunlit-conservatory-ljX2si20Vek | KAUDIA ESTATE |
 | pergola | https://unsplash.com/photos/black-metal-table-and-chairs-on-green-grass-field-during-daytime-Kwg6xKwBNGA | Florian Schmidinger |
+
+## Owner-stated figures
+
+"15+ yıl deneyim" and "200+ müşteri, 5 yıldız" were given by the owner on 5 November 2026. This repository holds no document that proves them. What it can prove is 21 published five-star reviews, from a profile showing 25 in total. Keep evidence for both figures: under Turkish advertising rules the advertiser may be asked to prove a claim. Because of this gap, machine-readable files label the figures as the business's own statement, and no `aggregateRating` is published.
 
 ## Crops of owner photographs
 
@@ -66,6 +70,7 @@ Crops only, no retouching. They remove distractions (a broom, a dustpan, water c
 ## Typography and vector assets
 
 - DM Sans variable WOFF2, Latin and Latin Extended subsets, downloaded from Google Fonts. License: `public/assets/OFL-DM-Sans.txt` (SIL Open Font License).
+- DM Serif Display WOFF2, Latin and Latin Extended subsets, downloaded from Google Fonts. License: `public/assets/OFL-DM-Serif-Display.txt` (SIL Open Font License).
 - The logo and outline SVG symbols are original vector artwork for this site.
 
 ## Photographs added on 5 November 2026

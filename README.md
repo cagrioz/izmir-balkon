@@ -18,15 +18,27 @@ npm run build  # static output in dist/
 
 Import this repository into Vercel. `vercel.json` specifies the build command and output directory. The page also works on any static host.
 
+## How the site is built
+
+Content lives in `scripts/facts.mjs` and `public/reviews-data.js`. Templates live in `src/`. `scripts/render.mjs` turns them into every HTML page, Markdown mirror, `llms.txt`, JSON-LD block and the sitemap, so people and AI agents always read the same facts. Change a fact in one place and every format follows.
+
 ## Content and interaction
 
-- **One task per screen.** The hero holds one thing to do: a three-tap quote wizard (service, approximate size, district) that opens a ready WhatsApp draft. The phone number stays visible as plain text. Nothing is sent or stored by the site.
-- **CTA rules.** Blue is the page's one action. Green appears only where WhatsApp actually opens. The mobile dock (WhatsApp + phone) appears only after the wizard scrolls away and hides at the closing section. On phones the dock replaces in-flow buttons; on desktop the sticky header button and the price card carry the action. Further-down buttons open the same wizard in a sheet, so visitors keep their place.
-- **Ad landing pages.** `/cam-balkon`, `/kis-bahcesi`, `/pergola` and `/dograma` render from `public/index.html` through `scripts/variants.mjs`, each with its own headline, hero photo, title and a wizard that starts on step 2. Point each ad group at its own page. Edit the page in `index.html`; `npm test` fails if a variant's markers go missing.
+- **One task per screen.** The hero holds a quote wizard with the page's service already selected and one blue button. Two more questions (size, district) open a ready WhatsApp draft. Nothing is sent or stored by the site.
+- **CTA rules.** Blue starts the quote, green opens WhatsApp, outlined calls. The mobile dock appears only after the wizard scrolls away and hides wherever a section on screen has its own action. Buttons further down open the same wizard in a sheet, so visitors keep their place.
+- **Service pages.** `/cam-balkon`, `/kis-bahcesi`, `/pergola` and `/dograma` each have their own title, headline, photo, summary and FAQ. Point each ad group at its own page. `/bilgi` is the plain answer page for search engines and agents.
 - **Proof.** Selling points are customers' own words, checked against `public/reviews-data.js` by `npm test`. All 21 reviews are published verbatim: 6 first, 15 behind a native disclosure.
-- **Photos.** Stock photos carry a visible "Temsili" label. The "Yaptığımız işlerden" gallery holds only the owner's own work; a test enforces this.
-- Local image and font assets, no third-party dependencies on initial page load.
-- No invented reviews, customer counts, guarantee durations, discounts, response times or installation times. No aggregate rating is invented.
+- **Claims.** 15+ years and 200+ customers are the owner's statements (see `docs/ASSETS.md`). No aggregate rating is published in structured data. No guarantee durations, discounts, response times or installation times are invented.
+- **Photos.** The "Kendi işlerimizden" gallery holds only the owner's own work; a test enforces this. Other marketing photos are Unsplash stock, disclosed on the privacy page.
+
+## For AI agents and search
+
+- Everything important is in the initial HTML; no JavaScript is needed to read it.
+- `/llms.txt` is a short described index, `/llms-full.txt` is everything in one file. Both are linked from the footer and page metadata.
+- Every page has a Markdown mirror, advertised with `<link rel="alternate">` and an HTTP `Link` header. `middleware.js` also serves it to clients sending `Accept: text/markdown`. Browsers never ask for it.
+- JSON-LD covers the business, 30 districts, services, FAQ and breadcrumbs, and `/bilgi` adds the reviews. The same facts are repeated in visible text, because some converters drop script blocks.
+- `public/ui.js` registers experimental WebMCP tools when the browser supports them. They stay inactive on the live site until an origin trial token is added.
+- After a deploy with changed pages, run `npm run indexnow` to notify Bing and other IndexNow engines.
 
 ## GetSidely measurement
 

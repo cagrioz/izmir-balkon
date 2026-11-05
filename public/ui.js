@@ -66,7 +66,14 @@
     dialog.addEventListener('close', () => opener?.focus());
   }
 
-  // Three taps build a WhatsApp draft. Nothing is sent or stored: the visitor sends it themselves.
+  // A few taps build a WhatsApp draft. Nothing is sent or stored: the visitor sends it themselves.
+  function draftMessage(service, size, district) {
+    const item = SERVICES[service];
+    const detail = size ? `${item.fact}: ${size}.` : 'Ölçüyü bilmiyorum, keşifte alınabilir.';
+    return `Merhaba, ${district} ilçesinde ${item.phrase} için ücretsiz keşif ve fiyat almak istiyorum. ${detail}`;
+  }
+  const draftLink = text => `${WHATSAPP}?text=${encodeURIComponent(text)}`;
+
   function initWizard() {
     const wiz = document.getElementById('teklif');
     if (!wiz) return {};
@@ -78,25 +85,24 @@
     const finish = wiz.querySelector('[data-wiz-finish]');
     const bubble = wiz.querySelector('[data-wiz-bubble]');
     const send = wiz.querySelector('#wiz-send');
-    const state = { service: document.body.dataset.service || '', size: '' };
+    const tiles = [...wiz.querySelectorAll('[data-pick-service]')];
+    const state = { service: document.body.dataset.service || 'cam-balkon', size: '' };
 
     function funnel(step) {
       // Step names only. Service, size and district never leave the browser through analytics.
       document.dispatchEvent(new CustomEvent('izmir:funnel', { detail: { step } }));
     }
-    function message() {
-      const service = SERVICES[state.service];
-      const detail = state.size ? `${service.fact}: ${state.size}.` : 'Ölçüyü bilmiyorum, keşifte alınabilir.';
-      return `Merhaba, ${district.value} ilçesinde ${service.phrase} için ücretsiz keşif ve fiyat almak istiyorum. ${detail}`;
-    }
     function refreshFinish() {
       finish.hidden = !district.value;
       if (!district.value) return;
-      const text = message();
+      const text = draftMessage(state.service, state.size, district.value);
       bubble.textContent = text;
-      send.href = `${WHATSAPP}?text=${encodeURIComponent(text)}`;
+      send.href = draftLink(text);
     }
-    function go(step, { focus = true } = {}) {
+    function currentQuestion() {
+      return wiz.querySelector('[data-step]:not([hidden]) .wiz-sizes:not([hidden]) .wiz-q, [data-step="service"]:not([hidden]) .wiz-q, [data-step="district"]:not([hidden]) .wiz-q');
+    }
+    function go(step) {
       order.forEach(name => { steps[name].hidden = name !== step; });
       wiz.dataset.at = step;
       count.textContent = `Adım ${order.indexOf(step) + 1} / ${order.length}`;
@@ -105,22 +111,19 @@
         wiz.querySelectorAll('.wiz-sizes').forEach(group => { group.hidden = group.dataset.for !== state.service; });
       }
       if (step === 'district') refreshFinish();
-      if (focus) {
-        const target = step === 'size' ? steps.size.querySelector('.wiz-sizes:not([hidden]) .wiz-q') : steps[step].querySelector('.wiz-q');
-        target?.focus({ preventScroll: true });
-      }
+      currentQuestion()?.focus({ preventScroll: true });
     }
-    function pickService(service) {
-      if (!SERVICES[service]) return;
+    function chooseService(service) {
       state.service = service;
       state.size = '';
-      funnel('service');
+      tiles.forEach(tile => tile.setAttribute('aria-pressed', String(tile.dataset.pickService === service)));
     }
 
     wiz.addEventListener('click', event => {
-      const serviceButton = event.target.closest('[data-pick-service]');
-      if (serviceButton) {
-        pickService(serviceButton.dataset.pickService);
+      const tile = event.target.closest('[data-pick-service]');
+      if (tile) chooseService(tile.dataset.pickService);
+      if (tile || event.target.closest('[data-wiz-next]')) {
+        funnel('service');
         go('size');
         return;
       }
@@ -140,20 +143,7 @@
       if (!finish.hidden) send.scrollIntoView({ block: 'nearest' });
     });
 
-    if (state.service && SERVICES[state.service]) go('size', { focus: false });
-    else go('service', { focus: false });
-
-    return {
-      preselect(service) {
-        if (SERVICES[service]) {
-          pickService(service);
-          go('size', { focus: false });
-        }
-      },
-      focusCurrent() {
-        wiz.querySelector('[data-step]:not([hidden]) .wiz-sizes:not([hidden]) .wiz-q, [data-step="service"]:not([hidden]) .wiz-q, [data-step="district"]:not([hidden]) .wiz-q')?.focus({ preventScroll: true });
-      }
-    };
+    return { focusCurrent: () => currentQuestion()?.focus({ preventScroll: true }) };
   }
 
   // Keeps visitors where they are: the one wizard moves into a sheet, then back to the hero.
@@ -173,7 +163,6 @@
         opener = link;
         // Hold the hero's height before anything changes, so the page behind does not jump.
         home.style.minHeight = `${home.offsetHeight}px`;
-        if (link.dataset.service) wizard.preselect?.(link.dataset.service);
         body.append(card);
         sheet.showModal();
         wizard.focusCurrent?.();
@@ -190,23 +179,23 @@
     });
   }
 
-  // The wizard is the page's action until it scrolls away. Only then do shortcuts appear,
-  // and they step aside again when the closing section carries its own action.
+  // The wizard is the page's action until it scrolls away. The dock then takes over, and
+  // steps aside wherever a section on screen already carries its own action.
   function initContactShortcuts() {
     const slot = document.getElementById('teklif-yuva');
-    const closing = document.getElementById('son-adim');
     const dock = document.querySelector('.dock');
-    const header = document.querySelector('.site-header');
-    if (!slot || !closing || !dock || !header) return;
+    const sections = [document.getElementById('kesif-cagri'), document.getElementById('son-adim')].filter(Boolean);
+    if (!slot || !dock) return;
     let scheduled = 0;
 
     function update() {
       scheduled = 0;
       const pastHero = slot.getBoundingClientRect().bottom <= 0;
-      const box = closing.getBoundingClientRect();
-      const closingVisible = box.top < window.innerHeight && box.bottom > 0;
-      header.classList.toggle('is-past-hero', pastHero);
-      dock.hidden = !pastHero || closingVisible;
+      const actionOnScreen = sections.some(section => {
+        const box = section.getBoundingClientRect();
+        return box.top < window.innerHeight && box.bottom > 0;
+      });
+      dock.hidden = !pastHero || actionOnScreen;
     }
     function schedule() {
       if (!scheduled) scheduled = requestAnimationFrame(update);
@@ -214,14 +203,51 @@
 
     if ('IntersectionObserver' in window) {
       const observer = new IntersectionObserver(schedule);
-      observer.observe(slot);
-      observer.observe(closing);
+      [slot, ...sections].forEach(element => observer.observe(element));
     } else {
       window.addEventListener('scroll', schedule, { passive: true });
     }
     window.addEventListener('resize', schedule);
     window.addEventListener('pageshow', schedule);
     schedule();
+  }
+
+  // WebMCP: lets an in-browser AI agent read the facts and prepare a draft directly. The API is
+  // experimental, so browsers without it simply skip this and the page behaves the same.
+  function initAgentTools() {
+    const modelContext = document.modelContext || navigator.modelContext;
+    if (!modelContext?.registerTool) return;
+    const districts = [...document.querySelectorAll('#district option')].map(option => option.value).filter(Boolean);
+    const register = tool => {
+      try {
+        Promise.resolve(modelContext.registerTool(tool)).catch(() => {});
+      } catch {}
+    };
+    register({
+      name: 'get_business_facts',
+      description: 'Returns İzmir Balkon’s services, service area, contact details and how pricing works.',
+      inputSchema: { type: 'object', properties: {} },
+      annotations: { readOnlyHint: true },
+      execute: async () => (await fetch('/llms.txt')).text()
+    });
+    register({
+      name: 'prepare_quote_message',
+      description: 'Builds a WhatsApp draft link asking İzmir Balkon for a free survey and a quote. It sends nothing: the user reviews and sends the message.',
+      inputSchema: {
+        type: 'object',
+        properties: {
+          service: { type: 'string', enum: Object.keys(SERVICES), description: 'The service wanted.' },
+          district: { type: 'string', enum: districts, description: 'The İzmir district of the property.' },
+          size: { type: 'string', description: 'Approximate size, for example "4 m" or "20 m²". Leave out if unknown.' }
+        },
+        required: ['service', 'district']
+      },
+      annotations: { readOnlyHint: true },
+      execute: async ({ service, district, size }) => {
+        const text = draftMessage(service, size || '', district);
+        return JSON.stringify({ message: text, whatsapp_url: draftLink(text), phone: '+905423551213' });
+      }
+    });
   }
 
   // Long comments are clamped, never rewritten: the full text is one tap away.
@@ -248,4 +274,5 @@
   initSheet(initWizard());
   initContactShortcuts();
   initReviewClamp();
+  initAgentTools();
 })();

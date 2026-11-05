@@ -1,3 +1,5 @@
+# Tüm tarayıcılara ve AI ajanlarına açık. Site özeti: https://izmirbalkon.com/llms.txt
 User-agent: *
 Allow: /
+
 Sitemap: https://izmirbalkon.com/sitemap.xml

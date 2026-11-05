@@ -5,11 +5,189 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "headers": [
-    { "source": "/(.*)", "headers": [
-      { "key": "X-Content-Type-Options", "value": "nosniff" },
-      { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
-      { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" },
-      { "key": "X-Frame-Options", "value": "DENY" }
-    ] }
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=()"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        }
+      ]
+    },
+    {
+      "source": "/",
+      "headers": [
+        {
+          "key": "Vary",
+          "value": "Accept"
+        },
+        {
+          "key": "Link",
+          "value": "<https://izmirbalkon.com/index.md>; rel=\"alternate\"; type=\"text/markdown\", <https://izmirbalkon.com/llms.txt>; rel=\"describedby\"; type=\"text/plain\""
+        }
+      ]
+    },
+    {
+      "source": "/cam-balkon",
+      "headers": [
+        {
+          "key": "Vary",
+          "value": "Accept"
+        },
+        {
+          "key": "Link",
+          "value": "<https://izmirbalkon.com/cam-balkon.md>; rel=\"alternate\"; type=\"text/markdown\", <https://izmirbalkon.com/llms.txt>; rel=\"describedby\"; type=\"text/plain\""
+        }
+      ]
+    },
+    {
+      "source": "/kis-bahcesi",
+      "headers": [
+        {
+          "key": "Vary",
+          "value": "Accept"
+        },
+        {
+          "key": "Link",
+          "value": "<https://izmirbalkon.com/kis-bahcesi.md>; rel=\"alternate\"; type=\"text/markdown\", <https://izmirbalkon.com/llms.txt>; rel=\"describedby\"; type=\"text/plain\""
+        }
+      ]
+    },
+    {
+      "source": "/pergola",
+      "headers": [
+        {
+          "key": "Vary",
+          "value": "Accept"
+        },
+        {
+          "key": "Link",
+          "value": "<https://izmirbalkon.com/pergola.md>; rel=\"alternate\"; type=\"text/markdown\", <https://izmirbalkon.com/llms.txt>; rel=\"describedby\"; type=\"text/plain\""
+        }
+      ]
+    },
+    {
+      "source": "/dograma",
+      "headers": [
+        {
+          "key": "Vary",
+          "value": "Accept"
+        },
+        {
+          "key": "Link",
+          "value": "<https://izmirbalkon.com/dograma.md>; rel=\"alternate\"; type=\"text/markdown\", <https://izmirbalkon.com/llms.txt>; rel=\"describedby\"; type=\"text/plain\""
+        }
+      ]
+    },
+    {
+      "source": "/bilgi",
+      "headers": [
+        {
+          "key": "Vary",
+          "value": "Accept"
+        },
+        {
+          "key": "Link",
+          "value": "<https://izmirbalkon.com/bilgi.md>; rel=\"alternate\"; type=\"text/markdown\", <https://izmirbalkon.com/llms.txt>; rel=\"describedby\"; type=\"text/plain\""
+        }
+      ]
+    },
+    {
+      "source": "/(.*)\\.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "Vary",
+          "value": "Accept"
+        }
+      ]
+    },
+    {
+      "source": "/index.md",
+      "headers": [
+        {
+          "key": "Link",
+          "value": "<https://izmirbalkon.com/>; rel=\"canonical\""
+        }
+      ]
+    },
+    {
+      "source": "/cam-balkon.md",
+      "headers": [
+        {
+          "key": "Link",
+          "value": "<https://izmirbalkon.com/cam-balkon>; rel=\"canonical\""
+        }
+      ]
+    },
+    {
+      "source": "/kis-bahcesi.md",
+      "headers": [
+        {
+          "key": "Link",
+          "value": "<https://izmirbalkon.com/kis-bahcesi>; rel=\"canonical\""
+        }
+      ]
+    },
+    {
+      "source": "/pergola.md",
+      "headers": [
+        {
+          "key": "Link",
+          "value": "<https://izmirbalkon.com/pergola>; rel=\"canonical\""
+        }
+      ]
+    },
+    {
+      "source": "/dograma.md",
+      "headers": [
+        {
+          "key": "Link",
+          "value": "<https://izmirbalkon.com/dograma>; rel=\"canonical\""
+        }
+      ]
+    },
+    {
+      "source": "/bilgi.md",
+      "headers": [
+        {
+          "key": "Link",
+          "value": "<https://izmirbalkon.com/bilgi>; rel=\"canonical\""
+        }
+      ]
+    },
+    {
+      "source": "/llms(.*)\\.txt",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/plain; charset=utf-8"
+        }
+      ]
+    },
+    {
+      "source": "/assets/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=2592000"
+        }
+      ]
+    }
   ]
 }
