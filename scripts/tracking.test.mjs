@@ -4,10 +4,11 @@ import { readFileSync } from 'node:fs';
 import { runInNewContext } from 'node:vm';
 const source = readFileSync(new URL('../public/app.js', import.meta.url), 'utf8');
 
-function setup(config = {}, stored = '', search = '', legacy = '') {
+function setup(config = {}, stored = '', search = '', legacy = '', previous = '') {
   const appended = [], events = [], handlers = new Map(), storage = new Map();
   if (legacy) storage.set('izmir_balkon_measurement_v1', legacy);
-  if (stored) storage.set('izmir_balkon_measurement_v2', stored);
+  if (previous) storage.set('izmir_balkon_measurement_v2', previous);
+  if (stored) storage.set('izmir_balkon_measurement_v3', stored);
   const node = (name) => ({hidden:true, addEventListener:(event, fn)=>handlers.set(name + ':' + event, fn)});
   const nodes = Object.fromEntries(['consent-banner','cookie-settings','accept-cookies','reject-cookies'].map(name=>[name,node(name)]));
   const link = {getAttribute:()=> 'tel:+905423551213',dataset:{contact:'phone',position:'hero'}, addEventListener:(event,fn)=>handlers.set(event === 'click' ? 'phone' : 'phone:'+event,fn)};
@@ -38,7 +39,7 @@ test('configured site blocks all measurement before consent, including contact c
 });
 test('refusal persists and keeps Google scripts blocked',()=>{
   const s=setup(configured); s.handlers.get('reject-cookies:click')(); s.handlers.get('phone')();
-  assert.equal(s.storage.get('izmir_balkon_measurement_v2'),'denied');
+  assert.equal(s.storage.get('izmir_balkon_measurement_v3'),'denied');
   assert.equal(s.appended.length,0); assert.equal(s.window.dataLayer.length,0);
 });
 test('consented click sends an intent event and configured conversion without form data',()=>{
@@ -53,7 +54,7 @@ test('consented click sends an intent event and configured conversion without fo
 test('revoking a saved grant updates consent and reloads into blocked state',()=>{
   const s=setup(configured,'granted'); assert.equal(s.appended.length,1);
   s.handlers.get('reject-cookies:click')();
-  assert.equal(s.storage.get('izmir_balkon_measurement_v2'),'denied'); assert.ok(s.events.includes('reload'));
+  assert.equal(s.storage.get('izmir_balkon_measurement_v3'),'denied'); assert.ok(s.events.includes('reload'));
   const denied=setup(configured,'denied'); assert.equal(denied.appended.length,0);
 });
 test('malformed public measurement IDs cannot load a third party script',()=>{
@@ -91,7 +92,7 @@ test('wizard and other WhatsApp labels are separate, exactly once per click', ()
   }
   assert.equal(s.appended.length,1);
   const defaults=s.window.dataLayer.find(e=>e[0]==='consent'&&e[1]==='default');
-  assert.equal(defaults[2].ad_user_data,'denied');
+  assert.equal(defaults[2].ad_user_data,'granted');
   assert.equal(defaults[2].ad_personalization,'denied');
 });
 test('missing wizard label never falls back to secondary label; refusal blocks all three', () => {
@@ -151,4 +152,34 @@ test('DataFast-only configuration works and progress sends allowed step names on
   s.handlers.get('reject-cookies:click')();
   const before=s.window.datafast.q.length; s.handlers.get('phone')(clickEvent());
   assert.equal(s.window.datafast.q.length,before); assert.ok(s.events.includes('reload'));
+});
+
+
+test('v1 and v2 grants require fresh consent while prior refusals remain blocked', () => {
+  for (const version of [1, 2]) {
+    for (const choice of ['granted', 'denied']) {
+      const s = setup(datafastConfig, '', '', version === 1 ? choice : '', version === 2 ? choice : '');
+      assert.equal(s.appended.length, 0);
+      assert.equal(s.nodes['consent-banner'].hidden, choice === 'denied');
+      for (const key of ['phone','wizard','other']) s.handlers.get(key)(clickEvent());
+      assert.equal(conversions(s).length, 0);
+      s.handlers.get('accept-cookies:click')();
+      assert.equal(s.storage.get('izmir_balkon_measurement_v3'), 'granted');
+      assert.equal(s.appended.length, 2);
+      const consent = s.window.dataLayer.find(e => e[0] === 'consent');
+      assert.equal(consent[2].ad_user_data, 'granted');
+      assert.equal(consent[2].ad_personalization, 'denied');
+    }
+  }
+});
+test('revocation denies all consent signals and v3 choice takes precedence over old choices', () => {
+  const s = setup(datafastConfig, 'granted', '', 'denied', 'denied');
+  assert.equal(s.appended.length, 2);
+  s.handlers.get('reject-cookies:click')();
+  const update = s.window.dataLayer.find(e => e[0] === 'consent' && e[1] === 'update');
+  assert.deepEqual(Object.values(update[2]), ['denied','denied','denied','denied']);
+  assert.ok(s.events.includes('reload'));
+  const blocked = setup(datafastConfig, 'denied', '', 'granted', 'granted');
+  assert.equal(blocked.appended.length, 0);
+  assert.equal(blocked.nodes['consent-banner'].hidden, true);
 });

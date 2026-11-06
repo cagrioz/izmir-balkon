@@ -75,7 +75,7 @@ The code preserves only `gclid`, `gbraid`, `wbraid` and lowercase `utm_*` attrib
 
 Wizard WhatsApp (`data-position="wizard"`) and phone clicks are **primary intent conversions**; other WhatsApp clicks are **secondary**. Primary is a bidding configuration, not proof of a lead. `quote_step` remains diagnostic. A WhatsApp draft opening is not a sent message. Do not import the same GA4 event as another primary conversion alongside the Google Ads tag.
 
-`ad_user_data` and `ad_personalization` remain `denied` after measurement consent. Do not change either without owner approval. Google's [consent reference](https://support.google.com/google-ads/answer/13802165?hl=en) states that ad-user-data consent affects tag-based measurement and click-ID exports. A local `gtag` command or successful request does not prove Google Ads recorded an attributed conversion. Tag Assistant confirmed outgoing hits on 6 November; account-side attribution remains unverified. See [the separate, unapplied consent proposal](ads/CONSENT-PROPOSAL.md).
+Owner approval on 6 November permits `ad_user_data=granted` only after renewed explicit measurement consent (v3). `ad_personalization` remains `denied`; enhanced conversions and customer-data uploads remain off. Google's [consent reference](https://support.google.com/google-ads/answer/13802165?hl=en) states that ad-user-data consent affects tag-based measurement and click-ID exports. A local `gtag` command or successful request does not prove Google Ads recorded an attributed conversion. Tag Assistant confirmed outgoing hits on 6 November; account-side attribution remains unverified. See [the approved consent scope](ads/CONSENT-PROPOSAL.md).
 
 The genuine base tag ID supplied by the owner is configured; the three action labels are configured and GA4 remains blank. No fake test identifiers are shipped in the live config. The owner has not supplied a legal name, address, public profiles, Search Console or Bing verification tokens and authorized proceeding with the basic trade name “İzmir Balkon”. Identity expansion is deferred; do not call that trade name a verified legal identity or invent an address/sameAs/token.
 
@@ -87,7 +87,7 @@ Matching WhatsApp enquiries back to gclid/gbraid/wbraid requires a backend, iden
 
 ## Launch verification still required
 
-With real IDs: check the live domain in Tag Assistant before consent, after rejection, after acceptance and after revocation. Test phone, wizard WhatsApp and other WhatsApp separately: one tag event per click, the correct destination/label, and conversion acceptance under `ad_user_data=denied`. Never report the mocked unit-test result as an account-side pass. Measure LCP and CLS with tags enabled, compare all wizard-step heights at 320, 390 and 1440 px, and test the banner with the wizard sheet open. Finally run actual phone/WhatsApp flows on an iPhone and Android; desktop emulation is not a substitute.
+With real IDs: check the live domain in Tag Assistant before consent, after rejection, after acceptance and after revocation. Test phone, wizard WhatsApp and other WhatsApp separately: one tag event per click, the correct destination/label, and conversion acceptance under the explicitly consented `ad_user_data=granted` scope. Never report the mocked unit-test result as an account-side pass. Measure LCP and CLS with tags enabled, compare all wizard-step heights at 320, 390 and 1440 px, and test the banner with the wizard sheet open. Finally run actual phone/WhatsApp flows on an iPhone and Android; desktop emulation is not a substitute.
 
 
 ## Turkey call reporting check
@@ -118,6 +118,6 @@ Goals are emitted by the site, and appear in DataFast after the first accepted e
 
 DataFast reads the current URL directly. Before it loads, the site replaces the address with origin + pathname + the existing attribution allowlist (`gclid`, `gbraid`, `wbraid`, `utm_*`), removing other queries and the fragment. The site does not depend on query parameters for rendering. Incoming referrer and technical device metadata may still be processed by DataFast as described in the privacy notice. Cookieless mode limits multi-day attribution; do not equate its visitor counts with Google Ads attributed conversions.
 
-The consent preference is now v2: existing Google-only grants prompt again because DataFast is a new provider. Previous refusals remain refusals. Reject/revoke blocks both providers; revocation reloads the page to stop already-loaded code. Enhanced conversions and ad personalization remain off.
+The consent preference is now v3: existing v1/v2 grants prompt again for the expanded ad-user-data scope approved on 6 November. Previous refusals remain refusals. Reject/revoke blocks both providers; revocation reloads the page to stop already-loaded code. Enhanced conversions and ad personalization remain off.
 
 References: [script configuration](https://datafa.st/docs/script-configuration), [custom goals](https://datafa.st/docs/custom-goals), [cookieless mode](https://datafa.st/docs/gdpr-cookieless-tracking).

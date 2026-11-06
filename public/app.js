@@ -5,13 +5,14 @@
   const ga4Id = /^G-[A-Z0-9]+$/.test(config.ga4Id || '') ? config.ga4Id : '';
   const datafastId = /^dfid_[A-Za-z0-9]+$/.test(config.datafastWebsiteId || '') ? config.datafastWebsiteId : '';
   const hasTracking = Boolean(adsId || ga4Id || datafastId);
-  // A previous Google-only grant does not opt visitors into a new provider.
-  const preferenceKey = 'izmir_balkon_measurement_v2';
+  // New ad-user-data scope requires fresh consent; preserve previous refusals.
+  const preferenceKey = 'izmir_balkon_measurement_v3';
   let consent = '';
   let loaded = false;
   try {
     consent = localStorage.getItem(preferenceKey) || '';
-    if (!consent && localStorage.getItem('izmir_balkon_measurement_v1') === 'denied') consent = 'denied';
+    if (!consent && ['izmir_balkon_measurement_v2', 'izmir_balkon_measurement_v1']
+      .some(key => localStorage.getItem(key) === 'denied')) consent = 'denied';
   } catch {}
   window.dataLayer = window.dataLayer || [];
   function gtag() { window.dataLayer.push(arguments); }
@@ -22,7 +23,7 @@
     if (loaded || !hasTracking || consent !== 'granted') return;
     loaded = true;
     if (adsId || ga4Id) {
-      gtag('consent', 'default', { ad_storage: 'granted', analytics_storage: 'granted', ad_user_data: 'denied', ad_personalization: 'denied' });
+      gtag('consent', 'default', { ad_storage: 'granted', analytics_storage: 'granted', ad_user_data: 'granted', ad_personalization: 'denied' });
       gtag('js', new Date());
     }
     // Do not send arbitrary URL query strings or form selections to analytics.

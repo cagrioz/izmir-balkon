@@ -1,10 +1,10 @@
-# Ayrı onay bekleyen ölçüm değişikliği
+# Onaylanan ölçüm değişikliği
 
-Durum: **Uygulanmadı.** `ad_user_data` hâlâ `denied`.
+Durum: **6 Kasım 2026 tarihinde işletme sahibi açıkça onayladı.** v3 kapsamında yalnızca yeni açık ziyaretçi izninden sonra `ad_user_data=granted`; kişiselleştirme ve gelişmiş dönüşümler kapalı.
 
 6 Kasım canlı testinde üç dönüşüm isteği doğru etiketle gönderildi; Google Ads tablosu hâlâ Unverified. Bu durumun tek nedeninin izin ayarı olduğu kanıtlanmadı. Google, `ad_user_data` izninin etiket tabanlı dönüşüm ölçümünde de kullanıldığını belirtiyor: https://support.google.com/google-ads/answer/13802165?hl=en
 
-Onaylanabilecek somut kapsam:
+Onaylanan somut kapsam:
 
 1. Ziyaretçi açıkça “İzin ver” seçerse `ad_storage`, `analytics_storage` ve `ad_user_data` granted olur. Öncesinde/ret sonrasında Google ve DataFast hiç yüklenmez.
 2. `ad_personalization` denied kalır; yeniden pazarlama ve gelişmiş dönüşümler açılmaz. Ad, telefon, e-posta veya WhatsApp mesajı Google'a yüklenmez.
