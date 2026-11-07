@@ -81,8 +81,15 @@ const footer = `<footer class="site-footer">
         <address>İzmir, Türkiye<br>Telefon ve WhatsApp: <a href="tel:${BUSINESS.phone}" data-contact="phone" data-position="footer">${BUSINESS.phoneDisplay}</a></address>
       </div>
       <nav aria-label="Hizmetler"><h2>Hizmetler</h2><ul>${serviceList.map(([key, s]) => `<li><a href="${pathFor(key)}">${esc(s.cardLabel || s.label)}</a></li>`).join('')}</ul></nav>
-      <nav aria-label="Bilgi"><h2>Bilgi</h2><ul><li><a href="/bilgi">Tüm bilgiler ve sık sorulanlar</a></li><li><a href="/gizlilik">Gizlilik</a></li><li><a href="/llms.txt">AI ajanları için özet</a></li><li><button id="cookie-settings" type="button" hidden>Çerez tercihleri</button></li></ul></nav>
+      <nav aria-label="Bilgi"><h2>Bilgi</h2><ul><li><a href="/bilgi">Tüm bilgiler ve sık sorulanlar</a></li><li><a href="/gizlilik">Gizlilik</a></li><li><a href="/llms.txt">AI ajanları için özet</a></li><li><button id="cookie-settings" type="button" aria-expanded="false" aria-controls="consent-banner" hidden>Ölçüm tercihleri</button></li></ul></nav>
     </div>
+    <section class="wrap consent-banner" id="consent-banner" aria-labelledby="measurement-title" hidden>
+      <h2 id="measurement-title">Ölçüm tercihleri</h2>
+      <p>Google Ads ilk ziyarette çerezsiz, sınırlı sinyaller alır. Buradan tüm ölçümü kapatabilir veya izin verdiğiniz araçları seçebilirsiniz. <a href="/gizlilik">Gizlilik bilgileri</a></p>
+      <label><input type="checkbox" id="allow-datafast"> DataFast ile ziyaretleri ve iletişim tıklamalarını ölç</label>
+      <label><input type="checkbox" id="allow-google"> Google Ads ile reklam ve iletişim tıklamalarını ilişkilendir</label>
+      <div class="consent-actions"><button type="button" id="reject-cookies">Tümünü kapat</button><button type="button" id="accept-cookies">Seçimimi kaydet</button></div>
+    </section>
     <p class="wrap footer-legal">© <span id="year">2026</span> İzmir Balkon · Son güncelleme: <time datetime="${UPDATED}">${UPDATED_TR}</time></p>
   </footer>`;
 

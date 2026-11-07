@@ -192,3 +192,13 @@ test('no invented guarantee, discount or rating is advertised', () => {
     }
   }
 });
+
+test('all tracked pages have one closed, reachable footer preference panel', () => {
+  for (const [path, html] of htmlPages) {
+    const footer = html.slice(html.lastIndexOf('<footer class="site-footer">'));
+    assert.equal((html.match(/id="consent-banner"/g) || []).length, 1, path);
+    assert.match(footer, /aria-expanded="false" aria-controls="consent-banner"/);
+    assert.match(footer, /id="consent-banner"[^>]+hidden>/);
+    for (const provider of ['google', 'datafast']) assert.ok(footer.includes('id="allow-' + provider + '"'));
+  }
+});

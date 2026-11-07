@@ -2,7 +2,7 @@
 
 ## Scope and current state
 
-The site is the acquisition destination. GetSidely manages the connected Google Ads account separately. No campaign has been created, enabled or funded by this repository. No Sidely API key or Google Ads credential is embedded. The owner-supplied Google Ads base tag is configured in public/tracking-config.js and loads after opt-in. Three real conversion action labels are configured: phone and wizard WhatsApp primary, other WhatsApp secondary. Each uses Count=One and zero monetary value. GA4 is off.
+The site is the acquisition destination. GetSidely manages the connected Google Ads account separately. No campaign has been created, enabled or funded by this repository. No Sidely API key or Google Ads credential is embedded. The owner-supplied Google Ads base tag is configured in public/tracking-config.js and uses advanced Consent Mode on a new visit. A saved refusal blocks the tag. Three real conversion action labels are configured: phone and wizard WhatsApp primary, other WhatsApp secondary. Each uses Count=One and zero monetary value. GA4 is off.
 
 ## Activation
 
@@ -10,7 +10,7 @@ On 7 November 2026 Google Ads showed the account-default Contact goal as healthy
 
 1. Connect the intended Google Ads account in getsidely.com and use the verified site domain as the final URL.
 2. Verify the three existing Google Ads website conversion actions; do not create duplicates: phone click (primary, `callClickLabel`), wizard WhatsApp click (primary, `wizardWhatsappClickLabel`), and all other WhatsApp clicks (secondary, `whatsappClickLabel`). All already use Count=One and their real public labels are configured in `public/tracking-config.js`. Never map a missing wizard label to the secondary label. Add a real GA4 `G-…` ID only if wanted. The labels in tests are fictitious and never shipped as configuration.
-3. Check consent acceptance and denial in Google Tag Assistant on the live domain. Confirm one action per real click, correct destination/label, and no Google requests before consent. The real account and identifiers are available; distinguish a sent test hit from Google Ads tag verification and ad-attributed reporting.
+3. Check consent acceptance and denial in Google Tag Assistant on the live domain. Confirm one action per real click, correct destination/label, and redacted cookieless Google requests on a fresh visit. A stored refusal should produce no vendor requests. The real account and identifiers are available; distinguish a sent test hit from Google Ads tag verification and ad-attributed reporting.
 4. Keep the already-enabled Google Ads auto-tagging on. Keep query parameters through any domain redirects. Optional final-URL suffix: `utm_source=google&utm_medium=cpc&utm_campaign={campaignid}&utm_content={creative}&utm_term={keyword}`. Review the suffix and location targeting inside the real campaign before launch.
 5. The chosen deployment must be eligible for commercial use. No paid hosting upgrade is made automatically.
 6. Confirm business/legal identity, real product availability, contact handling, and approved daily budget before the campaign launch.
@@ -87,7 +87,7 @@ Matching WhatsApp enquiries back to gclid/gbraid/wbraid requires a backend, iden
 
 ## Launch verification still required
 
-With real IDs: check the live domain in Tag Assistant before consent, after rejection, after acceptance and after revocation. Test phone, wizard WhatsApp and other WhatsApp separately: one tag event per click, the correct destination/label, and conversion acceptance under the explicitly consented `ad_user_data=granted` scope. Never report the mocked unit-test result as an account-side pass. Measure LCP and CLS with tags enabled, compare all wizard-step heights at 320, 390 and 1440 px, and test the banner with the wizard sheet open. Finally run actual phone/WhatsApp flows on an iPhone and Android; desktop emulation is not a substitute.
+With real IDs: check the live domain in Tag Assistant before consent, after rejection, after acceptance and after revocation. Test phone, wizard WhatsApp and other WhatsApp separately: one tag event per click, the correct destination/label, and conversion acceptance under the explicitly consented `ad_user_data=granted` scope. Never report the mocked unit-test result as an account-side pass. Measure LCP and CLS with tags enabled, compare all wizard-step heights at 320, 390 and 1440 px, and confirm that no preference panel appears over the wizard. Finally run actual phone/WhatsApp flows on an iPhone and Android; desktop emulation is not a substitute.
 
 
 ## Turkey call reporting check
@@ -118,6 +118,8 @@ Goals are emitted by the site, and appear in DataFast after the first accepted e
 
 DataFast reads the current URL directly. Before it loads, the site replaces the address with origin + pathname + the existing attribution allowlist (`gclid`, `gbraid`, `wbraid`, `utm_*`), removing other queries and the fragment. For a nonempty Google click ID and a missing or Google source, it fills missing UTM source and medium with `google` and `cpc` before DataFast loads. Explicit UTM values take precedence. This makes consented, auto-tagged visits filterable going forward. The site does not depend on query parameters for rendering. Incoming referrer and technical device metadata may still be processed by DataFast as described in the privacy notice. Cookieless mode limits multi-day attribution; do not equate its visitor counts with Google Ads attributed conversions.
 
-The consent preference is now v3: existing v1/v2 grants prompt again for the expanded ad-user-data scope approved on 6 November. Previous refusals remain refusals. Reject/revoke blocks both providers; revocation reloads the page to stop already-loaded code. Enhanced conversions and ad personalization remain off.
+On 7 November the opening banner was removed. The footer on every landing page and /bilgi opens independent controls for DataFast and Google. /gizlilik links directly to them. A new visitor receives only Google cookieless measurement with all four consent signals denied, ad data redaction active and URL passthrough disabled. The page address passed to Google omits search parameters until a visitor enables attribution. The site holds the incoming attribution parameters in memory for this page only. Once enabled, full Google measurement uses the three existing conversion labels. DataFast runs only after permission. The dashboard therefore covers a subset of visits, and Google’s limited signals do not guarantee attributable conversions.
+
+The v4 preference records the two providers separately. A v3 grant retains its existing scope. A saved refusal (including v1/v2) blocks both providers. Older grants do not enable full measurement. Revocation stops an already-running vendor by reloading. Enhanced conversions and ad personalization remain off.
 
 References: [script configuration](https://datafa.st/docs/script-configuration), [custom goals](https://datafa.st/docs/custom-goals), [cookieless mode](https://datafa.st/docs/gdpr-cookieless-tracking).

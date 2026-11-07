@@ -23,6 +23,6 @@ Vercel handles TLS issuance and renewal. On a future platform migration, copy th
 
 ## Measurement
 
-Google Ads and the three contact-conversion labels are configured. DataFast is configured in cookieless mode. Both load only after measurement consent; GA4 remains off. Public identifiers live only in `public/tracking-config.js`. See `PILOT.md` and `ads/VALIDATION.md` for account settings and the limits of verification. No campaign was created, enabled or funded.
+Google Ads and the three contact-conversion labels are configured. DataFast is configured in cookieless mode. On a fresh visit Google starts in restricted cookieless mode. Full Google attribution and DataFast each have a separate opt-in in footer preferences. A stored refusal blocks both vendors. GA4 is off. Public identifiers live only in `public/tracking-config.js`. See `PILOT.md` and `ads/VALIDATION.md` for account settings and the limits of verification. No campaign was created, enabled or funded.
 
 On 5 November 2026, a delayed GitHub build of commit `afaed6b` replaced the newer CLI deployment. The deployment containing `44bddef` was promoted again, and the public domain was checked for the DataFast configuration. After deploying, always compare the live tracking config and consent copy with the intended source; a successful CLI build alone does not prove the domain still serves it.

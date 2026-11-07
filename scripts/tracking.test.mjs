@@ -4,13 +4,14 @@ import { readFileSync } from 'node:fs';
 import { runInNewContext } from 'node:vm';
 const source = readFileSync(new URL('../public/app.js', import.meta.url), 'utf8');
 
-function setup(config = {}, stored = '', search = '', legacy = '', previous = '') {
+function setup(config = {}, stored = '', search = '', legacy = '', previous = '', current = '') {
   const appended = [], events = [], handlers = new Map(), storage = new Map();
   if (legacy) storage.set('izmir_balkon_measurement_v1', legacy);
   if (previous) storage.set('izmir_balkon_measurement_v2', previous);
   if (stored) storage.set('izmir_balkon_measurement_v3', stored);
-  const node = (name) => ({hidden:true, addEventListener:(event, fn)=>handlers.set(name + ':' + event, fn)});
-  const nodes = Object.fromEntries(['consent-banner','cookie-settings','accept-cookies','reject-cookies'].map(name=>[name,node(name)]));
+  if (current) storage.set('izmir_balkon_measurement_v4', current);
+  const node = (name) => ({hidden:true, checked:false, focus(){}, scrollIntoView(){}, setAttribute(key,value){this[key]=value;}, addEventListener:(event, fn)=>handlers.set(name + ':' + event, fn)});
+  const nodes = Object.fromEntries(['consent-banner','cookie-settings','accept-cookies','reject-cookies','allow-google','allow-datafast'].map(name=>[name,node(name)]));
   const link = {getAttribute:()=> 'tel:+905423551213',dataset:{contact:'phone',position:'hero'}, addEventListener:(event,fn)=>handlers.set(event === 'click' ? 'phone' : 'phone:'+event,fn)};
   const whatsapp = {getAttribute:()=> 'https://wa.me/905423551213?text=private',dataset:{contact:'whatsapp',position:'wizard'}, addEventListener:(event,fn)=>handlers.set(event === 'click' ? 'wizard' : 'wizard:'+event,fn)};
   const other = {getAttribute:()=> 'https://wa.me/905423551213',dataset:{contact:'whatsapp',position:'footer'}, addEventListener:(event,fn)=>handlers.set(event === 'click' ? 'other' : 'other:'+event,fn)};
@@ -25,6 +26,11 @@ function setup(config = {}, stored = '', search = '', legacy = '', previous = ''
   runInNewContext(source, {window, document, localStorage:{getItem:key=>storage.get(key),setItem:(key,value)=>storage.set(key,value)},location:{origin:'https://izmirbalkon.com',pathname:'/',search,reload:()=>events.push('reload')},CustomEvent:class{constructor(_,options){this.detail=options.detail}},Date,encodeURIComponent,URL,URLSearchParams});
   return {window,nodes,appended,events,handlers,storage,whatsapp};
 }
+function grantBoth(s) {
+  s.nodes['allow-datafast'].checked = true;
+  s.nodes['allow-google'].checked = true;
+  s.handlers.get('accept-cookies:click')();
+}
 const configured = {googleAdsId:'AW-123456789',ga4Id:'G-ABC123',callClickLabel:'call_label'};
 
 test('unconfigured public build never loads Google or shows an unnecessary consent banner',()=>{
@@ -32,18 +38,26 @@ test('unconfigured public build never loads Google or shows an unnecessary conse
   assert.equal(s.appended.length,0); assert.equal(s.nodes['consent-banner'].hidden,true);
   assert.equal(s.window.dataLayer.length,0); assert.equal(s.events[0].event,'phone_click');
 });
-test('configured site blocks all measurement before consent, including contact clicks',()=>{
-  const s=setup(configured); s.handlers.get('phone')();
-  assert.equal(s.nodes['consent-banner'].hidden,false); assert.equal(s.appended.length,0);
-  assert.equal(s.window.dataLayer.length,0);
+test('first visit sends only redacted Google measurement without consent storage or DataFast',()=>{
+  const s=setup({...configured,datafastWebsiteId:'dfid_test'}, '', '?gclid=secret&utm_source=private&email=private');
+  s.handlers.get('phone')({ stopPropagation(){} });
+  assert.equal(s.nodes['consent-banner'].hidden,true);
+  assert.equal(s.appended.length,1);
+  assert.deepEqual(Array.from(Object.values(s.window.dataLayer[0][2])), Array(4).fill('denied'));
+  assert.ok(s.window.dataLayer.some(e=>e[0]==='set' && e[1]==='ads_data_redaction' && e[2]===true));
+  assert.ok(!/private|secret/.test(JSON.stringify(s.window.dataLayer)));
+  assert.equal(s.events.find(e=>e.url).url,'https://izmirbalkon.com/');
+  assert.equal(conversions(s).length,1);
+  assert.equal(s.storage.size,0);
 });
-test('refusal persists and keeps Google scripts blocked',()=>{
+test('explicit refusal stops new events and a returning visitor loads neither vendor',()=>{
   const s=setup(configured); s.handlers.get('reject-cookies:click')(); s.handlers.get('phone')();
-  assert.equal(s.storage.get('izmir_balkon_measurement_v3'),'denied');
-  assert.equal(s.appended.length,0); assert.equal(s.window.dataLayer.length,0);
+  assert.equal(s.storage.get('izmir_balkon_measurement_v4'),'none');
+  assert.equal(conversions(s).length,0); assert.ok(s.events.includes('reload'));
+  assert.equal(setup(configured,'','','','','none').appended.length,0);
 });
 test('consented click sends an intent event and configured conversion without form data',()=>{
-  const s=setup(configured); s.handlers.get('accept-cookies:click')(); s.handlers.get('phone')();
+  const s=setup(configured); grantBoth(s); s.handlers.get('phone')();
   assert.equal(s.appended.length,1); assert.equal(s.appended[0].src,'https://www.googletagmanager.com/gtag/js?id=AW-123456789');
   const intent=s.window.dataLayer.find(e=>e.event==='phone_click');
   assert.deepEqual(Object.keys(intent).sort(),['contact_channel','cta_position','event']);
@@ -54,7 +68,7 @@ test('consented click sends an intent event and configured conversion without fo
 test('revoking a saved grant updates consent and reloads into blocked state',()=>{
   const s=setup(configured,'granted'); assert.equal(s.appended.length,1);
   s.handlers.get('reject-cookies:click')();
-  assert.equal(s.storage.get('izmir_balkon_measurement_v3'),'denied'); assert.ok(s.events.includes('reload'));
+  assert.equal(s.storage.get('izmir_balkon_measurement_v4'),'none'); assert.ok(s.events.includes('reload'));
   const denied=setup(configured,'denied'); assert.equal(denied.appended.length,0);
 });
 test('malformed public measurement IDs cannot load a third party script',()=>{
@@ -63,8 +77,8 @@ test('malformed public measurement IDs cannot load a third party script',()=>{
 });
 test('wizard progress reports the step only, and nothing without consent',()=>{
   const blocked=setup(configured); blocked.handlers.get('document:izmir:funnel')({detail:{step:'size'}});
-  assert.equal(blocked.window.dataLayer.length,0);
-  const s=setup(configured); s.handlers.get('accept-cookies:click')();
+  assert.ok(!blocked.window.dataLayer.some(e => e.event==='quote_step' || e[1]==='quote_step'));
+  const s=setup(configured); grantBoth(s);
   s.handlers.get('document:izmir:funnel')({detail:{step:'size',service:'pergola',district:'Bornova'}});
   const step=s.window.dataLayer.find(e=>e.event==='quote_step');
   assert.deepEqual(Object.keys(step).sort(),['event','quote_step']);
@@ -76,22 +90,22 @@ test('wizard progress reports the step only, and nothing without consent',()=>{
 const conversions = s => s.window.dataLayer.filter(e => e[0] === 'event' && e[1] === 'conversion');
 test('allowlists attribution parameters, preserving duplicates and stripping unrelated queries and fragment', () => {
   const s = setup(configured, 'granted', '?gclid=abc&gbraid=def&wbraid=ghi&utm_source=google&utm_campaign=a%20b&utm_custom=x&utm_source=two&email=private&phone=secret&redirect=https%3A%2F%2Fevil.test&notutm_source=no');
-  const configs = s.window.dataLayer.filter(e => e[0] === 'config');
-  for (const c of configs) assert.equal(c[2].page_location, 'https://izmirbalkon.com/?gclid=abc&gbraid=def&wbraid=ghi&utm_source=google&utm_campaign=a+b&utm_custom=x&utm_source=two');
+  const fields = s.window.dataLayer.find(e => e[0] === 'set' && e[1].page_location);
+  assert.equal(fields[1].page_location, 'https://izmirbalkon.com/?gclid=abc&gbraid=def&wbraid=ghi&utm_source=google&utm_campaign=a+b&utm_custom=x&utm_source=two');
   assert.ok(!JSON.stringify(s.window.dataLayer).includes('private'));
 });
 test('wizard and other WhatsApp labels are separate, exactly once per click', () => {
   const s = setup({...configured, wizardWhatsappClickLabel:'wizard_label', whatsappClickLabel:'other_label'});
   s.handlers.get('wizard')(); s.handlers.get('other')();
-  assert.equal(conversions(s).length, 0);
-  s.handlers.get('accept-cookies:click')(); s.handlers.get('accept-cookies:click')();
+  assert.equal(conversions(s).length, 2);
+  grantBoth(s); grantBoth(s);
   for (const [key,label] of [['phone','call_label'],['wizard','wizard_label'],['other','other_label']]) {
     const before=conversions(s).length; s.handlers.get(key)();
     assert.equal(conversions(s).length,before+1);
     assert.equal(conversions(s).at(-1)[2].send_to, 'AW-123456789/'+label);
   }
   assert.equal(s.appended.length,1);
-  const defaults=s.window.dataLayer.find(e=>e[0]==='consent'&&e[1]==='default');
+  const defaults=s.window.dataLayer.findLast(e=>e[0]==='consent');
   assert.equal(defaults[2].ad_user_data,'granted');
   assert.equal(defaults[2].ad_personalization,'denied');
 });
@@ -109,19 +123,19 @@ test('DataFast is blocked before consent and after refusal; old Google-only gran
   for (const [saved,legacy] of [['',''],['denied',''],['','granted'],['','denied']]) {
     const s=setup(datafastConfig,saved,'',legacy);
     s.handlers.get('wizard')(clickEvent());
-    assert.equal(s.appended.length,0); assert.equal(s.window.datafast,undefined);
-    assert.equal(s.nodes['consent-banner'].hidden, saved==='denied'||legacy==='denied');
+    assert.equal(s.appended.length, saved==='denied'||legacy==='denied' ? 0 : 1); assert.equal(s.window.datafast,undefined);
+    assert.equal(s.nodes['consent-banner'].hidden, true);
   }
 });
 test('DataFast loads once after consent with clean URL and no payment capture', () => {
   const s=setup(datafastConfig,'','?utm_source=google&gclid=abc&message=private');
-  s.handlers.get('accept-cookies:click')(); s.handlers.get('accept-cookies:click')();
+  grantBoth(s); grantBoth(s);
   assert.equal(s.appended.length,2);
   const script=s.appended.find(x=>x.src.includes('datafa.st'));
   assert.equal(script.src,'https://datafa.st/js/script.cookieless.js');
   assert.equal(script.attributes['data-website-id'],'dfid_publicTest123');
   assert.equal(script.attributes['data-disable-payments'],'true');
-  assert.equal(s.events.find(x=>x.url).url,'https://izmirbalkon.com/?utm_source=google&gclid=abc&utm_medium=cpc');
+  assert.equal(s.events.findLast(x=>x.url).url,'https://izmirbalkon.com/?utm_source=google&gclid=abc&utm_medium=cpc');
 });
 test('three DataFast contact goals fire once without draft data or automatic outbound-link capture', () => {
   const s=setup(datafastConfig,'granted');
@@ -159,14 +173,14 @@ test('v1 and v2 grants require fresh consent while prior refusals remain blocked
   for (const version of [1, 2]) {
     for (const choice of ['granted', 'denied']) {
       const s = setup(datafastConfig, '', '', version === 1 ? choice : '', version === 2 ? choice : '');
-      assert.equal(s.appended.length, 0);
-      assert.equal(s.nodes['consent-banner'].hidden, choice === 'denied');
+      assert.equal(s.appended.length, choice === 'denied' ? 0 : 1);
+      assert.equal(s.nodes['consent-banner'].hidden, true);
       for (const key of ['phone','wizard','other']) s.handlers.get(key)(clickEvent());
-      assert.equal(conversions(s).length, 0);
-      s.handlers.get('accept-cookies:click')();
-      assert.equal(s.storage.get('izmir_balkon_measurement_v3'), 'granted');
+      assert.equal(conversions(s).length, choice === 'denied' ? 0 : 1);
+      grantBoth(s);
+      assert.equal(s.storage.get('izmir_balkon_measurement_v4'), 'both');
       assert.equal(s.appended.length, 2);
-      const consent = s.window.dataLayer.find(e => e[0] === 'consent');
+      const consent = s.window.dataLayer.findLast(e => e[0] === 'consent');
       assert.equal(consent[2].ad_user_data, 'granted');
       assert.equal(consent[2].ad_personalization, 'denied');
     }
@@ -193,5 +207,21 @@ test('DataFast classifies auto-tagged landings only after consent and respects e
   for (const query of ['?gclid=', '?utm_source=newsletter&gclid=x', '?utm_source=google&utm_medium=custom&wbraid=x', '?utm_campaign=brand']) {
     const s = setup(datafastConfig, 'granted', query);
     assert.equal(new URL(s.events.find(event => event.url).url).search, query);
+  }
+});
+
+test('separate provider choices and a saved refusal take precedence over earlier grants', () => {
+  for (const choice of ['google', 'datafast', 'both', 'none']) {
+    const s = setup(datafastConfig, 'granted', '', '', '', choice);
+    s.handlers.get('cookie-settings:click')();
+    assert.equal(s.nodes['consent-banner'].hidden, false);
+    for (const provider of ['google', 'datafast']) {
+      const enabled = choice === provider || choice === 'both';
+      assert.equal(s.nodes['allow-' + provider].checked, enabled);
+      assert.equal(s.appended.some(script => script.src.includes(provider === 'google' ? 'googletagmanager' : 'datafa.st')), enabled);
+    }
+    s.handlers.get('phone')(clickEvent());
+    assert.equal(conversions(s).length, choice === 'google' || choice === 'both' ? 1 : 0);
+    assert.equal(s.window.datafast?.q?.length || 0, choice === 'datafast' || choice === 'both' ? 1 : 0);
   }
 });
