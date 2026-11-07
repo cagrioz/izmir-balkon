@@ -89,3 +89,11 @@ Owner explicitly approved the ad-user-data scope and confirmed they do not manag
 - Final Google Ads table still showed all three actions **Inactive**, Primary / Primary / Secondary, Count One, zero attributed conversions. Tag Assistant confirms transmission, not advertising attribution or a confirmed lead. Account-side verification remains pending; do not report all readiness checks as completed.
 
 Owner follow-up: choose launch budget/bid cap/contact coverage, complete real iPhone and Android flows, provide publishable address/profile URLs/verification tokens when available, and retain evidence for the site's 15+/200+ claims before using those claims in ads. A clean post-v3 network/performance measurement and subsequent account status check remain outstanding. No new privacy-scope approval is needed for those read-only checks.
+
+
+## 7 November 2026 · Live verification
+
+- A normal Chrome visit with a unique QA campaign parameter was visible in the DataFast campaign detail report. It recorded one visitor and no contact goal. The automated browser checks used separate sessions.
+- Fresh visits and visits after rejection loaded neither analytics provider. After consent the Google and DataFast scripts returned HTTP 200. The three contact actions each produced one logical conversion. The real Google tag produced requests carrying the correct label for each action, intercepted in the test browser before transmission.
+- Google Ads listed the Contact goal as Healthy / Active and all three actions as No recent conversions, with phone and wizard WhatsApp primary and other WhatsApp secondary. The live account had auto-tagging enabled. An attributed customer conversion remains a separate outcome.
+- At 320×568, 390×844 and 1440×900 the phone and main quote action fit in the initial viewport with the consent prompt available below the hero. The wizard kept the same height across all three steps at each width. One 390×844 desktop Chrome emulation with tags enabled recorded CLS 0 and a 401 ms load event on a warm reload.
