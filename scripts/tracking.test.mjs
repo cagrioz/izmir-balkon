@@ -121,7 +121,7 @@ test('DataFast loads once after consent with clean URL and no payment capture', 
   assert.equal(script.src,'https://datafa.st/js/script.cookieless.js');
   assert.equal(script.attributes['data-website-id'],'dfid_publicTest123');
   assert.equal(script.attributes['data-disable-payments'],'true');
-  assert.equal(s.events.find(x=>x.url).url,'https://izmirbalkon.com/?utm_source=google&gclid=abc');
+  assert.equal(s.events.find(x=>x.url).url,'https://izmirbalkon.com/?utm_source=google&gclid=abc&utm_medium=cpc');
 });
 test('three DataFast contact goals fire once without draft data or automatic outbound-link capture', () => {
   const s=setup(datafastConfig,'granted');
@@ -182,4 +182,16 @@ test('revocation denies all consent signals and v3 choice takes precedence over 
   const blocked = setup(datafastConfig, 'denied', '', 'granted', 'granted');
   assert.equal(blocked.appended.length, 0);
   assert.equal(blocked.nodes['consent-banner'].hidden, true);
+});
+
+test('DataFast classifies auto-tagged landings only after consent and respects explicit UTMs', () => {
+  for (const key of ['gclid', 'gbraid', 'wbraid']) {
+    const s = setup(datafastConfig, 'granted', '?' + key + '=test&message=private');
+    const url = new URL(s.events.find(event => event.url).url);
+    assert.deepEqual(Object.fromEntries(url.searchParams), { [key]: 'test', utm_source: 'google', utm_medium: 'cpc' });
+  }
+  for (const query of ['?gclid=', '?utm_source=newsletter&gclid=x', '?utm_source=google&utm_medium=custom&wbraid=x', '?utm_campaign=brand']) {
+    const s = setup(datafastConfig, 'granted', query);
+    assert.equal(new URL(s.events.find(event => event.url).url).search, query);
+  }
 });

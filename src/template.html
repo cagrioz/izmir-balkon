@@ -34,10 +34,6 @@
   <script type="application/ld+json">{{jsonld}}</script>
 </head>
 <body data-service="{{service}}">
-  <aside id="consent-banner" class="consent-banner" aria-label="Çerez tercihi" hidden>
-    <p>Google Ads ile reklam tıklamalarını iletişim tıklamalarıyla ilişkilendirmemize ve DataFast ile ziyaretleri ölçmemize izin verir misiniz? <a href="/gizlilik">Ayrıntılar</a></p>
-    <div class="consent-actions"><button type="button" id="reject-cookies">Yalnızca gerekli</button><button type="button" id="accept-cookies">İzin ver</button></div>
-  </aside>
   <a class="skip-link" href="#icerik">İçeriğe geç</a>
   {{sprite}}
   {{header}}
@@ -106,6 +102,11 @@
         </section>
       </div>
     </section>
+
+    <aside id="consent-banner" class="wrap consent-banner" aria-label="Ölçüm tercihi" hidden>
+            <p>DataFast ile ziyaretleri, Google Ads ile reklamdan gelen arama ve WhatsApp tıklamalarını ölçebilir miyiz? <a href="/gizlilik">Ayrıntılar</a></p>
+            <div class="consent-actions"><button type="button" id="reject-cookies">Reddet</button><button type="button" id="accept-cookies">İzin ver</button></div>
+          </aside>
 
     <section class="voc on-dark" aria-labelledby="voc-title">
       <div class="wrap">

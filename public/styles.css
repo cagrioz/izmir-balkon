@@ -79,7 +79,7 @@ summary::-webkit-details-marker { display: none; }
 .btn-outline:hover { background: var(--ink); color: var(--white); }
 
 /* Header */
-.site-header { background: var(--white); border-bottom: 1px solid var(--line); }
+.site-header { position: sticky; top: 0; z-index: 20; background: var(--white); border-bottom: 1px solid var(--line); }
 .header-inner { display: flex; align-items: center; justify-content: space-between; gap: .75rem; min-height: 3.5rem; }
 .brand { display: inline-flex; align-items: center; gap: .5rem; min-height: 2.75rem; font-size: 1.1875rem; font-weight: 800; letter-spacing: -.035em; white-space: nowrap; }
 .brand img { width: 1.5rem; height: 1.5rem; }
@@ -332,8 +332,7 @@ details[open] > summary > .icon { transform: rotate(180deg); }
 .lightbox-stage figcaption span { color: var(--on-dark-muted); }
 
 /* Consent: one line and two buttons, so it never buries the hero on a phone. */
-.consent-banner { position: fixed; left: .5rem; right: .5rem; bottom: .5rem; z-index: 40; display: grid; gap: .5rem; padding: .625rem .75rem; background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-sm); box-shadow: 0 8px 28px rgb(11 27 51 / .18); }
-.dock:not([hidden]) ~ .consent-banner { bottom: calc(var(--dock-height) + env(safe-area-inset-bottom) + .5rem); }
+.consent-banner { display: grid; gap: .5rem; align-self: start; margin-block: .5rem 1rem; padding: .625rem .75rem; border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--white); }
 .consent-banner p { color: var(--muted); font-size: .8125rem; line-height: 1.35; }
 .consent-banner p a { text-decoration: underline; }
 .consent-actions { display: flex; gap: .5rem; }
@@ -374,7 +373,6 @@ ol.doc-list { list-style: decimal; }
   .band-actions { justify-items: start; }
   .closing-actions, .doc-actions { display: flex; flex-wrap: wrap; }
   .footer-grid { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr); }
-  .consent-banner { left: 1.25rem; right: auto; bottom: 1.25rem; width: 26rem; }
 }
 
 /* Desktop: promise on the left, photo bleeding off the right edge, wizard floating over it. */
@@ -445,7 +443,6 @@ ol.doc-list { list-style: decimal; }
 
   .site-footer { padding-bottom: 1.5rem; }
   .dock { display: none; }
-  .consent-banner, .dock:not([hidden]) ~ .consent-banner { bottom: 1.25rem; }
 }
 
 /* Narrow desktops: a slimmer card, and the supporting line gives way to the photo. */
@@ -483,7 +480,6 @@ ol.doc-list { list-style: decimal; }
 @media (max-height: 26.25rem) {
   .dock { display: none; }
   .site-footer { padding-bottom: 1.5rem; }
-  .consent-banner, .dock:not([hidden]) ~ .consent-banner { bottom: .5rem; }
   .site-header { position: static; }
   html { scroll-padding-top: 1rem; scroll-padding-bottom: 1rem; }
 }
@@ -493,13 +489,12 @@ ol.doc-list { list-style: decimal; }
   *, *::before, *::after { transition: none !important; animation: none !important; }
 }
 
-/* Consent remains in document flow: it cannot cover the wizard or its sheet actions. */
-.consent-banner, .dock:not([hidden]) ~ .consent-banner {
-  position: relative; inset: auto; width: auto; max-width: none;
-  margin: 0; border-radius: 0; box-shadow: none;
-  padding: .75rem max(1rem, calc((100% - 78rem) / 2));
-}
 @media (min-width: 48rem) {
-  .consent-banner { grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 1rem; }
-  .consent-actions { min-width: 20rem; }
+  .consent-banner { grid-template-columns: 1fr auto; align-items: center; }
+  .consent-actions { min-width: 13rem; }
+}
+@media (max-width: 40rem) and (max-height: 43rem) {
+  .hero-photo { grid-row: 3; }
+  .hero-inner { gap: .5rem; }
+  .hero-copy .stats { display: none; }
 }

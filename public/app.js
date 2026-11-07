@@ -43,7 +43,14 @@
     if (datafastId) {
       // DataFast reads location.href, so remove arbitrary queries/fragments first.
       // No page in this site needs query parameters for its functionality.
-      window.history.replaceState(window.history.state, '', pageLocation);
+      // DataFast groups paid visits by UTMs. Auto-tagged Google Ads links may only carry a click ID.
+      const params = pageUrl.searchParams;
+      const googleClick = ['gclid', 'gbraid', 'wbraid'].some(key => params.get(key)?.trim());
+      if (googleClick && (!params.has('utm_source') || params.get('utm_source')?.toLowerCase() === 'google')) {
+        if (!params.has('utm_source')) params.set('utm_source', 'google');
+        if (!params.has('utm_medium')) params.set('utm_medium', 'cpc');
+      }
+      window.history.replaceState(window.history.state, '', pageUrl.href);
       window.datafast = window.datafast || function () {
         (window.datafast.q = window.datafast.q || []).push(arguments);
       };
