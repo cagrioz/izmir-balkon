@@ -29,7 +29,8 @@
   const datafastOption = document.getElementById('allow-datafast');
   let googleLoaded = false;
   let datafastLoaded = false;
-  const permits = provider => preference === 'both' || preference === provider;
+  const permits = provider => preference === 'both' || preference === provider ||
+    (provider === 'datafast' && preference === '');
   window.dataLayer = window.dataLayer || [];
   function gtag() { window.dataLayer.push(arguments); }
 
@@ -62,7 +63,7 @@
     const googleActive = googleId && (!preference || permits('google'));
     const datafastActive = datafastId && permits('datafast');
     if (!googleActive && !datafastActive) return;
-    const pageLocation = preference ? measurementUrl() : cleanPage;
+    const pageLocation = datafastActive || permits('google') ? measurementUrl() : cleanPage;
     // Keep working in-page links, discard arbitrary fragments before loading vendor code.
     const anchor = location.hash && /^#[a-z][a-z0-9-]*$/.test(location.hash) &&
       document.getElementById(location.hash.slice(1)) ? location.hash : '';
@@ -74,7 +75,7 @@
       gtag('set', 'ads_data_redaction', true);
       gtag('set', 'url_passthrough', false);
       gtag('set', {
-        page_location: pageLocation,
+        page_location: permits('google') ? pageLocation : cleanPage,
         page_referrer: document.referrer ? new URL(document.referrer).origin : '',
         allow_google_signals: false,
         allow_ad_personalization_signals: false

@@ -85,7 +85,7 @@ const footer = `<footer class="site-footer">
     </div>
     <section class="wrap consent-banner" id="consent-banner" aria-labelledby="measurement-title" hidden>
       <h2 id="measurement-title">Ölçüm tercihleri</h2>
-      <p>Google Ads ilk ziyarette çerezsiz, sınırlı sinyaller alır. Buradan tüm ölçümü kapatabilir veya izin verdiğiniz araçları seçebilirsiniz. <a href="/gizlilik">Gizlilik bilgileri</a></p>
+      <p>DataFast ziyaretleri çerezsiz sayar. Google Ads ilk ziyarette sınırlı sinyaller alır. Ölçümü buradan kapatabilirsiniz. <a href="/gizlilik">Gizlilik bilgileri</a></p>
       <label><input type="checkbox" id="allow-datafast"> DataFast ile ziyaretleri ve iletişim tıklamalarını ölç</label>
       <label><input type="checkbox" id="allow-google"> Google Ads ile reklam ve iletişim tıklamalarını ilişkilendir</label>
       <div class="consent-actions"><button type="button" id="reject-cookies">Tümünü kapat</button><button type="button" id="accept-cookies">Seçimimi kaydet</button></div>

@@ -38,15 +38,15 @@ test('unconfigured public build never loads Google or shows an unnecessary conse
   assert.equal(s.appended.length,0); assert.equal(s.nodes['consent-banner'].hidden,true);
   assert.equal(s.window.dataLayer.length,0); assert.equal(s.events[0].event,'phone_click');
 });
-test('first visit sends only redacted Google measurement without consent storage or DataFast',()=>{
-  const s=setup({...configured,datafastWebsiteId:'dfid_test'}, '', '?gclid=secret&utm_source=private&email=private');
+test('first visit sends redacted Google measurement and cookieless DataFast without storing consent',()=>{
+  const s=setup({...configured,datafastWebsiteId:'dfid_test123'}, '', '?gclid=secret&utm_source=private&email=private');
   s.handlers.get('phone')({ stopPropagation(){} });
   assert.equal(s.nodes['consent-banner'].hidden,true);
-  assert.equal(s.appended.length,1);
+  assert.equal(s.appended.length,2);
   assert.deepEqual(Array.from(Object.values(s.window.dataLayer[0][2])), Array(4).fill('denied'));
   assert.ok(s.window.dataLayer.some(e=>e[0]==='set' && e[1]==='ads_data_redaction' && e[2]===true));
   assert.ok(!/private|secret/.test(JSON.stringify(s.window.dataLayer)));
-  assert.equal(s.events.find(e=>e.url).url,'https://izmirbalkon.com/');
+  assert.equal(s.events.find(e=>e.url).url,'https://izmirbalkon.com/?utm_source=private');
   assert.equal(conversions(s).length,1);
   assert.equal(s.storage.size,0);
 });
@@ -119,11 +119,13 @@ test('missing wizard label never falls back to secondary label; refusal blocks a
 
 const datafastConfig = {...configured, datafastWebsiteId:'dfid_publicTest123'};
 const clickEvent = () => ({stopped:false, stopPropagation(){this.stopped=true;}});
-test('DataFast is blocked before consent and after refusal; old Google-only grants need fresh consent', () => {
+test('DataFast counts first visits and honors existing refusals', () => {
   for (const [saved,legacy] of [['',''],['denied',''],['','granted'],['','denied']]) {
     const s=setup(datafastConfig,saved,'',legacy);
     s.handlers.get('wizard')(clickEvent());
-    assert.equal(s.appended.length, saved==='denied'||legacy==='denied' ? 0 : 1); assert.equal(s.window.datafast,undefined);
+    const denied = saved==='denied'||legacy==='denied';
+    assert.equal(s.appended.length, denied ? 0 : 2);
+    assert.equal(s.window.datafast?.q?.length || 0, denied ? 0 : 1);
     assert.equal(s.nodes['consent-banner'].hidden, true);
   }
 });
@@ -173,7 +175,7 @@ test('v1 and v2 grants require fresh consent while prior refusals remain blocked
   for (const version of [1, 2]) {
     for (const choice of ['granted', 'denied']) {
       const s = setup(datafastConfig, '', '', version === 1 ? choice : '', version === 2 ? choice : '');
-      assert.equal(s.appended.length, choice === 'denied' ? 0 : 1);
+      assert.equal(s.appended.length, choice === 'denied' ? 0 : 2);
       assert.equal(s.nodes['consent-banner'].hidden, true);
       for (const key of ['phone','wizard','other']) s.handlers.get(key)(clickEvent());
       assert.equal(conversions(s).length, choice === 'denied' ? 0 : 1);
