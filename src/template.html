@@ -30,7 +30,7 @@
   <noscript><style>.wiz-steps,.wiz-bar,.wiz-meta,.wiz-call,.quote-nav{display:none!important}</style></noscript>
   <script src="/tracking-config.js" defer></script>
   <script src="/app.js" defer></script>
-  <script src="/ui.js" defer></script>
+  <script src="/ui.js" defer></script>{{estimateAssets}}
   <script type="application/ld+json">{{jsonld}}</script>
 </head>
 <body data-service="{{service}}">
@@ -53,44 +53,7 @@
         </div>
 
         <div id="teklif-yuva" class="hero-form">
-          <section id="teklif" class="wiz" data-at="service" aria-labelledby="wiz-title">
-            <div class="wiz-head">
-              <h2 id="wiz-title">Ücretsiz keşif ve net fiyat</h2>
-              <p class="wiz-meta" data-wiz-count aria-live="polite">Adım 1 / 3</p>
-              <div class="wiz-bar" aria-hidden="true"><span></span></div>
-            </div>
-
-            <div class="wiz-steps">
-              <div class="wiz-step" data-step="service">
-                <p class="wiz-q" id="q-service" tabindex="-1">Ne yaptırmak istiyorsunuz?</p>
-                <div class="wiz-tiles" role="group" aria-labelledby="q-service">{{tiles}}</div>
-                <button class="btn btn-primary btn-lg wiz-next" type="button" data-wiz-next>Ücretsiz keşif ve fiyat al<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button>
-              </div>
-
-              <div class="wiz-step" data-step="size" hidden>
-                <div class="wiz-sel"><img data-wiz-photo src="{{pickedPhoto}}" width="480" height="480" decoding="async" alt=""><span class="wiz-sel-text" data-wiz-service>{{picked}}</span><button class="wiz-link" type="button" data-wiz-go="service">Değiştir</button></div>
-                <div class="wiz-size-stack">{{sizes}}</div>
-              </div>
-
-              <div class="wiz-step" data-step="district" hidden>
-                <div class="wiz-sel"><img data-wiz-photo src="{{pickedPhoto}}" width="480" height="480" decoding="async" alt=""><span class="wiz-sel-text" data-wiz-summary>{{picked}}</span><button class="wiz-link" type="button" data-wiz-go="size">Geri</button></div>
-                <label class="wiz-q" for="district" id="q-district" tabindex="-1">Hangi ilçedesiniz?</label>
-                <div class="select">
-                  <select id="district" name="district">
-                    <option value="">İlçenizi seçin</option>
-                    {{districtOptions}}
-                  </select>
-                  <svg class="icon" aria-hidden="true"><use href="#i-chevron-down"/></svg>
-                </div>
-                <p class="wiz-bubble" data-ghost="{{longestDraft}}"><span data-wiz-bubble></span></p>
-                <a id="wiz-send" class="btn btn-wa btn-lg" target="_blank" rel="noopener noreferrer" data-contact="whatsapp" data-position="wizard"><svg class="icon" aria-hidden="true"><use href="#i-whatsapp"/></svg>WhatsApp’ta mesajı açın</a>
-                <p class="wiz-note">Mesajı siz gönderirsiniz. Fotoğraf eklerseniz fiyat netleşir.</p>
-              </div>
-            </div>
-
-            <a class="btn btn-ghost wiz-call" href="tel:+905423551213" data-contact="phone" data-position="wizard"><svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg>Hemen arayın: 0542 355 12 13</a>
-            <noscript><p class="wiz-noscript"><a class="btn btn-wa btn-lg" href="https://wa.me/905423551213">WhatsApp’tan yazın</a><a class="btn btn-ghost" href="tel:+905423551213">Arayın: 0542 355 12 13</a></p></noscript>
-          </section>
+{{quoteCard}}
         </div>
 
         <section class="hero-quotes" data-quotes aria-label="Müşteri yorumlarından">
@@ -134,7 +97,7 @@
           <p>Keşif ücretsiz, zorunluluk yok.</p>
         </div>
         <div class="band-actions">
-          <a class="btn btn-white btn-lg" href="#teklif" data-open-wizard>Ücretsiz keşif al<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          <a class="btn btn-white btn-lg" {{quoteTarget}}>{{bandAction}}<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
           <a class="band-call" href="tel:+905423551213" data-contact="phone" data-position="band">ya da arayın: <strong>0542 355 12 13</strong></a>
         </div>
       </div>
@@ -150,7 +113,7 @@
         <aside class="price-card" aria-labelledby="ask-title">
           <h3 id="ask-title">Teklifleri karşılaştırırken sorun</h3>
           <ul class="ask-list">{{askList}}</ul>
-          <a class="btn btn-primary btn-lg" href="#teklif" data-open-wizard>Ölçünüze özel fiyat alın<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          <a class="btn btn-primary btn-lg" {{quoteTarget}}>{{priceAction}}<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
         </aside>
       </div>
     </section>
@@ -225,10 +188,7 @@
     <a class="dock-call" href="tel:+905423551213" aria-label="Ara: 0542 355 12 13" data-contact="phone" data-position="mobile_sticky"><svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg></a>
   </nav>
 
-  <dialog id="teklif-sheet" class="sheet" aria-labelledby="wiz-title">
-    <button class="sheet-close" type="button" aria-label="Kapat" data-sheet-close><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></button>
-    <div class="sheet-body"></div>
-  </dialog>
+{{quoteSheet}}
 
   <dialog id="lightbox" class="lightbox on-dark" aria-labelledby="lightbox-title">
     <div class="lightbox-top">

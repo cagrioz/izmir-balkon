@@ -51,8 +51,9 @@ test('each service page matches its ad and starts with its service selected', ()
     assert.ok(html.includes(`<span class="h1-key">${service.h1Key}</span>`), key);
     assert.ok(html.includes(`<link rel="canonical" href="https://izmirbalkon.com/${key}">`), key);
     assert.ok(html.includes(`<body data-service="${key}">`), key);
-    assert.ok(html.includes(`data-pick-service="${key}" aria-pressed="true"`), key);
-    assert.equal((html.match(/aria-pressed="true"/g) || []).length, 1, key);
+    assert.ok(html.includes('id="fiyat-hesapla"'), key);
+    assert.ok(!html.includes('data-pick-service=') && !html.includes('id="district"'), key);
+    assert.ok(html.includes('data-position="wizard"') && html.includes('id="estimate-send"'), key);
     assert.ok(html.includes(`<img class="hero-img" src="${service.hero.lg}"`), key);
     assert.ok(html.includes(`<link rel="alternate" type="text/markdown" href="/${key}.md"`), key);
   }

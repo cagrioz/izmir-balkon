@@ -4,6 +4,7 @@
   "framework": null,
   "cleanUrls": true,
   "trailingSlash": false,
+  "redirects": [{ "source": "/cambalkon", "destination": "/cam-balkon", "permanent": true }],
   "headers": [
     {
       "source": "/(.*)",

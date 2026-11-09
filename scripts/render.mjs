@@ -1,7 +1,7 @@
 // Renders every page and machine-readable file from scripts/facts.mjs and public/reviews-data.js.
 import { readFileSync } from 'node:fs';
 import { runInNewContext } from 'node:vm';
-import { SITE, UPDATED, UPDATED_TR, BUSINESS, DISTRICTS, SUMMARY, SUMMARY_EN, PRICE_FACTORS, QUOTE_QUESTIONS, STEPS, SERVICES, HOME, ALL_FAQ, VOC, HERO_QUOTES, PROCESS_QUOTE, FEATURED_REVIEWS, GALLERY } from './facts.mjs';
+import { SITE, UPDATED, UPDATED_TR, BUSINESS, DISTRICTS, SUMMARY, SUMMARY_EN, PRICE_FACTORS, QUOTE_QUESTIONS, STEPS, SERVICES, ESTIMATES, HOME, ALL_FAQ, VOC, HERO_QUOTES, PROCESS_QUOTE, FEATURED_REVIEWS, GALLERY } from './facts.mjs';
 
 const read = path => readFileSync(new URL(`../${path}`, import.meta.url), 'utf8');
 const context = { window: {} };
@@ -59,7 +59,7 @@ const sprite = `<svg class="sprite" xmlns="http://www.w3.org/2000/svg" aria-hidd
     <symbol id="i-stars" viewBox="0 0 120 24"><g id="i-star-one"><path d="m12 2.6 2.9 5.9 6.5.95-4.7 4.6 1.1 6.5L12 17.5l-5.8 3.05 1.1-6.5-4.7-4.6 6.5-.95L12 2.6Z"/></g><use href="#i-star-one" x="24"/><use href="#i-star-one" x="48"/><use href="#i-star-one" x="72"/><use href="#i-star-one" x="96"/></symbol>
   </defs></svg>`;
 
-const header = base => `<header class="site-header">
+const header = (base, estimate = false) => `<header class="site-header">
     <div class="wrap header-inner">
       <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="32" height="32"><span>İzmir Balkon</span></a>
       <nav class="header-nav" aria-label="Ana menü">
@@ -70,7 +70,7 @@ const header = base => `<header class="site-header">
         <a href="${base}#sorular">Sorular</a>
       </nav>
       <a class="header-call" href="tel:${BUSINESS.phone}" aria-label="Ara: ${BUSINESS.phoneDisplay}" data-contact="phone" data-position="header"><svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg>${BUSINESS.phoneDisplay}</a>
-      <a class="btn btn-primary header-cta" href="${base}#teklif"${base ? '' : ' data-open-wizard'}>Ücretsiz keşif al</a>
+      <a class="btn btn-primary header-cta" href="${base}${estimate ? '#fiyat-hesapla' : '#teklif'}"${base || estimate ? '' : ' data-open-wizard'}>${estimate ? 'Fiyatı hesapla' : 'Ücretsiz keşif al'}</a>
     </div>
   </header>`;
 
@@ -170,7 +170,24 @@ export function renderPage(key) {
     nodes.push(breadcrumb(url, data.cardLabel || data.label));
     nodes.push({ '@type': 'Service', '@id': `${url}#hizmet`, name: data.cardLabel || data.label, serviceType: data.cardLabel || data.label, description: data.summary, url, provider: { '@id': `${SITE}/#isletme` }, areaServed: { '@type': 'City', name: 'İzmir' }, offers: { '@type': 'Offer', name: 'Ücretsiz keşif', price: 0, priceCurrency: 'TRY' } });
   }
-  return fill(read('src/template.html'), {
+  const estimate = ESTIMATES[key];
+  const base = read('src/template.html')
+    .replace('{{quoteCard}}', read(estimate ? 'src/service-estimate.html' : 'src/home-wizard.html').trimEnd())
+    .replace('{{quoteSheet}}', estimate ? '' : read('src/home-sheet.html').trimEnd());
+  return fill(base, {
+    quoteTarget: estimate ? 'href="#fiyat-hesapla"' : 'href="#teklif" data-open-wizard',
+    bandAction: estimate ? 'Yaklaşık fiyatı gör' : 'Ücretsiz keşif al',
+    priceAction: estimate ? 'Ölçünüzle hesaplayın' : 'Ölçünüze özel fiyat alın',
+    estimateAssets: estimate ? '<link rel="stylesheet" href="/estimate.css"><script type="module" src="/estimate.js"></script>' : '',
+    ...(estimate && {
+      estimateTitle: esc(estimate.title), model: esc(estimate.model), quantityLabel: esc(estimate.label),
+      inputMode: estimate.unit === 'adet' ? 'numeric' : 'decimal', example: esc(estimate.example),
+      unit: esc(estimate.unit), hint: esc(estimate.hint), scope: esc(estimate.scope), sourceUrl: esc(estimate.url),
+      sourceName: esc(estimate.source), rateLow: estimate.low, rateHigh: estimate.high,
+      unitRange: [estimate.low, estimate.high].map(n => n.toLocaleString('tr-TR')).join('–'),
+      taxLabel: estimate.unit === 'adet' ? ' · KDV hariç' : '',
+      estimateWa: wa(quoteMessage(data.phrase))
+    }),
     title: esc(data.title),
     description: esc(data.description),
     canonical: url,
@@ -181,7 +198,7 @@ export function renderPage(key) {
     preload: `<link rel="preload" as="image" href="${hero.lg}" imagesrcset="${hero.sm} 800w, ${hero.lg} ${hero.w}w" imagesizes="(min-width: 60rem) 62vw, 100vw" fetchpriority="high">`,
     jsonld: graph(nodes),
     sprite,
-    header: header(''),
+    header: header('', Boolean(estimate)),
     footer,
     service: selected,
     heroImg: `<img class="hero-img" src="${hero.lg}" srcset="${hero.sm} 800w, ${hero.lg} ${hero.w}w" sizes="(min-width: 60rem) 62vw, 100vw" width="${hero.w}" height="${hero.h}" fetchpriority="high"${hero.pos ? ` style="object-position:${hero.pos}"` : ''} alt="${esc(hero.alt)}">`,
@@ -201,7 +218,7 @@ export function renderPage(key) {
     quoteDots,
     gallery,
     voc: VOC.map(([label, quote, name]) => `<li><strong>${esc(label)}</strong><blockquote>“${quote[0] === quote[0].toLocaleUpperCase('tr') ? '' : '… '}${esc(quote)}”</blockquote><cite>${esc(name)}</cite></li>`).join(''),
-    svcCards: serviceList.map(([id, s]) => `<a class="svc svc-${id}${id === key ? ' is-current' : ''}" href="${pathFor(id)}"${id === key ? ' data-open-wizard' : ''}><img src="${s.cardImg.src}" width="${s.cardImg.w}" height="${s.cardImg.h}" loading="lazy" decoding="async"${s.cardImg.pos ? ` style="object-position:${s.cardImg.pos}"` : ''} alt=""><span class="svc-body"><strong>${esc(s.cardLabel || s.label)}</strong><small>${esc(s.card)}</small><span class="svc-go">Fiyat alın<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span></span></a>`).join(''),
+    svcCards: serviceList.map(([id, s]) => `<a class="svc svc-${id}${id === key ? ' is-current' : ''}" href="${id === key ? '#fiyat-hesapla' : pathFor(id)}"><img src="${s.cardImg.src}" width="${s.cardImg.w}" height="${s.cardImg.h}" loading="lazy" decoding="async"${s.cardImg.pos ? ` style="object-position:${s.cardImg.pos}"` : ''} alt=""><span class="svc-body"><strong>${esc(s.cardLabel || s.label)}</strong><small>${esc(s.card)}</small><span class="svc-go">Fiyat alın<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span></span></a>`).join(''),
     priceList: PRICE_FACTORS.map(([name, text]) => `<li><strong>${esc(name)}</strong><span>${esc(text)}</span></li>`).join(''),
     askList: QUOTE_QUESTIONS.map(text => `<li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>${esc(text)}</li>`).join(''),
     steps: STEPS.map(([name, text]) => `<li><strong>${esc(name)}</strong><span>${esc(text)}</span></li>`).join(''),

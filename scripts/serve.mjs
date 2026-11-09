@@ -8,6 +8,10 @@ const types = { '.html':'text/html; charset=utf-8', '.md':'text/markdown; charse
 createServer(async (req, res) => {
   try {
     const path = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);
+    if (path === '/cambalkon') {
+      res.writeHead(308, { Location: '/cam-balkon' + new URL(req.url, 'http://localhost').search });
+      return res.end();
+    }
     const pageless = path === '/' ? '/index' : path;
     const generated = renderAll();
     const markdown = prefersMarkdown(req.headers.accept) && generated.has(`${pageless}.md`);

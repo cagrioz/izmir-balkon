@@ -1,0 +1,17 @@
+          <section class="wiz estimate" id="fiyat-hesapla" aria-labelledby="estimate-title" tabindex="-1" data-low="{{rateLow}}" data-high="{{rateHigh}}" data-unit="{{unit}}" data-tax="{{taxLabel}}" data-model="{{model}}">
+            <div class="estimate-heading"><span class="estimate-kicker">Fiyat hesabı</span>
+              <h2 id="estimate-title">{{estimateTitle}}</h2><p>{{model}}</p></div>
+            <div id="estimate-input" hidden>
+              <label for="quantity">{{quantityLabel}}</label>
+              <div class="estimate-field"><input id="quantity" type="text" inputmode="{{inputMode}}" maxlength="9" placeholder="Örn. {{example}}" aria-describedby="estimate-help"><span>{{unit}}</span></div>
+              <p id="estimate-help">{{hint}}</p>
+            </div>
+            <div class="estimate-result" aria-live="polite" aria-atomic="true">
+              <span id="result-label">Birim fiyat örneği · {{unit}}{{taxLabel}}</span>
+              <strong id="result-value">{{unitRange}} TL</strong>
+              <p>Yaklaşık piyasa aralığıdır. Net fiyatı ücretsiz keşifte veriyoruz.</p>
+            </div>
+            <a class="btn btn-primary btn-lg" id="estimate-send" href="{{estimateWa}}" data-contact="whatsapp" data-position="wizard" target="_blank" rel="noopener noreferrer"><svg class="icon" aria-hidden="true"><use href="#i-whatsapp"/></svg>WhatsApp’tan teklif iste</a>
+            <p class="estimate-or">Ölçüyü bilmiyorsanız fotoğrafla da yazabilirsiniz.</p>
+            <details class="estimate-source"><summary>Fiyat neye dayanıyor?</summary><p>{{scope}} <a href="{{sourceUrl}}" target="_blank" rel="noopener noreferrer">{{sourceName}} fiyat listesi</a> · 9 Kasım 2026.</p></details>
+          </section>

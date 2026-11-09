@@ -62,8 +62,8 @@ const VILLA_HERO = { lg: '/assets/work/villa-kose.webp', sm: '/assets/work/villa
 export const SERVICES = {
   'cam-balkon': {
     label: 'Cam balkon', phrase: 'cam balkon', fact: 'Yaklaşık ölçü', photoNoun: 'Balkonumun',
-    title: 'İzmir Cam Balkon: Ücretsiz Keşif, Net Fiyat | İzmir Balkon',
-    description: 'İzmir’in 30 ilçesinde katlanır ve sürme cam balkon. 15+ yıl deneyim, ücretsiz keşif, ölçünüze özel net fiyat. WhatsApp veya telefon: 0542 355 12 13.',
+    title: 'İzmir Cam Balkon Fiyat Hesaplama | İzmir Balkon',
+    description: 'Balkonunuzun cam alanına göre 8 mm sürme cam balkon için yaklaşık bütçeyi görün. İzmir’de ücretsiz keşif ve ölçünüze özel teklif isteyin.',
     h1Key: 'İzmir’de cam balkon', h1Line: 'Rüzgâra kapalı, manzaraya açık.',
     lead: 'Katlanır ve sürme cam balkon. Ücretsiz keşifte ölçünüzü alır, net fiyatı söyleriz.',
     summary: 'Cam balkon, balkonu rüzgâr, yağmur ve tozdan koruyan, istendiğinde açılan cam kapatma sistemidir. İzmir Balkon katlanır ve sürme sistem uygular.',
@@ -75,8 +75,8 @@ export const SERVICES = {
   },
   'kis-bahcesi': {
     label: 'Kış bahçesi', phrase: 'kış bahçesi', fact: 'Yaklaşık alan', photoNoun: 'Terasımın',
-    title: 'İzmir Kış Bahçesi: Ücretsiz Keşif, Net Fiyat | İzmir Balkon',
-    description: 'İzmir’in 30 ilçesinde teras ve bahçeye kış bahçesi. 15+ yıl deneyim, ücretsiz keşif, ölçünüze özel net fiyat. WhatsApp veya telefon: 0542 355 12 13.',
+    title: 'İzmir Kış Bahçesi Fiyat Hesaplama | İzmir Balkon',
+    description: 'Kış bahçenizin zemin alanına göre panel çatı ve sürme cam için yaklaşık bütçeyi görün. Ölçünüze özel teklif ve ücretsiz keşif isteyin.',
     h1Key: 'İzmir’de kış bahçesi', h1Line: 'Yağmura kapalı, gökyüzüne açık.',
     lead: 'Terasınız ya da bahçeniz yıl boyu oturma alanına dönüşsün. Ücretsiz keşifte ölçünüzü alır, net fiyatı söyleriz.',
     summary: 'Kış bahçesi, teras ya da bahçenin çatısı ve yanları camla kapatılarak yıl boyu kullanılabilen bir oturma alanına dönüştürülmesidir.',
@@ -88,8 +88,8 @@ export const SERVICES = {
   },
   pergola: {
     label: 'Pergola', phrase: 'pergola', fact: 'Yaklaşık alan', photoNoun: 'Terasımın',
-    title: 'İzmir Pergola Sistemleri: Ücretsiz Keşif | İzmir Balkon',
-    description: 'İzmir’in 30 ilçesinde teras ve bahçeye pergola. 15+ yıl deneyim, ücretsiz keşif, ölçünüze özel net fiyat. WhatsApp veya telefon: 0542 355 12 13.',
+    title: 'İzmir Pergola Fiyat Hesaplama | İzmir Balkon',
+    description: 'Terasınızın ölçüsünü girin, sabit pergola için yaklaşık fiyat aralığını görün. İzmir’de ücretsiz keşif ve net teklif için bize yazın.',
     h1Key: 'İzmir’de pergola', h1Line: 'Güneşe gölge, yağmura çatı.',
     lead: 'Teras ve bahçeniz için gölge ve yağmur koruması. Ücretsiz keşifte ölçünüzü alır, net fiyatı söyleriz.',
     summary: 'Pergola, teras ve bahçede gölge ve yağmur koruması sağlayan çatı sistemidir. Yanlar genellikle açık kalır.',
@@ -102,8 +102,8 @@ export const SERVICES = {
   dograma: {
     label: 'Pencere ve kapı', phrase: 'pencere ve kapı doğraması', fact: 'Yaklaşık adet', photoNoun: 'Pencerelerimin',
     cardLabel: 'PVC ve alüminyum doğrama',
-    title: 'İzmir PVC ve Alüminyum Doğrama: Ücretsiz Keşif | İzmir Balkon',
-    description: 'İzmir’in 30 ilçesinde PVC ve alüminyum pencere, kapı, sürme sistem, sineklik ve cam değişimi. 15+ yıl deneyim, ücretsiz keşif. 0542 355 12 13.',
+    title: 'İzmir PVC Pencere ve Doğrama Fiyatları | İzmir Balkon',
+    description: 'Standart PVC pencere için adede göre yaklaşık bütçeyi görün. Farklı ölçüler, kapılar ve alüminyum doğrama için İzmir’de ücretsiz keşif isteyin.',
     h1Key: 'İzmir’de PVC ve alüminyum doğrama', h1Line: 'Sese ve soğuğa kapalı, ışığa açık.',
     lead: 'Pencere, kapı, sürme sistem, sineklik ve cam değişimi. Ücretsiz keşifte ölçünüzü alır, net fiyatı söyleriz.',
     summary: 'İzmir Balkon, ev ve iş yerleri için PVC ve alüminyum pencere, kapı ve sürme sistem uygular; sineklik ve cam değişimi de yapar.',
@@ -168,3 +168,35 @@ export const GALLERY = [
     { file: 'cam-bolme-tamam-ic', sm: 600, w: 1200, h: 1600, title: 'Cam bölme, iç görünüm', note: 'İç mekân, tamamlanmış', alt: 'Koyu çerçeveli cam bölmenin içinde masalar ve sandalyeler', vw: 22 }
   ]
 ];
+
+// Public comparison figures, not İzmir Balkon offers. Keep scopes and units with the rates.
+export const ESTIMATES = {
+  'cam-balkon': {
+    title: 'Cam balkon kaç TL tutar?', model: '8 mm camlı standart sürme sistem',
+    label: 'Kapanacak cam alanı', hint: 'Camla kapanacak cephelerin toplam uzunluğunu cam yüksekliğiyle çarpın. Zemini ölçmeyin.',
+    example: '7,5', unit: 'm²', low: 4000, high: 4500,
+    source: 'Cam Balkon İzmir', url: 'https://www.cambalkonizmir.com.tr/',
+    scope: 'İzmir için yayımlanan 2026 örneği; malzeme ve montaj dahil. KDV durumu belirtilmemiş.'
+  },
+  pergola: {
+    title: 'Pergola kaç TL tutar?', model: 'Sabit pergola',
+    label: 'Gölgelenecek alan', hint: 'Terasın enini pergolanın öne doğru uzanacağı mesafeyle çarpın.',
+    example: '15', unit: 'm²', low: 6000, high: 9000,
+    source: 'İzmir Tente Branda', url: 'https://izmirtentebranda.com/izmir-tente-fiyatlari-2026/',
+    scope: 'İzmir için yayımlanan 2026 sabit sistem örneği. Motorlu sistem ve yan camlar bu hesapta yok. KDV ve montaj kapsamı keşifte netleşir.'
+  },
+  'kis-bahcesi': {
+    title: 'Kış bahçesi kaç TL tutar?', model: 'Panel çatı ve tek camlı sürme cephe',
+    label: 'Kapatılacak zemin alanı', hint: 'Kış bahçesinin zeminde kaplayacağı en ve boyu çarpın.',
+    example: '20', unit: 'm²', low: 3500, high: 5500,
+    source: 'Kış Bahçesi İzmir', url: 'https://www.kisbahcesiizmir.com.tr/kis-bahcesi-fiyatlari-izmir/',
+    scope: 'İzmir için yayımlanan 2026 örneği; panel çatı ve tek camlı sürme cephe içindir. Cam çatı ve zemin hazırlığı ayrı değerlendirilir. KDV durumu belirtilmemiş.'
+  },
+  dograma: {
+    title: 'PVC pencere kaç TL tutar?', model: '100 × 120 cm çift kanatlı PVC pencere',
+    label: 'Bu ölçüde kaç pencere var?', hint: 'Farklı ölçü, kapı veya alüminyum doğrama için doğrudan yazabilirsiniz.',
+    example: '3', unit: 'adet', low: 8000, high: 12000,
+    source: 'Egepen Akçayapı', url: 'https://egepenakcayapi.com.tr/products/pvc-dograma/',
+    scope: 'İstanbul için yayımlanan 2026 karşılaştırması; montaj dahil, KDV hariç. İzmir teklifimiz yerinde ölçüyle belirlenir.'
+  }
+};
