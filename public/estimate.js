@@ -28,7 +28,7 @@ export function initEstimate(card) {
     label.textContent = size + ' için tahmini toplam' + card.dataset.tax;
     value.textContent = range;
     const link = new URL(baseLink);
-    link.searchParams.set('text', 'Merhaba, ' + model + ' için teklif almak istiyorum. Yaklaşık ölçüm: ' + size + '. Sitede gördüğüm piyasa aralığı ' + range + card.dataset.tax + '. Ücretsiz keşif için görüşebilir miyiz?');
+    link.searchParams.set('text', 'Merhaba, ' + model + ' için teklif almak istiyorum. Yaklaşık ölçüm: ' + size + '. Yaklaşık tutar: ' + range + card.dataset.tax + '. Ücretsiz keşif için görüşebilir miyiz?');
     send.href = link.href;
   }
   card.querySelector('#estimate-input').hidden = false;

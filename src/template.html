@@ -44,7 +44,7 @@
         <div class="hero-photo">{{heroImg}}</div>
         <div class="hero-copy">
           <h1 id="hero-title"><span class="h1-key">{{h1Key}}</span> <span class="h1-line">{{h1Line}}</span></h1>
-          <p class="hero-lead">{{lead}}</p>
+          {{heroLead}}
           <ul class="stats">
             <li><strong>15+</strong><span>yıl deneyim</span></li>
             <li><a href="#yorumlar"><strong>200+</strong><span>müşteri <svg class="stars" role="img" aria-label="5 yıldız"><use href="#i-stars"/></svg></span></a></li>
@@ -66,107 +66,7 @@
       </div>
     </section>
 
-    <section class="voc on-dark" aria-labelledby="voc-title">
-      <div class="wrap">
-        <h2 id="voc-title">Bizi müşterilerimiz anlatsın</h2>
-        <ul class="voc-list">{{voc}}</ul>
-      </div>
-    </section>
-
-    <section id="islerimiz" class="section" aria-labelledby="work-title">
-      <div class="wrap">
-        <div class="section-head">
-          <h2 id="work-title">Kendi işlerimizden</h2>
-          <p>Bu bölümdeki fotoğrafların hepsi kendi uygulamalarımız. Büyütmek için dokunun.</p>
-        </div>
-        <div class="work-track">{{gallery}}</div>
-      </div>
-    </section>
-
-    <section id="hizmetler" class="section section-gray" aria-labelledby="services-title">
-      <div class="wrap">
-        <div class="section-head"><h2 id="services-title">Hizmetlerimiz</h2></div>
-        <div class="svc-grid">{{svcCards}}</div>
-      </div>
-    </section>
-
-    <section id="kesif-cagri" class="band on-dark" aria-labelledby="band-title">
-      <div class="wrap band-inner">
-        <div>
-          <h2 id="band-title">Evinize gelelim, ölçelim, net fiyatı söyleyelim.</h2>
-          <p>Keşif ücretsiz, zorunluluk yok.</p>
-        </div>
-        <div class="band-actions">
-          <a class="btn btn-white btn-lg" {{quoteTarget}}>{{bandAction}}<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-          <a class="band-call" href="tel:+905423551213" data-contact="phone" data-position="band">ya da arayın: <strong>0542 355 12 13</strong></a>
-        </div>
-      </div>
-    </section>
-
-    <section id="fiyat" class="section" aria-labelledby="price-title">
-      <div class="wrap price">
-        <div>
-          <h2 id="price-title">Fiyat neye göre değişir?</h2>
-          <p class="price-lead">Tek bir metrekare fiyatı yanıltıcı olur. Net fiyatı dört şey belirler:</p>
-          <ol class="price-list">{{priceList}}</ol>
-        </div>
-        <aside class="price-card" aria-labelledby="ask-title">
-          <h3 id="ask-title">Teklifleri karşılaştırırken sorun</h3>
-          <ul class="ask-list">{{askList}}</ul>
-          <a class="btn btn-primary btn-lg" {{quoteTarget}}>{{priceAction}}<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-        </aside>
-      </div>
-    </section>
-
-    <section id="surec" class="section section-gray" aria-labelledby="process-title">
-      <div class="wrap process">
-        <figure class="process-photo"><img src="/assets/work/dograma-lazer-olcu-sm.webp" srcset="/assets/work/dograma-lazer-olcu-sm.webp 600w, /assets/work/dograma-lazer-olcu.webp 1200w" sizes="(min-width: 60rem) 40vw, 100vw" width="1200" height="1600" loading="lazy" decoding="async" alt="Usta, mağaza girişindeki doğrama boşluğunda zemine koyduğu lazerle ölçü alıyor"><figcaption>Kendi işimizden: lazerle yerinde ölçü</figcaption></figure>
-        <div>
-          <h2 id="process-title">Üç adımda tamam</h2>
-          <ol class="steps">{{steps}}</ol>
-          <blockquote class="process-quote">“{{processQuote}}”<cite>{{processQuoteBy}}</cite></blockquote>
-        </div>
-      </div>
-    </section>
-
-    <section id="yorumlar" class="section" aria-labelledby="reviews-title">
-      <div class="wrap">
-        <div class="section-head">
-          <h2 id="reviews-title">Müşteri yorumları</h2>
-          <p>Pencere, kapı, cam ve sineklik işlerimizden sonra bırakılan yorumlar.</p>
-        </div>
-        <div class="review-track">{{reviewsFeatured}}</div>
-        <details class="more-reviews">
-          <summary class="btn btn-outline">Tüm yorumları göster<svg class="icon" aria-hidden="true"><use href="#i-chevron-down"/></svg></summary>
-          <div class="review-grid">{{reviewsRest}}</div>
-        </details>
-      </div>
-    </section>
-
-    <section id="sorular" class="section section-gray" aria-labelledby="faq-title">
-      <div class="wrap faq">
-        <div>
-          <h2 id="faq-title">{{faqTitle}}</h2>
-          <p class="faq-call">Sorunuz burada yoksa arayın: <a href="tel:+905423551213" data-contact="phone" data-position="faq">0542 355 12 13</a></p>
-          <p class="faq-more"><a href="/bilgi">Fiyat, bölge ve hizmetler hakkında tüm bilgiler</a></p>
-        </div>
-        <div class="faq-items">{{faq}}</div>
-      </div>
-    </section>
-
-    <section id="hakkinda" class="section" aria-labelledby="about-title">
-      <div class="wrap about">
-        <div>
-          <h2 id="about-title">İzmir Balkon hakkında</h2>
-          <p class="about-text">{{aboutText}}</p>
-        </div>
-        <div>
-          <dl class="facts">{{factsList}}</dl>
-          <h3 class="about-h3">Hizmet verdiğimiz ilçeler</h3>
-          <p class="districts">{{districtList}}</p>
-        </div>
-      </div>
-    </section>
+{{mainContent}}
 
     <section id="son-adim" class="closing on-dark" aria-labelledby="closing-title">
       <img class="closing-img" src="/assets/work/villa-kose.webp" srcset="/assets/work/villa-kose-sm.webp 800w, /assets/work/villa-kose.webp 1419w" sizes="100vw" width="1419" height="716" loading="lazy" decoding="async" alt="">

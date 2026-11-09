@@ -18,3 +18,8 @@
 .estimate-source p { padding-top: .25rem; }
 .estimate-source a { text-decoration: underline; }
 @media (min-width:60rem) { .estimate { align-self: center; gap: 1rem; } }
+
+.work-film .work-media { position:relative; aspect-ratio:1.5; background:var(--ink); }
+.work-film .work-media img { object-fit:contain; }
+.play-symbol { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); border-radius:50%; background:var(--blue); color:white; padding:.7rem 1rem; }
+@media (min-width:60rem) { .service-work .work { max-width:36rem; } .service-work .work-media { max-height:23rem; } }

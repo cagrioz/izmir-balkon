@@ -1,7 +1,7 @@
 // Renders every page and machine-readable file from scripts/facts.mjs and public/reviews-data.js.
 import { readFileSync } from 'node:fs';
 import { runInNewContext } from 'node:vm';
-import { SITE, UPDATED, UPDATED_TR, BUSINESS, DISTRICTS, SUMMARY, SUMMARY_EN, PRICE_FACTORS, QUOTE_QUESTIONS, STEPS, SERVICES, ESTIMATES, HOME, ALL_FAQ, VOC, HERO_QUOTES, PROCESS_QUOTE, FEATURED_REVIEWS, GALLERY } from './facts.mjs';
+import { SITE, UPDATED, UPDATED_TR, BUSINESS, DISTRICTS, SUMMARY, SUMMARY_EN, PRICE_FACTORS, QUOTE_QUESTIONS, STEPS, SERVICES, ESTIMATES, HOME, ALL_FAQ, VOC, HERO_QUOTES, PROCESS_QUOTE, FEATURED_REVIEWS, GALLERY, TERRACE_FRAME, PANEL_VIDEO, SERVICE_PROOF } from './facts.mjs';
 
 const read = path => readFileSync(new URL(`../${path}`, import.meta.url), 'utf8');
 const context = { window: {} };
@@ -64,8 +64,8 @@ const header = (base, estimate = false) => `<header class="site-header">
       <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="32" height="32"><span>İzmir Balkon</span></a>
       <nav class="header-nav" aria-label="Ana menü">
         <a href="${base}#islerimiz">İşlerimiz</a>
-        <a href="${base}#hizmetler">Hizmetler</a>
-        <a href="${base}#fiyat">Fiyat</a>
+        <a href="${estimate ? '/' : base}#hizmetler">Hizmetler</a>
+        <a href="${estimate ? '#fiyat-hesapla' : base + '#fiyat'}">Fiyat</a>
         <a href="${base}#yorumlar">Yorumlar</a>
         <a href="${base}#sorular">Sorular</a>
       </nav>
@@ -123,6 +123,7 @@ const galleryItem = item => {
   const srcset = item.sm ? ` srcset="/assets/work/${item.file}-sm.webp ${item.sm}w, ${full} ${item.w}w" sizes="(min-width: 60rem) ${item.vw}vw, 84vw"` : '';
   return `<a class="work" style="--r:${(item.w / item.h).toFixed(3)}" href="${full}" data-gallery data-title="${esc(item.title)}" data-note="${esc(item.note)}."><span class="work-media"><img src="${item.sm ? `/assets/work/${item.file}-sm.webp` : full}"${srcset} width="${item.w}" height="${item.h}" loading="lazy" decoding="async" alt="${esc(item.alt)}"></span><span class="work-label"><strong>${esc(item.title)}</strong><small>${esc(item.note)}</small></span></a>`;
 };
+const videoItem = v => `<a class="work work-film" style="--r:1.5" href="${esc(v.file)}" target="_blank" rel="noopener"><span class="work-media"><img src="${esc(v.cover)}" width="${v.w}" height="${v.h}" loading="lazy" decoding="async" alt=""><span class="play-symbol" aria-hidden="true">▶</span></span><span class="work-label"><strong>${esc(v.title)}</strong><small>${esc(v.note)}</small></span></a>`;
 const gallery = GALLERY.map(row => `<div class="work-row">${row.map(galleryItem).join('')}</div>`).join('');
 
 const faqHtml = items => items.map(([q, a], index) => `<details${index === 0 ? ' open' : ''}><summary><h3>${esc(q)}</h3><svg class="icon" aria-hidden="true"><use href="#i-chevron-down"/></svg></summary><p>${esc(a)}</p></details>`).join('');
@@ -165,13 +166,16 @@ export function renderPage(key) {
   const selected = key === 'home' ? 'cam-balkon' : key;
   const url = key === 'home' ? `${SITE}/` : `${SITE}/${key}`;
   const { hero } = data;
-  const nodes = [businessNode(), websiteNode, webPageNode(url, data.title, data.description, `${SITE}${hero.og}`), faqNode(data.faq, url)];
+  const proof = SERVICE_PROOF[key];
+  const pageFaq = proof?.faq || data.faq;
+  const nodes = [businessNode(), websiteNode, webPageNode(url, data.title, data.description, `${SITE}${hero.og}`), faqNode(pageFaq, url)];
   if (key !== 'home') {
     nodes.push(breadcrumb(url, data.cardLabel || data.label));
     nodes.push({ '@type': 'Service', '@id': `${url}#hizmet`, name: data.cardLabel || data.label, serviceType: data.cardLabel || data.label, description: data.summary, url, provider: { '@id': `${SITE}/#isletme` }, areaServed: { '@type': 'City', name: 'İzmir' }, offers: { '@type': 'Offer', name: 'Ücretsiz keşif', price: 0, priceCurrency: 'TRY' } });
   }
   const estimate = ESTIMATES[key];
   const base = read('src/template.html')
+    .replace('{{mainContent}}', read(estimate ? 'src/service-content.html' : 'src/home-content.html').trimEnd())
     .replace('{{quoteCard}}', read(estimate ? 'src/service-estimate.html' : 'src/home-wizard.html').trimEnd())
     .replace('{{quoteSheet}}', estimate ? '' : read('src/home-sheet.html').trimEnd());
   return fill(base, {
@@ -180,10 +184,14 @@ export function renderPage(key) {
     priceAction: estimate ? 'Ölçünüzle hesaplayın' : 'Ölçünüze özel fiyat alın',
     estimateAssets: estimate ? '<link rel="stylesheet" href="/estimate.css"><script type="module" src="/estimate.js"></script>' : '',
     ...(estimate && {
-      estimateTitle: esc(estimate.title), model: esc(estimate.model), quantityLabel: esc(estimate.label),
+      workTitle: esc(proof.title),
+      workItems: proof.files.map(id => id === 'video' ? videoItem(PANEL_VIDEO) : galleryItem([TERRACE_FRAME, ...GALLERY.flat()].find(item => item.file === id))).join(''),
+      resultNote: estimate.ownerRange ? 'Net teklif için ücretsiz keşif.' : 'Piyasa örneğidir. Net fiyat keşifte belirlenir.',
+      rateDetails: estimate.ownerRange ? '' : `<details class="estimate-source"><summary>Fiyatın kaynağı</summary><p>${esc(estimate.scope)} <a href="${esc(estimate.url)}" target="_blank" rel="noopener noreferrer">${esc(estimate.source)}</a> · Kasım 2026.</p></details>`,
+      estimateTitle: esc(estimate.title), estimateSubtitle: estimate.ownerRange ? '' : `<p>${esc(estimate.model)}</p>`, model: esc(estimate.model), quantityLabel: esc(estimate.label),
       inputMode: estimate.unit === 'adet' ? 'numeric' : 'decimal', example: esc(estimate.example),
-      unit: esc(estimate.unit), hint: esc(estimate.hint), scope: esc(estimate.scope), sourceUrl: esc(estimate.url),
-      sourceName: esc(estimate.source), rateLow: estimate.low, rateHigh: estimate.high,
+      unit: esc(estimate.unit), hint: esc(estimate.hint),
+      rateLow: estimate.low, rateHigh: estimate.high,
       unitRange: [estimate.low, estimate.high].map(n => n.toLocaleString('tr-TR')).join('–'),
       taxLabel: estimate.unit === 'adet' ? ' · KDV hariç' : '',
       estimateWa: wa(quoteMessage(data.phrase))
@@ -204,7 +212,7 @@ export function renderPage(key) {
     heroImg: `<img class="hero-img" src="${hero.lg}" srcset="${hero.sm} 800w, ${hero.lg} ${hero.w}w" sizes="(min-width: 60rem) 62vw, 100vw" width="${hero.w}" height="${hero.h}" fetchpriority="high"${hero.pos ? ` style="object-position:${hero.pos}"` : ''} alt="${esc(hero.alt)}">`,
     h1Key: esc(data.h1Key),
     h1Line: esc(data.h1Line),
-    lead: esc(data.lead),
+    heroLead: estimate ? '' : `<p class="hero-lead">${esc(data.lead)}</p>`,
     tiles: serviceList.map(([id, s]) => `<button class="tile" type="button" data-pick-service="${id}" aria-pressed="${id === selected}"><img src="${tilePhoto(id)}" width="480" height="480" decoding="async" alt=""><span class="tile-label">${esc(s.label)}</span><svg class="icon tile-check" aria-hidden="true"><use href="#i-check"/></svg></button>`).join(''),
     picked: esc(SERVICES[selected].label),
     pickedPhoto: tilePhoto(selected),
@@ -224,10 +232,10 @@ export function renderPage(key) {
     steps: STEPS.map(([name, text]) => `<li><strong>${esc(name)}</strong><span>${esc(text)}</span></li>`).join(''),
     processQuote: esc(PROCESS_QUOTE[0]),
     processQuoteBy: esc(PROCESS_QUOTE[1]),
-    reviewsFeatured: featuredReviews.map(reviewCard).join(''),
+    reviewsFeatured: (estimate ? featuredReviews.slice(0,3) : featuredReviews).map(reviewCard).join(''),
     reviewsRest: otherReviews.map(reviewCard).join(''),
     faqTitle: esc(data.faqTitle),
-    faq: faqHtml(data.faq),
+    faq: faqHtml(pageFaq),
     aboutText: esc(key === 'home' ? SUMMARY : `${data.summary} ${SUMMARY}`),
     factsList,
     districtList: esc(DISTRICTS.join(', ')),
@@ -291,7 +299,7 @@ export function renderPageMarkdown(key) {
 
 ${data.h1Line} ${data.lead}
 
-Web sayfası: ${url}
+Web sayfası: ${url}${ESTIMATES[key] ? '\n\n' + ESTIMATES[key].model + ': ' + [ESTIMATES[key].low, ESTIMATES[key].high].map(x => x.toLocaleString('tr-TR')).join('–') + ' TL/' + ESTIMATES[key].unit + '. ' + (ESTIMATES[key].ownerRange ? 'İzmir Balkon yaklaşık fiyatı. Net teklif ücretsiz keşifte belirlenir.' : 'Örnek piyasa aralığı. ' + ESTIMATES[key].scope) : ''}
 
 ${data.summary}
 

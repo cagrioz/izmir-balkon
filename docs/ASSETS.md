@@ -101,3 +101,6 @@ Published files: `public/assets/work/cam-balkon-montaj.webp`, `cam-balkon-montaj
 Final prompt:
 
 > Edit target: the supplied real installation photograph. Make exactly one small, local clothing correction: extend the hem of the man's existing dark royal-blue T-shirt down naturally so it completely covers the small exposed strip of lower-back skin immediately above his jeans. Match the existing fabric color, folds, texture, lighting and raised-arm tension. Preserve the man's identity, face, pose, hands, arms, jeans, body proportions, and every other part of the photograph. Preserve all glass panels, architectural geometry, reflections, dog, plants, containers, furniture, composition, framing and original photographic appearance. Do not clean up the scene, add objects, crop, beautify, restyle or change lighting. This is a precise modesty retouch of a real portfolio photograph, not a new scene. Output the full original composition.
+
+## November 9 service galleries
+Owner-supplied terrace photo: metal frame during assembly. Do not label it as a finished pergola or winter garden. WebP sizes: 360 and 768 pixels wide. Balcony clip: 19 silent seconds from the supplied minute-long demonstration, with a 320-pixel WebP cover. Only /cam-balkon links to the MP4, as a normal link: no embed, preload, autoplay, or player script.
