@@ -4,7 +4,7 @@ import { resolve, extname } from 'node:path';
 import { renderAll } from './render.mjs';
 import { prefersMarkdown } from '../middleware.js';
 const root = resolve('public');
-const types = { '.html':'text/html; charset=utf-8', '.md':'text/markdown; charset=utf-8', '.css':'text/css', '.js':'text/javascript', '.svg':'image/svg+xml', '.jpg':'image/jpeg', '.webp':'image/webp', '.png':'image/png', '.woff2':'font/woff2', '.xml':'application/xml', '.txt':'text/plain; charset=utf-8' };
+const types = { '.html':'text/html; charset=utf-8', '.md':'text/markdown; charset=utf-8', '.css':'text/css', '.js':'text/javascript', '.svg':'image/svg+xml', '.jpg':'image/jpeg', '.webp':'image/webp', '.avif':'image/avif', '.png':'image/png', '.woff2':'font/woff2', '.xml':'application/xml', '.txt':'text/plain; charset=utf-8' };
 createServer(async (req, res) => {
   try {
     const path = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);

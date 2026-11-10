@@ -59,6 +59,37 @@
     const state = permits('google') ? 'granted' : 'denied';
     return { ad_storage: state, analytics_storage: state, ad_user_data: state, ad_personalization: 'denied' };
   }
+  // Queue consent/config immediately. Let the browser paint the hero before parsing
+  // the Ads library. A contact tap starts delivery immediately, even on a slow link.
+  let googleScriptStarted = false;
+  function startGoogleScript() {
+    if (googleScriptStarted || !googleLoaded || (preference && !permits('google'))) return;
+    googleScriptStarted = true;
+    const script = document.createElement('script');
+    script.async = true;
+    script.fetchPriority = 'low';
+    script.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(googleId);
+    document.head.append(script);
+  }
+  function loadGoogleAfterHero() {
+    const hero = document.querySelector?.('.hero-img');
+    if (!hero || !window.requestAnimationFrame || document.visibilityState === 'hidden') {
+      startGoogleScript();
+      return;
+    }
+    const afterPaint = () => window.requestAnimationFrame(() => window.requestAnimationFrame(() => {
+      if (window.requestIdleCallback) window.requestIdleCallback(startGoogleScript, {timeout: 600});
+      else startGoogleScript();
+    }));
+    if (hero.complete) afterPaint();
+    else {
+      hero.addEventListener('load', afterPaint, {once: true});
+      hero.addEventListener('error', afterPaint, {once: true});
+    }
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'hidden') startGoogleScript();
+    });
+  }
   function configureTracking() {
     const googleActive = googleId && (!preference || permits('google'));
     const datafastActive = datafastId && permits('datafast');
@@ -85,10 +116,7 @@
         gtag('js', new Date());
         if (adsId) gtag('config', adsId);
         if (ga4Id) gtag('config', ga4Id);
-        const script = document.createElement('script');
-        script.async = true;
-        script.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(googleId);
-        document.head.append(script);
+        loadGoogleAfterHero();
       }
     }
     if (datafastActive && !datafastLoaded) {
@@ -97,7 +125,8 @@
         (window.datafast.q = window.datafast.q || []).push(arguments);
       };
       const script = document.createElement('script');
-      script.defer = true;
+      script.async = true;
+      script.fetchPriority = 'low';
       script.src = 'https://datafa.st/js/script.cookieless.js';
       script.setAttribute('data-website-id', datafastId);
       script.setAttribute('data-domain', 'izmirbalkon.com');
@@ -127,6 +156,7 @@
     if (datafastLoaded && permits('datafast')) window.datafast(channel === 'phone' ? 'phone_click'
       : position === 'wizard' ? 'wizard_whatsapp_click' : 'whatsapp_click');
     if (!googleLoaded || (preference && !permits('google'))) return;
+    startGoogleScript();
     window.dataLayer.push({ event, contact_channel: channel, cta_position: position });
     const label = channel === 'phone' ? config.callClickLabel
       : position === 'wizard' ? config.wizardWhatsappClickLabel : config.whatsappClickLabel;

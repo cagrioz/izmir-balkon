@@ -326,7 +326,18 @@
   initLightbox();
   initSheet(initWizard());
   initContactShortcuts();
-  initReviewClamp();
+  const reviews = document.getElementById('yorumlar');
+  if (reviews && 'IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(entries => {
+      if (entries.some(entry => entry.isIntersecting)) {
+        observer.disconnect();
+        initReviewClamp();
+      }
+    }, {rootMargin: '300px'});
+    observer.observe(reviews);
+  } else {
+    initReviewClamp();
+  }
   initQuotes();
   initAgentTools();
 })();

@@ -166,6 +166,10 @@ export function renderPage(key) {
   const selected = key === 'home' ? 'cam-balkon' : key;
   const url = key === 'home' ? `${SITE}/` : `${SITE}/${key}`;
   const { hero } = data;
+  const heroSet = `${hero.sm} 800w, ${hero.lg} ${hero.w}w`;
+  const heroSizes = '(min-width: 60rem) 62vw, 100vw';
+  const mobileMedia = '(width < 40rem)';
+  const mobileSource = hero.mobile ? `<source media="${mobileMedia}" type="image/avif" srcset="${hero.mobile}">` : '';
   const proof = SERVICE_PROOF[key];
   const pageFaq = proof?.faq || data.faq;
   const nodes = [businessNode(), websiteNode, webPageNode(url, data.title, data.description, `${SITE}${hero.og}`), faqNode(pageFaq, url)];
@@ -182,7 +186,8 @@ export function renderPage(key) {
     quoteTarget: estimate ? 'href="#fiyat-hesapla"' : 'href="#teklif" data-open-wizard',
     bandAction: estimate ? 'Yaklaşık fiyatı gör' : 'Ücretsiz keşif al',
     priceAction: estimate ? 'Ölçünüzle hesaplayın' : 'Ölçünüze özel fiyat alın',
-    estimateAssets: estimate ? '<link rel="stylesheet" href="/estimate.css"><script type="module" src="/estimate.js"></script>' : '',
+    styles: read('public/styles.css') + (estimate ? read('public/estimate.css') : ''),
+    estimateAssets: estimate ? '<script type="module" src="/estimate.js"></script>' : '',
     ...(estimate && {
       workTitle: esc(proof.title),
       workItems: proof.files.map(id => id === 'video' ? videoItem(PANEL_VIDEO) : galleryItem([TERRACE_FRAME, ...GALLERY.flat()].find(item => item.file === id))).join(''),
@@ -203,17 +208,18 @@ export function renderPage(key) {
     ogImage: `${SITE}${hero.og}`,
     ogW: hero.ogW,
     ogH: hero.ogH,
-    preload: `<link rel="preload" as="image" href="${hero.lg}" imagesrcset="${hero.sm} 800w, ${hero.lg} ${hero.w}w" imagesizes="(min-width: 60rem) 62vw, 100vw" fetchpriority="high">`,
+    preload: (hero.mobile ? `<link rel="preload" as="image" type="image/avif" media="${mobileMedia}" href="${hero.mobile}" fetchpriority="high">` : '') +
+      `<link rel="preload" as="image" ${hero.mobile ? 'media="(min-width: 40rem)" ' : ''}href="${hero.lg}" imagesrcset="${heroSet}" imagesizes="${heroSizes}" fetchpriority="high">`,
     jsonld: graph(nodes),
     sprite,
     header: header('', Boolean(estimate)),
     footer,
     service: selected,
-    heroImg: `<img class="hero-img" src="${hero.lg}" srcset="${hero.sm} 800w, ${hero.lg} ${hero.w}w" sizes="(min-width: 60rem) 62vw, 100vw" width="${hero.w}" height="${hero.h}" fetchpriority="high"${hero.pos ? ` style="object-position:${hero.pos}"` : ''} alt="${esc(hero.alt)}">`,
+    heroImg: `<picture>${mobileSource}<img class="hero-img" src="${hero.lg}" srcset="${hero.sm} 800w, ${hero.lg} ${hero.w}w" sizes="(min-width: 60rem) 62vw, 100vw" width="${hero.w}" height="${hero.h}" fetchpriority="high"${hero.pos ? ` style="object-position:${hero.pos}"` : ''} alt="${esc(hero.alt)}"></picture>`,
     h1Key: esc(data.h1Key),
     h1Line: esc(data.h1Line),
     heroLead: estimate ? '' : `<p class="hero-lead">${esc(data.lead)}</p>`,
-    tiles: serviceList.map(([id, s]) => `<button class="tile" type="button" data-pick-service="${id}" aria-pressed="${id === selected}"><img src="${tilePhoto(id)}" width="480" height="480" decoding="async" alt=""><span class="tile-label">${esc(s.label)}</span><svg class="icon tile-check" aria-hidden="true"><use href="#i-check"/></svg></button>`).join(''),
+    tiles: serviceList.map(([id, s]) => `<button class="tile" type="button" data-pick-service="${id}" aria-pressed="${id === selected}"><img src="${tilePhoto(id)}" width="384" height="256" decoding="async" alt=""><span class="tile-label">${esc(s.label)}</span><svg class="icon tile-check" aria-hidden="true"><use href="#i-check"/></svg></button>`).join(''),
     picked: esc(SERVICES[selected].label),
     pickedPhoto: tilePhoto(selected),
     longestDraft: esc(LONGEST_DRAFT),

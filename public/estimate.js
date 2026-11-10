@@ -31,7 +31,6 @@ export function initEstimate(card) {
     link.searchParams.set('text', 'Merhaba, ' + model + ' için teklif almak istiyorum. Yaklaşık ölçüm: ' + size + '. Yaklaşık tutar: ' + range + card.dataset.tax + '. Ücretsiz keşif için görüşebilir miyiz?');
     send.href = link.href;
   }
-  card.querySelector('#estimate-input').hidden = false;
   input.addEventListener('input', update);
   update();
 }

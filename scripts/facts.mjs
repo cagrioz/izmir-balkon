@@ -57,7 +57,7 @@ const FAQ = {
 };
 const COMMON = [FAQ.send, FAQ.free, FAQ.areas, FAQ.time, FAQ.pay];
 
-const VILLA_HERO = { lg: '/assets/work/villa-kose.webp', sm: '/assets/work/villa-kose-sm.webp', w: 1419, h: 716, og: '/assets/work/villa-kose.jpg', ogW: 1419, ogH: 716, pos: '42% 50%', alt: 'Çimenli bahçeye bakan villanın köşesinde koyu çerçeveli, geniş sürme doğrama camları' };
+const VILLA_HERO = { mobile: '/assets/work/villa-kose-hero-mobile.avif', lg: '/assets/work/villa-kose.webp', sm: '/assets/work/villa-kose-sm.webp', w: 1419, h: 716, og: '/assets/work/villa-kose.jpg', ogW: 1419, ogH: 716, pos: '42% 50%', alt: 'Çimenli bahçeye bakan villanın köşesinde koyu çerçeveli, geniş sürme doğrama camları' };
 
 export const SERVICES = {
   'cam-balkon': {
@@ -70,7 +70,7 @@ export const SERVICES = {
     card: 'Katlanır veya sürme. Rüzgârı, yağmuru ve tozu dışarıda bırakır, istediğinizde açılır.',
     faqTitle: 'Cam balkon hakkında sık sorulanlar',
     faq: [FAQ.price, FAQ.use, FAQ.fold, FAQ.permit, ...COMMON],
-    hero: { lg: '/assets/work/cam-balkon-genis.webp', sm: '/assets/work/cam-balkon-genis-sm.webp', w: 1086, h: 796, og: '/assets/work/cam-balkon-genis.jpg', ogW: 1086, ogH: 796, pos: '50% 72%', alt: 'Usta, balkon girişine taktığı çerçevesiz cam panellerin üst kısmında son ayarı yapıyor' },
+    hero: { mobile: '/assets/work/cam-balkon-genis-hero-mobile.avif', lg: '/assets/work/cam-balkon-genis.webp', sm: '/assets/work/cam-balkon-genis-sm.webp', w: 1086, h: 796, og: '/assets/work/cam-balkon-genis.jpg', ogW: 1086, ogH: 796, pos: '50% 72%', alt: 'Usta, balkon girişine taktığı çerçevesiz cam panellerin üst kısmında son ayarı yapıyor' },
     cardImg: { src: '/assets/stock/balkon-sm.webp', w: 800, h: 533, pos: '66% 50%' }
   },
   'kis-bahcesi': {
