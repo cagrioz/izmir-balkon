@@ -22,8 +22,15 @@ On 7 November 2026 Google Ads showed the account-default Contact goal as healthy
 | `phone_click` | Visitor opened a telephone link | Answered call, qualified lead, sale |
 | `whatsapp_click` | Visitor opened WhatsApp or a message draft | Message sent, response, qualified lead |
 | `quote_step` | Visitor answered a wizard question | Any contact at all |
+| `quote_step_estimate` (DataFast) | Visitor committed a valid calculator input | Any contact at all |
 
-CTA position is `header`, `wizard`, `band`, `facts`, `faq`, `closing`, `footer`, `bilgi`, or `mobile_sticky`. Wizard progress reaches analytics as `quote_step` (`service`, `size`, `district`), which shows where visitors drop out; treat it as a diagnostic, not a conversion. The chosen service, size and district are not included in analytics events. The page does not collect names, visitor phone numbers or addresses.
+CTA position is `header`, `wizard`, `band`, `facts`, `faq`, `closing`, `footer`, `bilgi`, or `mobile_sticky`. Wizard progress reaches analytics as `quote_step` (`service`, `size`, `district`), which shows where visitors drop out; treat it as a diagnostic, not a conversion. Service-page calculators emit `quote_step_estimate` in DataFast once per page, after a valid input is committed; initial render, invalid inputs, and individual keystrokes do not emit it. No chosen service, size, district, calculated price or message text is included in analytics events. The page does not collect names, visitor phone numbers or addresses.
+
+### QA and interpreting engagement
+
+Open any landing page with `?measurement=off` for interaction/layout QA without adding test visitors or goals to Google or DataFast. The exclusion applies only to that page URL and never changes stored visitor preferences. Reapply it when visiting another page. Do not put it in ads. This mode tests the interface, not tag delivery; test delivery separately with vendor requests intercepted before transmission, or explicitly label genuine manual tag tests as QA.
+
+DataFast's default cookieless mode must measure wizard progress just as it measures pageviews and contact clicks. On 12 November a regression was found: progress required an explicit preference even though pageviews did not. Existing data cannot be backfilled. Missing interactions can inflate bounce rate: DataFast defines bounce as a session without a second tracked interaction ([metrics reference](https://datafa.st/docs/api/website/analytics/overview)). The served cookieless script has no periodic dwell-time heartbeat; do not interpret short reported duration as proof that users immediately left. Compare contact goals and actual enquiry outcomes, with matching dates, timezone, source and landing page. Never add synthetic heartbeat events merely to improve engagement numbers.
 
 For real pilot evaluation, keep a separate lead outcome log: enquiry date, channel, district, qualified/not qualified, survey booked/completed, quote, sale and value. Do not put personal lead information in this public repository. Import verified outcomes into Google Ads only once a suitable consent/attribution and CRM process is established. Sidely should optimize using confirmed business outcomes; button clicks are early funnel diagnostics.
 

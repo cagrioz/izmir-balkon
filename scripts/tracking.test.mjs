@@ -33,6 +33,19 @@ function grantBoth(s) {
 }
 const configured = {googleAdsId:'AW-123456789',ga4Id:'G-ABC123',callClickLabel:'call_label'};
 
+test('explicit measurement=off excludes QA without changing saved preferences', () => {
+  const config = {...configured, datafastWebsiteId:'dfid_test123'};
+  const s = setup(config, '', '?measurement=off', '', '', 'both');
+  assert.equal(s.appended.length, 0);
+  assert.equal(s.window.dataLayer, undefined);
+  assert.equal(s.window.datafast, undefined);
+  assert.equal(s.storage.get('izmir_balkon_measurement_v4'), 'both');
+  assert.equal(s.handlers.size, 0);
+  assert.equal(setup(config, '', '?measurement=on').appended.length, 2);
+  assert.equal(setup(config, '', '?measurement=offish').appended.length, 2);
+  assert.equal(setup(config, '', '', '', '', 'both').appended.length, 2);
+});
+
 test('unconfigured public build never loads Google or shows an unnecessary consent banner',()=>{
   const s=setup(); s.handlers.get('phone')();
   assert.equal(s.appended.length,0); assert.equal(s.nodes['consent-banner'].hidden,true);
@@ -75,7 +88,7 @@ test('malformed public measurement IDs cannot load a third party script',()=>{
   const s=setup({googleAdsId:'https://other.example',ga4Id:'G-<script>'},'granted');
   assert.equal(s.appended.length,0);
 });
-test('wizard progress reports the step only, and nothing without consent',()=>{
+test('wizard progress reports the step only, and no Google progress without consent',()=>{
   const blocked=setup(configured); blocked.handlers.get('document:izmir:funnel')({detail:{step:'size'}});
   assert.ok(!blocked.window.dataLayer.some(e => e.event==='quote_step' || e[1]==='quote_step'));
   const s=setup(configured); grantBoth(s);
@@ -119,6 +132,27 @@ test('missing wizard label never falls back to secondary label; refusal blocks a
 
 const datafastConfig = {...configured, datafastWebsiteId:'dfid_publicTest123'};
 const clickEvent = () => ({stopped:false, stopPropagation(){this.stopped=true;}});
+test('default cookieless visitors report wizard and estimate progress without Google consent', () => {
+  const s = setup(datafastConfig);
+  for (const step of ['service', 'size', 'district', 'estimate', 'private']) {
+    s.handlers.get('document:izmir:funnel')({detail:{step, district:'Bornova', quantity:7.5, price:45000}});
+  }
+  assert.deepEqual(Array.from(s.window.datafast.q, e => Array.from(e)), [
+    ['quote_step_service'], ['quote_step_size'], ['quote_step_district'], ['quote_step_estimate']
+  ]);
+  assert.equal(conversions(s).length, 0);
+  assert.ok(!s.window.dataLayer.some(e => e.event === 'quote_step' || e[1] === 'quote_step'));
+  assert.equal(s.storage.size, 0);
+  for (const choice of ['none', 'google']) {
+    const blocked = setup(datafastConfig, '', '', '', '', choice);
+    blocked.handlers.get('document:izmir:funnel')({detail:{step:'estimate'}});
+    assert.equal(blocked.window.datafast, undefined);
+  }
+  s.handlers.get('reject-cookies:click')();
+  const count = s.window.datafast.q.length;
+  s.handlers.get('document:izmir:funnel')({detail:{step:'estimate'}});
+  assert.equal(s.window.datafast.q.length, count);
+});
 test('DataFast counts first visits and honors existing refusals', () => {
   for (const [saved,legacy] of [['',''],['denied',''],['','granted'],['','denied']]) {
     const s=setup(datafastConfig,saved,'',legacy);

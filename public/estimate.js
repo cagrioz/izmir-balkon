@@ -13,6 +13,7 @@ export function initEstimate(card) {
   const input = card.querySelector('#quantity'), send = card.querySelector('#estimate-send');
   const label = card.querySelector('#result-label'), value = card.querySelector('#result-value');
   const baseLink = send.href, baseLabel = label.textContent, baseValue = value.textContent;
+  let estimateTracked = false;
   function update() {
     const total = estimateTotal(input.value, unit, +low, +high);
     const invalid = !total && !!input.value.trim();
@@ -32,6 +33,13 @@ export function initEstimate(card) {
     send.href = link.href;
   }
   input.addEventListener('input', update);
+  // One real completed calculation per page, not every keystroke. Never send
+  // the entered area, price, or WhatsApp draft to analytics.
+  input.addEventListener('change', () => {
+    if (estimateTracked || !estimateTotal(input.value, unit, +low, +high)) return;
+    estimateTracked = true;
+    card.ownerDocument.dispatchEvent(new CustomEvent('izmir:funnel', { detail: { step: 'estimate' } }));
+  });
   update();
 }
 if (typeof document !== 'undefined') {

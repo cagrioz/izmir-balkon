@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { ESTIMATES } from './facts.mjs';
-import { estimateTotal } from '../public/estimate.js';
+import { estimateTotal, initEstimate } from '../public/estimate.js';
 import { renderAll } from './render.mjs';
 
 test('area accepts Turkish decimals; window pricing is per whole opening', () => {
@@ -11,6 +11,27 @@ test('area accepts Turkish decimals; window pricing is per whole opening', () =>
   assert.deepEqual(calc('2','dograma'), { quantity: 2, low: 16000, high: 24000 });
   for (const raw of ['', '-1', '1,5', '0', '1e2', '1.000', '12 m²']) assert.equal(calc(raw,'dograma'), null);
   for (const raw of ['0','1e2','1,000','-7','NaN']) assert.equal(calc(raw,'pergola'), null);
+});
+test('calculator reports one valid committed calculation, never amount or draft data', () => {
+  const handlers = new Map(), events = [];
+  const nodes = {
+    '#quantity': {value:'', setAttribute(){}, addEventListener:(type, handler) => handlers.set(type, handler)},
+    '#estimate-send': {href:'https://wa.me/905423551213?text=private'},
+    '#result-label': {textContent:'Birim fiyat'}, '#result-value': {textContent:'6.000–6.500 TL'}
+  };
+  initEstimate({dataset:{unit:'m²', model:'Cam balkon', low:'6000', high:'6500', tax:''},
+    querySelector:selector => nodes[selector], ownerDocument:{dispatchEvent:event => events.push(event)}});
+  assert.equal(events.length, 0);
+  nodes['#quantity'].value = '-1'; handlers.get('change')();
+  assert.equal(events.length, 0);
+  nodes['#quantity'].value = '7,5'; handlers.get('input')();
+  assert.equal(events.length, 0);
+  handlers.get('change')();
+  nodes['#quantity'].value = '10'; handlers.get('input')(); handlers.get('change')();
+  assert.equal(events.length, 1);
+  assert.equal(events[0].type, 'izmir:funnel');
+  assert.deepEqual(events[0].detail, {step:'estimate'});
+  assert.ok(nodes['#estimate-send'].href.includes('text='));
 });
 test('service calculators link sources and have usable no-script contact, home keeps its original flow', () => {
   const pages = renderAll(), home = pages.get('/index.html');

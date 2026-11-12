@@ -1,5 +1,8 @@
 (() => {
   'use strict';
+  // Explicit, page-local QA exclusion. Never persist this or put it in ad URLs.
+  // ui.js and estimate.js still work, but test visits/clicks reach no analytics.
+  if (new URLSearchParams(location.search).get('measurement') === 'off') return;
   const config = window.IZMIR_TRACKING || {};
   const adsId = /^AW-\d+$/.test(config.googleAdsId || '') ? config.googleAdsId : '';
   const ga4Id = /^G-[A-Z0-9]+$/.test(config.ga4Id || '') ? config.ga4Id : '';
@@ -204,9 +207,8 @@
   });
   // Wizard progress. Step names only: the visitor's service, size and district stay in the browser.
   document.addEventListener('izmir:funnel', event => {
-    if (!preference || preference === 'none') return;
     const step = event.detail.step;
-    if (!['service', 'size', 'district'].includes(step)) return;
+    if (!['service', 'size', 'district', 'estimate'].includes(step)) return;
     if (datafastLoaded && permits('datafast')) window.datafast('quote_step_' + step);
     if (!googleLoaded || !permits('google')) return;
     window.dataLayer.push({ event: 'quote_step', quote_step: step });
