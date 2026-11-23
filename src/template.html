@@ -32,7 +32,7 @@
   <script src="/ui.js" defer></script>{{estimateAssets}}
   <script type="application/ld+json">{{jsonld}}</script>
 </head>
-<body data-service="{{service}}">
+<body data-service="{{service}}"{{pageClass}}>
   <a class="skip-link" href="#icerik">İçeriğe geç</a>
   {{sprite}}
   {{header}}
@@ -84,9 +84,9 @@
 
   {{footer}}
 
-  <nav class="dock" aria-label="Hızlı iletişim" hidden>
-    <a class="dock-wa" href="{{dockWa}}" target="_blank" rel="noopener noreferrer" data-contact="whatsapp" data-position="mobile_sticky"><svg class="icon" aria-hidden="true"><use href="#i-whatsapp"/></svg>WhatsApp’tan fiyat alın</a>
-    <a class="dock-call" href="tel:+905423551213" aria-label="Ara: 0542 355 12 13" data-contact="phone" data-position="mobile_sticky"><svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg></a>
+  <nav class="dock" aria-label="Hızlı iletişim">
+    <a class="dock-wa" href="{{dockWa}}" target="_blank" rel="noopener noreferrer" data-contact="whatsapp" data-position="mobile_sticky"><svg class="icon" aria-hidden="true"><use href="#i-whatsapp"/></svg>WhatsApp’tan yazın</a>
+    <a class="dock-call" href="tel:+905423551213" aria-label="Ara: 0542 355 12 13" data-contact="phone" data-position="mobile_sticky"><svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg>Hemen ara</a>
   </nav>
 
 {{quoteSheet}}

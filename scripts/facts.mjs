@@ -142,15 +142,31 @@ export const VOC = [
   ['Temizlik', 'Montaj sonrası etrafı tertemiz bırakmaları da ayrı bir incelikti.', 'Enes D.'],
   ['Fiyat', 'şişirilmiş, keyfi fiyatlar da vermiyor, ödeme konusunda da yardımcı oluyor.', 'Buse D.']
 ];
+// Short, verbatim excerpts; the full original reviews stay available on the page.
 export const HERO_QUOTES = [
-  ['İşçilik kalitesi tek kelimeyle muazzam; insan kendi evine yapsa ancak bu kadar özenir.', 'Erdem E.'],
-  ['İşini özenle ve titizlikle yapan, söz verdiği zamanda gelen ve işini hakkıyla yapan bir usta.', 'Dilek A.'],
-  ['Zamanında geldi, hızlı çalıştı ve ortaya gerçekten temiz ve kaliteli bir iş çıkardı.', 'Dilfuza S.'],
-  ['Eğitim kurumunuzun camlarını 3 günde bitirdi. Hem kaliteli hem de hızlı bir işçilik.', 'Ebru C.'],
-  ['Gerçekten işini hakkıyla yapan, ilgili ve saygılı bir usta.', 'Özkan K.']
+  ['Harika bir esnaflık, kusursuz işçilik!', 'Erdem E.'],
+  ['Montaj sonrası etrafı tertemiz bırakmaları da ayrı bir incelikti.', 'Enes D.'],
+  ['Hem kaliteli hem de hızlı bir işçilik.', 'Ebru C.'],
+  ['Tertemiz işçilik, özen ve dikkat var.', 'Buse D.'],
+  ['Sineklik montajı temiz, hızlı ve sorunsuz oldu.', 'Özkan K.']
 ];
-export const PROCESS_QUOTE = ['Ustam geldi ölçü aldı. Fiyat çıkardı. Acelemiz vardı. Sağolsun dediği günde de bitirdi.', 'Mustafa Kürşat A.'];
-export const FEATURED_REVIEWS = ['Erdem E.', 'Enes D.', 'Mustafa Kürşat A.', 'Ebru C.', 'Metin B.', 'Dilek A.'];
+export const PROCESS_QUOTE = ['Sağolsun dediği günde de bitirdi. Bundan sonra işimiz olursa hiç düşünmeden tekrar ararım.', 'Mustafa Kürşat A.'];
+export const FEATURED_REVIEWS = ['Erdem E.', 'Enes D.', 'Metin B.', 'Ebru C.', 'Mustafa Kürşat A.', 'Dilek A.'];
+export const REVIEW_EXCERPTS = {
+  'Erdem E.': 'İşçilik kalitesi tek kelimeyle muazzam; insan kendi evine yapsa ancak bu kadar özenir.',
+  'Enes D.': 'Evim için doğrama, cam ve kapı montajı hizmeti aldım. İlk günden teslim anına kadar yaklaşımı son derece profesyoneldi.',
+  'Mustafa Kürşat A.': 'Sağolsun dediği günde de bitirdi. Bundan sonra işimiz olursa hiç düşünmeden tekrar ararım. Ellerine sağlık.',
+  'Dilek A.': 'Gönül rahatlığıyla tavsiye ediyorum. Emeğine ve eline sağlık. Gözünüz kapalı güvenebilirsiniz.',
+  'Özkan K.': 'Sineklik montajı temiz, hızlı ve sorunsuz oldu. İletişimi de çok iyiydi. Emeğine sağlık.',
+  'Zehra Rezzan Ş.': 'Herkese tavsiye ederiz.',
+  'Fatma T.': 'Çok memnun kaldım. Seçkin Bey işinde çok başarılı, ilgili ve gerçekten çok hızlı. Kesinlikle tavsiye ederim.'
+};
+// Broader display labels do not add a service that the customer did not receive.
+export const REVIEW_SERVICE_LABELS = {
+  'Pimapen Pencere': 'PVC doğrama · Pencere',
+  'Pimapen Kapı': 'PVC doğrama · Kapı',
+  'Pimapen Cam Değişimi': 'Pencere camı değişimi'
+};
 
 // The owner's own photographs only. Each keeps its own ratio; rows are justified by these ratios.
 export const GALLERY = [
@@ -216,6 +232,6 @@ export const SHAPE_PAGE = {
   path: 'cam-balkon-hesaplama',
   title: 'I, L, U Balkon Fiyat Hesaplama | İzmir Balkon',
   description: 'Balkonunuzun şeklini ve açık cephe ölçülerini seçin. Kalın profilli sürme cam balkon için yaklaşık fiyatı görün, ücretsiz keşif isteyin.',
-  h1Key: 'Balkonunuza göre fiyat hesaplayın',
+  h1Key: 'Cam balkon fiyatı',
   h1Line: 'I, L veya U tipi. Ölçünüze özel teklif.'
 };

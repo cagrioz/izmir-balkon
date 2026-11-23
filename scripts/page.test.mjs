@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { existsSync, readFileSync } from 'node:fs';
 import { renderAll, reviews } from './render.mjs';
 import { prefersMarkdown } from '../middleware.js';
-import { SERVICES, HOME, VOC, HERO_QUOTES, PROCESS_QUOTE, DISTRICTS, ALL_FAQ, BUSINESS, GALLERY } from './facts.mjs';
+import { SERVICES, HOME, VOC, HERO_QUOTES, PROCESS_QUOTE, DISTRICTS, ALL_FAQ, BUSINESS, GALLERY, REVIEW_EXCERPTS } from './facts.mjs';
 
 const files = renderAll();
 const htmlPages = [...files].filter(([path]) => path.endsWith('.html'));
@@ -216,5 +216,24 @@ test('real review categories and finished sliding proof lead every offer page', 
     const html=files.get(path);
     assert.ok(html.includes('villa-kose-hero-mobile.avif'));
     assert.ok(html.includes('Pencere, kapı ve sineklik işlerimizden.'));
+  }
+});
+
+
+test('short review excerpts retain the customer’s exact words and accessible originals', () => {
+  for (const [name, excerpt] of Object.entries(REVIEW_EXCERPTS)) {
+    const original = reviews.find(review => review.name === name);
+    assert.ok(original.text.includes(excerpt), name);
+    assert.ok(decode(home).includes(`<blockquote class="review-text">${excerpt}</blockquote>`), name);
+    assert.ok(decode(home).includes(original.text), name);
+  }
+  assert.ok(home.includes('Yorumun aslını oku'));
+  for (const path of ['/index.html','/cam-balkon.html','/cam-balkon-hesaplama.html']) {
+    const html = files.get(path);
+    const dock = html.match(/<nav class="dock"[\s\S]*?<\/nav>/)[0];
+    assert.ok(!/<nav[^>]*hidden/.test(dock));
+    assert.ok(dock.includes('WhatsApp’tan yazın') && dock.includes('Hemen ara'));
+    assert.equal((dock.match(/data-contact=/g) || []).length, 2);
+    assert.equal((dock.match(/data-position="mobile_sticky"/g) || []).length, 2);
   }
 });

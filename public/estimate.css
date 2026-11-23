@@ -37,3 +37,31 @@
 .shape-dimensions input { display:block; margin-top:.25rem; width:100%; min-width:0; padding:.55rem; border:1px solid #8896ac; border-radius:.4rem; font:inherit; font-size:1rem; }
 .dimension-inactive { visibility:hidden; }
 .shape-help { font-size:.8rem; color:var(--muted); }
+
+/* Price-intent variant: show the calculator before supporting photos on phones. */
+@media (max-width:59.9375rem) {
+  .shape-page .hero { padding-top:.75rem; }
+  .shape-page .hero-inner { gap:.65rem; }
+  .shape-page .hero-copy { grid-row:1; }
+  .shape-page .hero-form { grid-row:2; }
+  .shape-page .hero-photo { grid-row:3; }
+  .shape-page .hero-quotes { grid-row:4; }
+  .shape-page .h1-key { font-size:1.6rem; }
+  .shape-page .h1-line,.shape-page .stats { display:none; }
+  .shape-page .product-note { margin-top:.3rem; font-size:.75rem; }
+  .shape-page .estimate { padding:.75rem; gap:.35rem; min-height:32rem; }
+  .shape-page .dimension-inactive { display:none; }
+  .shape-page .estimate-source { margin-top:auto; }
+  .shape-page .estimate-heading { display:none; }
+  .shape-page .shape-picker legend { font-size:.8rem; margin-bottom:.25rem; }
+  .shape-page .shape-options svg { height:24px; }
+  .shape-page .shape-options button { min-height:52px; padding:.25rem; }
+  .shape-page .shape-dimensions { gap:.4rem; }
+  .shape-page .shape-dimensions label { font-size:.75rem; }
+  .shape-page .shape-dimensions input { padding:.4rem .5rem; min-height:40px; margin-top:.15rem; }
+  .shape-page .shape-help { font-size:.7rem; line-height:1.35; }
+  .shape-page .estimate-result { padding:.55rem .75rem; gap:.15rem; }
+  .shape-page .estimate-result p { display:none; }
+  .shape-page #estimate-send { min-height:48px; padding:.65rem .5rem; font-size:.95rem; }
+  .shape-page .estimate-or,.shape-page .estimate-variant { font-size:.75rem; padding:.3rem; }
+}

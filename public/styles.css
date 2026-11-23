@@ -310,8 +310,8 @@ details[open] > summary > .icon { transform: rotate(180deg); }
 .site-footer nav a:hover, .site-footer nav button:hover { color: var(--blue); }
 .footer-legal { margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid var(--line); font-size: .8125rem; }
 
-/* Mobile dock: starts hidden, revealed by ui.js only after the hero wizard has scrolled away. */
-.dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; display: grid; grid-template-columns: minmax(0, 1fr) 3.5rem; gap: .5rem; padding: .5rem .5rem calc(.5rem + env(safe-area-inset-bottom)); background: var(--white); border-top: 1px solid var(--line); animation: dock-in .18s ease-out; }
+/* Mobile contact is available from the first screen, including without JavaScript. */
+.dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: .5rem; padding: .5rem .5rem calc(.5rem + env(safe-area-inset-bottom)); background: var(--white); border-top: 1px solid var(--line); animation: dock-in .18s ease-out; }
 @keyframes dock-in { from { transform: translateY(100%); } }
 .dock a { display: flex; align-items: center; justify-content: center; gap: .5rem; min-height: 3.25rem; border-radius: var(--radius-sm); font-weight: 700; line-height: 1.15; }
 .dock-wa { background: var(--wa); color: var(--ink); }
@@ -514,3 +514,12 @@ ol.doc-list { list-style: decimal; }
   .hero-quotes .quote-dot { display:none; }
   .hero-quotes { font-size:.85rem; }
 }
+
+@media (max-width:59.9375rem) {
+  body { padding-bottom:calc(4.5rem + env(safe-area-inset-bottom)); }
+  html { scroll-padding-bottom:calc(5rem + env(safe-area-inset-bottom)); }
+  .dock a { font-size:.9rem; }
+}
+.review-full { font-size:.8rem; color:var(--muted); }
+.review-full summary { cursor:pointer; padding:.5rem 0; text-decoration:underline; }
+.review-full blockquote { margin:.4rem 0; line-height:1.6; }

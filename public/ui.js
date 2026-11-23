@@ -187,37 +187,19 @@
     });
   }
 
-  // The wizard is the page's action until it scrolls away. The dock then takes over, and
-  // steps aside wherever a section on screen already carries its own action.
+  // Mobile contact remains available from the first screen. CSS reserves its space;
+  // native dialogs render above it and short/keyboard viewports do not get an overlay.
   function initContactShortcuts() {
-    const slot = document.getElementById('teklif-yuva');
     const dock = document.querySelector('.dock');
-    const sections = [document.getElementById('kesif-cagri'), document.getElementById('son-adim')].filter(Boolean);
-    if (!slot || !dock) return;
-    let scheduled = 0;
-
-    function update() {
-      scheduled = 0;
-      const pastHero = slot.getBoundingClientRect().bottom <= 0;
-      const actionOnScreen = sections.some(section => {
-        const box = section.getBoundingClientRect();
-        return box.top < window.innerHeight && box.bottom > 0;
-      });
-      dock.hidden = !pastHero || actionOnScreen;
-    }
-    function schedule() {
-      if (!scheduled) scheduled = requestAnimationFrame(update);
-    }
-
-    if ('IntersectionObserver' in window) {
-      const observer = new IntersectionObserver(schedule);
-      [slot, ...sections].forEach(element => observer.observe(element));
-    } else {
-      window.addEventListener('scroll', schedule, { passive: true });
-    }
-    window.addEventListener('resize', schedule);
-    window.addEventListener('pageshow', schedule);
-    schedule();
+    if (!dock || !window.visualViewport) return;
+    const viewport = window.visualViewport;
+    const update = () => {
+      const typing = /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement?.tagName || '');
+      dock.hidden = typing && viewport.height < window.innerHeight - 120;
+    };
+    viewport.addEventListener('resize', update);
+    document.addEventListener('focusin', update);
+    document.addEventListener('focusout', () => requestAnimationFrame(update));
   }
 
   // Customer words in the hero change by themselves. Hovering, keyboard focus, an open dialog or
@@ -247,7 +229,7 @@
       clearInterval(timer);
       timer = running ? setInterval(() => {
         if (!held && onScreen && !document.hidden && !document.querySelector('dialog[open]')) show(index + 1);
-      }, 6000) : 0;
+      }, 4000) : 0;
       stage.setAttribute('aria-live', running ? 'off' : 'polite');
       icon.setAttribute('href', running ? '#i-pause' : '#i-play');
       pause.setAttribute('aria-label', running ? 'Yorumların dönmesini durdur' : 'Yorumları döndür');

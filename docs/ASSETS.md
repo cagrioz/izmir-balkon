@@ -108,3 +108,7 @@ Owner-supplied terrace photo: metal frame during assembly. Do not label it as a 
 ## 23 November 2026 product and proof update
 
 The owner confirmed thick-profile, upper-segment sliding systems and approved 5,000–6,500 TRY/m² as the indicative balcony range. No glass thickness, insulation specification, guarantee or tax inclusion was inferred. The existing optimized villa-kose hero and villa-detay gallery show actual completed sliding joinery; they are not relabelled as a different project. The pergola/winter-garden stock heroes remain illustrative marketing photography, not completed owned projects or ad image assets.
+
+## 23 November 2026 · Review presentation follow-up
+
+Original review data, ratings, dates, names and machine-readable quotations remain unchanged. Selected visible cards use exact, contiguous excerpts that emphasize service and workmanship; their full originals remain under “Yorumun aslını oku”. Sineklik subtypes display as “Sineklik”; Pimapen window/door records display as PVC joinery with the matching window/door type. The original service record remains available in the disclosure. No screen-only review is relabelled as glazing or joinery, and no singular customer statement is rewritten as praise for a company.

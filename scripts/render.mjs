@@ -1,7 +1,7 @@
 // Renders every page and machine-readable file from scripts/facts.mjs and public/reviews-data.js.
 import { readFileSync } from 'node:fs';
 import { runInNewContext } from 'node:vm';
-import { SITE, UPDATED, UPDATED_TR, BUSINESS, DISTRICTS, SUMMARY, SUMMARY_EN, PRICE_FACTORS, QUOTE_QUESTIONS, STEPS, SERVICES, ESTIMATES, HOME, ALL_FAQ, VOC, HERO_QUOTES, PROCESS_QUOTE, FEATURED_REVIEWS, GALLERY, TERRACE_FRAME, PANEL_VIDEO, SERVICE_PROOF, SHAPE_PAGE } from './facts.mjs';
+import { SITE, UPDATED, UPDATED_TR, BUSINESS, DISTRICTS, SUMMARY, SUMMARY_EN, PRICE_FACTORS, QUOTE_QUESTIONS, STEPS, SERVICES, ESTIMATES, HOME, ALL_FAQ, VOC, HERO_QUOTES, PROCESS_QUOTE, FEATURED_REVIEWS, REVIEW_EXCERPTS, REVIEW_SERVICE_LABELS, GALLERY, TERRACE_FRAME, PANEL_VIDEO, SERVICE_PROOF, SHAPE_PAGE } from './facts.mjs';
 
 const read = path => readFileSync(new URL(`../${path}`, import.meta.url), 'utf8');
 const context = { window: {} };
@@ -93,12 +93,14 @@ const footer = `<footer class="site-footer">
     <p class="wrap footer-legal">© <span id="year">2026</span> İzmir Balkon · Son güncelleme: <time datetime="${UPDATED}">${UPDATED_TR}</time></p>
   </footer>`;
 
+const reviewService = review => /sinekl/i.test(review.service) ? 'Sineklik' : REVIEW_SERVICE_LABELS[review.service] || review.service;
 function reviewCard(review) {
   const initial = review.name.trim()[0].toLocaleUpperCase('tr');
-  let body = `<blockquote class="review-text">${esc(review.text)}</blockquote>`;
-  // The platform name stays in the verbatim text, one tap away, not in the visible excerpt.
-  if (review.name === 'Fatma T.') body = `<p class="review-text">… Çok memnun kaldım. Seçkin Bey işinde çok başarılı, ilgili ve gerçekten çok hızlı. Kesinlikle tavsiye ederim.</p><details class="review-full"><summary>Yorumun tamamı</summary><blockquote>${esc(review.text)}</blockquote></details>`;
-  return `<article class="review"><svg class="stars" role="img" aria-label="5 üzerinden ${review.rating} yıldız"><use href="#i-stars"/></svg>${body}<footer class="review-meta"><span class="avatar" aria-hidden="true">${esc(initial)}</span><span><strong>${esc(review.name)}</strong><small>${esc(review.service)} · <time datetime="${review.date}">${formatDate(review.date)}</time></small></span></footer></article>`;
+  const excerpt = REVIEW_EXCERPTS[review.name];
+  const service = reviewService(review);
+  const body = `<blockquote class="review-text">${esc(excerpt || review.text)}</blockquote>`;
+  const original = excerpt || service !== review.service ? `<details class="review-full"><summary>Yorumun aslını oku</summary>${excerpt ? `<blockquote>${esc(review.text)}</blockquote>` : ''}<p>Hizmet kaydı: ${esc(review.service)}</p></details>` : '';
+  return `<article class="review"><svg class="stars" role="img" aria-label="5 üzerinden ${review.rating} yıldız"><use href="#i-stars"/></svg>${body}${original}<footer class="review-meta"><span class="avatar" aria-hidden="true">${esc(initial)}</span><span><strong>${esc(review.name)}</strong><small>${esc(service)} · <time datetime="${review.date}">${formatDate(review.date)}</time></small></span></footer></article>`;
 }
 const featuredReviews = FEATURED_REVIEWS.map(name => reviews.find(review => review.name === name));
 const otherReviews = reviews.filter(review => !FEATURED_REVIEWS.includes(review.name)).sort((a, b) => b.date.localeCompare(a.date));
@@ -114,7 +116,7 @@ const factsList = [
 
 const heroQuotes = HERO_QUOTES.map(([quote, name], index) => {
   const source = reviews.find(review => review.name === name);
-  return `<figure class="quote${index === 0 ? ' is-on' : ''}"><blockquote>“${esc(quote)}”</blockquote><figcaption>${esc(name)} · ${esc(source.service)}</figcaption></figure>`;
+  return `<figure class="quote${index === 0 ? ' is-on' : ''}"><blockquote>“${esc(quote)}”</blockquote><figcaption>${esc(name)} · ${esc(reviewService(source))}</figcaption></figure>`;
 }).join('');
 const quoteDots = HERO_QUOTES.map((_, index) => `<button class="quote-dot" type="button" data-quote="${index}" aria-label="${index + 1}. yorum"${index === 0 ? ' aria-current="true"' : ''}></button>`).join('');
 
@@ -183,6 +185,7 @@ export function renderPage(key, shape = false) {
     .replace('{{quoteCard}}', read(estimate ? 'src/service-estimate.html' : 'src/home-wizard.html').trimEnd())
     .replace('{{quoteSheet}}', estimate ? '' : read('src/home-sheet.html').trimEnd());
   return fill(base, {
+    pageClass: shape ? ' class="shape-page"' : '',
     productNote: ['home', 'cam-balkon'].includes(key) ? `<p class="product-note">${esc(BUSINESS.productNote)}</p>` : '',
     measurementChoice: '<label class="measurement-inline" hidden><input type="checkbox" data-google-consent> <span>İsteğe bağlı: reklam ve iletişim tıklamalarımın Google Ads ile eşleştirilmesine izin veriyorum. <a href="/gizlilik" target="_blank" rel="noopener">Gizlilik</a></span></label>',
     homePrice: [ESTIMATES['cam-balkon'].low, ESTIMATES['cam-balkon'].high].map(n => n.toLocaleString('tr-TR')).join('–'),

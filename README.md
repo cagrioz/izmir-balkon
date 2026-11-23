@@ -25,9 +25,9 @@ Content lives in `scripts/facts.mjs` and `public/reviews-data.js`. Templates liv
 ## Content and interaction
 
 - **One task per screen.** The hero holds a photo-led quote wizard that keeps one size through every step with the page's service already selected and one blue button. Two more questions (size, district) open a ready WhatsApp draft. Nothing is sent or stored by the site.
-- **CTA rules.** Blue starts the quote, green opens WhatsApp, outlined calls. The mobile dock appears only after the wizard scrolls away and hides wherever a section on screen has its own action. Buttons further down open the same wizard in a sheet, so visitors keep their place.
+- **CTA rules.** Blue starts the quote, green opens WhatsApp, outlined calls. The mobile dock is visible from the first screen with named WhatsApp and telephone actions. It reserves bottom space and steps aside for the software keyboard; very short viewports use the normal page links. Buttons further down open the same wizard in a sheet, so visitors keep their place.
 - **Service pages.** `/cam-balkon`, `/kis-bahcesi`, `/pergola` and `/dograma` each have their own title, headline, photo, summary and FAQ. Point each ad group at its own page. `/bilgi` is the plain answer page for search engines and agents.
-- **Proof.** Selling points are customers' own words, checked against `public/reviews-data.js` by `npm test`. All 21 reviews are published verbatim: 6 first, 15 behind a native disclosure.
+- **Proof.** Selling points are customers' own words, checked against `public/reviews-data.js` by `npm test`. All 21 original reviews remain available: short verbatim excerpts lead selected cards, with the original text and service record in a native disclosure. The hero rotates short excerpts every four seconds, with pause and reduced-motion support.
 - **Claims.** 15+ years and 200+ customers are the owner's statements (see `docs/ASSETS.md`). No aggregate rating is published in structured data. No guarantee durations, discounts, response times or installation times are invented.
 - **Photos.** The "Kendi işlerimizden" gallery holds only the owner's own work; a test enforces this. Other marketing photos are Unsplash stock, disclosed on the privacy page.
 
