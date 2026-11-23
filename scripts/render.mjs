@@ -1,7 +1,7 @@
 // Renders every page and machine-readable file from scripts/facts.mjs and public/reviews-data.js.
 import { readFileSync } from 'node:fs';
 import { runInNewContext } from 'node:vm';
-import { SITE, UPDATED, UPDATED_TR, BUSINESS, DISTRICTS, SUMMARY, SUMMARY_EN, PRICE_FACTORS, QUOTE_QUESTIONS, STEPS, SERVICES, ESTIMATES, HOME, ALL_FAQ, VOC, HERO_QUOTES, PROCESS_QUOTE, FEATURED_REVIEWS, GALLERY, TERRACE_FRAME, PANEL_VIDEO, SERVICE_PROOF } from './facts.mjs';
+import { SITE, UPDATED, UPDATED_TR, BUSINESS, DISTRICTS, SUMMARY, SUMMARY_EN, PRICE_FACTORS, QUOTE_QUESTIONS, STEPS, SERVICES, ESTIMATES, HOME, ALL_FAQ, VOC, HERO_QUOTES, PROCESS_QUOTE, FEATURED_REVIEWS, GALLERY, TERRACE_FRAME, PANEL_VIDEO, SERVICE_PROOF, SHAPE_PAGE } from './facts.mjs';
 
 const read = path => readFileSync(new URL(`../${path}`, import.meta.url), 'utf8');
 const context = { window: {} };
@@ -18,7 +18,7 @@ const serviceList = Object.entries(SERVICES);
 const pathFor = key => (key === 'home' ? '/' : `/${key}`);
 const mdFor = key => (key === 'home' ? '/index.md' : `/${key}.md`);
 
-const tilePhoto = id => `/assets/tiles/${id}.webp`;
+const tilePhoto = id => id === 'cam-balkon' ? '/assets/work/villa-surme-genis-thumb.webp' : `/assets/tiles/${id}.webp`;
 // Kept open in the wizard so the card does not grow with the message. Same wording as draftMessage in public/ui.js.
 const LONGEST_DRAFT = 'Merhaba, Seferihisar ilçesinde pencere ve kapı doğraması için ücretsiz keşif ve fiyat almak istiyorum. Ölçüyü bilmiyorum, keşifte alınabilir.';
 
@@ -161,10 +161,10 @@ function fill(template, tokens) {
   return out;
 }
 
-export function renderPage(key) {
-  const data = key === 'home' ? HOME : SERVICES[key];
+export function renderPage(key, shape = false) {
+  const data = shape ? {...SERVICES[key], ...SHAPE_PAGE} : key === 'home' ? HOME : SERVICES[key];
   const selected = key === 'home' ? 'cam-balkon' : key;
-  const url = key === 'home' ? `${SITE}/` : `${SITE}/${key}`;
+  const url = key === 'home' ? `${SITE}/` : `${SITE}/${shape ? SHAPE_PAGE.path : key}`;
   const { hero } = data;
   const heroSet = `${hero.sm} 800w, ${hero.lg} ${hero.w}w`;
   const heroSizes = '(min-width: 60rem) 62vw, 100vw';
@@ -183,6 +183,9 @@ export function renderPage(key) {
     .replace('{{quoteCard}}', read(estimate ? 'src/service-estimate.html' : 'src/home-wizard.html').trimEnd())
     .replace('{{quoteSheet}}', estimate ? '' : read('src/home-sheet.html').trimEnd());
   return fill(base, {
+    productNote: ['home', 'cam-balkon'].includes(key) ? `<p class="product-note">${esc(BUSINESS.productNote)}</p>` : '',
+    measurementChoice: '<label class="measurement-inline" hidden><input type="checkbox" data-google-consent> <span>İsteğe bağlı: reklam ve iletişim tıklamalarımın Google Ads ile eşleştirilmesine izin veriyorum. <a href="/gizlilik" target="_blank" rel="noopener">Gizlilik</a></span></label>',
+    homePrice: [ESTIMATES['cam-balkon'].low, ESTIMATES['cam-balkon'].high].map(n => n.toLocaleString('tr-TR')).join('–'),
     quoteTarget: estimate ? 'href="#fiyat-hesapla"' : 'href="#teklif" data-open-wizard',
     bandAction: estimate ? 'Yaklaşık fiyatı gör' : 'Ücretsiz keşif al',
     priceAction: estimate ? 'Ölçünüzle hesaplayın' : 'Ölçünüze özel fiyat alın',
@@ -192,19 +195,23 @@ export function renderPage(key) {
       workTitle: esc(proof.title),
       workItems: proof.files.map(id => id === 'video' ? videoItem(PANEL_VIDEO) : galleryItem([TERRACE_FRAME, ...GALLERY.flat()].find(item => item.file === id))).join(''),
       resultNote: estimate.ownerRange ? 'Net teklif için ücretsiz keşif.' : 'Piyasa örneğidir. Net fiyat keşifte belirlenir.',
-      rateDetails: estimate.ownerRange ? '' : `<details class="estimate-source"><summary>Fiyatın kaynağı</summary><p>${esc(estimate.scope)} <a href="${esc(estimate.url)}" target="_blank" rel="noopener noreferrer">${esc(estimate.source)}</a> · Kasım 2026.</p></details>`,
-      estimateTitle: esc(estimate.title), estimateSubtitle: estimate.ownerRange ? '' : `<p>${esc(estimate.model)}</p>`, model: esc(estimate.model), quantityLabel: esc(estimate.label),
+      rateDetails: estimate.ownerRange ? `<details class="estimate-source"><summary>Bu fiyata hangi sistem karşılık geliyor?</summary><p>${esc(estimate.scope)}</p></details>` : `<details class="estimate-source"><summary>Fiyatın kaynağı</summary><p>${esc(estimate.scope)} <a href="${esc(estimate.url)}" target="_blank" rel="noopener noreferrer">${esc(estimate.source)}</a> · Kasım 2026.</p></details>`,
+      estimateTitle: esc(estimate.title), estimateSubtitle: `<p>${esc(estimate.model)}</p>`, model: esc(estimate.model), quantityLabel: esc(estimate.label),
       inputMode: estimate.unit === 'adet' ? 'numeric' : 'decimal', example: esc(estimate.example),
       unit: esc(estimate.unit), hint: esc(estimate.hint),
       rateLow: estimate.low, rateHigh: estimate.high,
       unitRange: [estimate.low, estimate.high].map(n => n.toLocaleString('tr-TR')).join('–'),
       taxLabel: estimate.unit === 'adet' ? ' · KDV hariç' : '',
-      estimateWa: wa(quoteMessage(data.phrase))
+      estimateWa: wa(quoteMessage(data.phrase)),
+      photoWa: wa(photoMessage(data.photoNoun)),
+      variantLink: key === 'cam-balkon' ? `<a class="estimate-variant" href="/${shape ? 'cam-balkon' : SHAPE_PAGE.path}">${shape ? 'Cam alanını biliyorum' : 'I / L / U balkon şekliyle hesapla'}</a>` : '',
+      areaHidden: shape ? ' hidden' : '',
+      shapeInputs: shape ? read('src/shape-inputs.html') : ''
     }),
     title: esc(data.title),
     description: esc(data.description),
     canonical: url,
-    mdUrl: mdFor(key),
+    mdUrl: shape ? `/${SHAPE_PAGE.path}.md` : mdFor(key),
     ogImage: `${SITE}${hero.og}`,
     ogW: hero.ogW,
     ogH: hero.ogH,
@@ -293,7 +300,7 @@ const FACTS_MD = `- İşletme: ${BUSINESS.name}, İzmir, Türkiye
 - Deneyim: ${BUSINESS.experience} (işletmenin beyanı)
 - Müşteri: ${BUSINESS.customers} (işletmenin beyanı)
 - Yayınlanan müşteri yorumu: ${reviews.length}, hepsi 5 üzerinden 5 yıldız
-- Fiyat: internette tek fiyat yayınlanmaz; ölçüye göre net fiyat verilir
+- Sürme cam balkon: ${ESTIMATES['cam-balkon'].low.toLocaleString('tr-TR')}–${ESTIMATES['cam-balkon'].high.toLocaleString('tr-TR')} TL/m² yaklaşık aralık; ${ESTIMATES['cam-balkon'].scope}
 - Son güncelleme: ${UPDATED}`;
 const faqMd = items => items.map(([q, a]) => `### ${q}\n\n${a}`).join('\n\n');
 const reviewMd = review => `> ${review.text}\n>\n> ${review.name}, ${review.service}, ${review.date}, ${review.rating}/5`;
@@ -410,7 +417,8 @@ ${serviceList.map(([id, s]) => `- [${s.cardLabel || s.label}](${SITE}${mdFor(id)
 
 - Arama: tel:${BUSINESS.phone}
 - WhatsApp taslağı: https://wa.me/${BUSINESS.whatsapp}?text=<URL kodlu mesaj>. Mesajda hizmeti, yaklaşık ölçüyü ve ilçeyi yazın. Bağlantı yalnızca taslak açar; mesajı kullanıcı gönderir.
-- Fiyat bilgisi internette yayınlanmaz. Kullanıcıya fiyat uydurmayın; ölçüye göre net fiyatı işletmeden istemesini önerin.
+- Hizmet sayfalarında kapsamı belirtilmiş yaklaşık fiyat aralıkları bulunur. Kesin teklif ve dahil olan kalemler ücretsiz keşifte netleşir.
+- [I/L/U balkon hesaplama](${SITE}/${SHAPE_PAGE.path}.md): açık cephe uzunlukları ve cam yüksekliğiyle hesaplayın.
 
 ## Optional
 
@@ -422,7 +430,7 @@ export function renderSitemap() {
   const entry = (loc, images = []) => `<url><loc>${loc}</loc><lastmod>${UPDATED}</lastmod>${images.map(([src, caption]) => `<image:image><image:loc>${SITE}${src}</image:loc><image:caption>${esc(caption)}</image:caption></image:image>`).join('')}</url>`;
   const ownWork = GALLERY.flat().map(item => [`/assets/work/${item.file}.webp`, `İzmir Balkon uygulaması: ${item.title}`]);
   return `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">${entry(`${SITE}/`, ownWork)}${serviceList.map(([id]) => entry(`${SITE}/${id}`)).join('')}${entry(`${SITE}/bilgi`)}</urlset>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">${entry(`${SITE}/`, ownWork)}${serviceList.map(([id]) => entry(`${SITE}/${id}`)).join('')}${entry(`${SITE}/${SHAPE_PAGE.path}`)}${entry(`${SITE}/bilgi`)}</urlset>
 `;
 }
 
@@ -435,6 +443,8 @@ export function renderAll() {
     files.set(`/${key}.html`, renderPage(key));
     files.set(`/${key}.md`, renderPageMarkdown(key));
   }
+  files.set(`/${SHAPE_PAGE.path}.html`, renderPage('cam-balkon', true));
+  files.set(`/${SHAPE_PAGE.path}.md`, renderPageMarkdown('cam-balkon').replace(`${SITE}/cam-balkon`, `${SITE}/${SHAPE_PAGE.path}`) + '\nI tipi: ön cephe; L tipi: ön ve bir yan; U tipi: ön ve iki yan. Yalnızca açık cepheler toplanır ve cam yüksekliğiyle çarpılır. Zemin alanı kullanılmaz.\n');
   files.set('/bilgi.html', renderBilgi());
   files.set('/bilgi.md', renderBilgiMarkdown());
   files.set('/llms.txt', renderLlms());

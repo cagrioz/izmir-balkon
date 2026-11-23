@@ -1,8 +1,8 @@
 // The single source for every fact the site states. HTML, Markdown, JSON-LD and llms.txt
 // all render from here, so people and AI agents always read the same thing.
 export const SITE = 'https://izmirbalkon.com';
-export const UPDATED = '2026-11-05';
-export const UPDATED_TR = '5 Kasım 2026';
+export const UPDATED = '2026-11-23';
+export const UPDATED_TR = '23 Kasım 2026';
 
 export const BUSINESS = {
   name: 'İzmir Balkon',
@@ -13,7 +13,8 @@ export const BUSINESS = {
   // Stated by the owner on 5 November 2026. See docs/ASSETS.md.
   experience: '15+ yıl',
   customers: '200+',
-  districtCount: 30
+  districtCount: 30,
+  productNote: 'Kalın profilli sürme sistem · Ücretsiz keşif'
 };
 
 export const DISTRICTS = ['Aliağa', 'Balçova', 'Bayındır', 'Bayraklı', 'Bergama', 'Beydağ', 'Bornova', 'Buca', 'Çeşme', 'Çiğli', 'Dikili', 'Foça', 'Gaziemir', 'Güzelbahçe', 'Karabağlar', 'Karaburun', 'Karşıyaka', 'Kemalpaşa', 'Kınık', 'Kiraz', 'Konak', 'Menderes', 'Menemen', 'Narlıdere', 'Ödemiş', 'Seferihisar', 'Selçuk', 'Tire', 'Torbalı', 'Urla'];
@@ -64,14 +65,14 @@ export const SERVICES = {
     label: 'Cam balkon', phrase: 'cam balkon', fact: 'Yaklaşık ölçü', photoNoun: 'Balkonumun',
     title: 'İzmir Cam Balkon Fiyat Hesaplama | İzmir Balkon',
     description: 'Balkonunuzun cam alanını girin, yaklaşık fiyatı görün. İzmir’de ücretsiz keşif ve ölçünüze özel teklif isteyin.',
-    h1Key: 'İzmir’de cam balkon', h1Line: 'Katlanır ve sürme cam sistemleri',
-    lead: 'Katlanır ve sürme cam balkon. Ücretsiz keşifte ölçünüzü alır, net fiyatı söyleriz.',
+    h1Key: 'İzmir’de sürme cam balkon', h1Line: 'Kalın profil. Ferah yaşam alanı.',
+    lead: 'Kalın profilli, üst segment sürme sistemler. Ölçünüze uygun çözümü ücretsiz keşifte birlikte seçelim.',
     summary: 'Cam balkon, balkonu rüzgâr, yağmur ve tozdan koruyan, istendiğinde açılan cam kapatma sistemidir. İzmir Balkon katlanır ve sürme sistem uygular.',
     card: 'Katlanır veya sürme. Rüzgârı, yağmuru ve tozu dışarıda bırakır, istediğinizde açılır.',
     faqTitle: 'Cam balkon hakkında sık sorulanlar',
     faq: [FAQ.price, FAQ.use, FAQ.fold, FAQ.permit, ...COMMON],
-    hero: { mobile: '/assets/work/cam-balkon-genis-hero-mobile.avif', lg: '/assets/work/cam-balkon-genis.webp', sm: '/assets/work/cam-balkon-genis-sm.webp', w: 1086, h: 796, og: '/assets/work/cam-balkon-genis.jpg', ogW: 1086, ogH: 796, pos: '50% 72%', alt: 'Usta, balkon girişine taktığı çerçevesiz cam panellerin üst kısmında son ayarı yapıyor' },
-    cardImg: { src: '/assets/stock/balkon-sm.webp', w: 800, h: 533, pos: '66% 50%' }
+    hero: VILLA_HERO,
+    cardImg: { src: '/assets/work/villa-kose-sm.webp', w: 800, h: 404, pos: '42% 50%' }
   },
   'kis-bahcesi': {
     label: 'Kış bahçesi', phrase: 'kış bahçesi', fact: 'Yaklaşık alan', photoNoun: 'Terasımın',
@@ -172,10 +173,10 @@ export const GALLERY = [
 // Indicative business range for balconies; external comparisons for other services. Keep scopes and units with the rates.
 export const ESTIMATES = {
   'cam-balkon': {
-    title: 'Cam balkon fiyatı', model: 'Cam balkon', ownerRange: true,
-    label: 'Kapanacak cam alanı', hint: 'Toplam cephe uzunluğu × cam yüksekliği.',
-    example: '7,5', unit: 'm²', low: 6000, high: 6500,
-    scope: 'Sistem ve montaj koşullarına göre değişir.'
+    title: 'Cam balkon fiyatı', model: 'Kalın profilli sürme cam balkon', ownerRange: true,
+    label: 'Kapanacak cam alanı', hint: 'Zemin alanı değil: örn. 5 m cephe × 1,5 m cam yüksekliği = 7,5 m².',
+    example: '7,5', unit: 'm²', low: 5000, high: 6500,
+    scope: 'Kalın profilli sürme sistem için yaklaşık aralık. Cam, profil, montaj ve KDV kapsamı yazılı teklifte netleşir.'
   },
   pergola: {
     title: 'Pergola kaç TL tutar?', model: 'Sabit pergola',
@@ -204,8 +205,17 @@ export const ESTIMATES = {
 export const TERRACE_FRAME = { file: 'teras-iskelet', sm: 360, w: 768, h: 960, title: 'Terasın taşıyıcı iskeleti', note: 'Montaj aşaması', alt: 'Taş cepheli evin terasına monte edilen siyah metal iskelet; üstü ve yanları henüz açık', vw: 32 };
 export const PANEL_VIDEO = { file: '/assets/work/kanat-acilisi.mp4', cover: '/assets/work/kanat-kapak.webp', title: 'Cam kanat nasıl açılır?', note: 'Videoyu izle · 19 sn', w: 320, h: 570 };
 export const SERVICE_PROOF = {
-  'cam-balkon': { files: ['video', 'cam-balkon-usta'], title: 'Cam balkon işçiliği', faq: [FAQ.fold, FAQ.free, FAQ.send] },
+  'cam-balkon': { files: ['villa-kose', 'villa-detay', 'video'], title: 'Tamamlanan sürme sistemlerimiz', faq: [FAQ.fold, FAQ.free, FAQ.send] },
   pergola: { files: ['teras-iskelet'], title: 'Teras montajından', faq: [FAQ.gardenVsPergola, FAQ.pergolaPrice, FAQ.free] },
   'kis-bahcesi': { files: ['teras-iskelet', 'villa-kose'], title: 'Teras ve doğrama işlerimiz', faq: [FAQ.gardenVsPergola, FAQ.gardenPrice, FAQ.free] },
   dograma: { files: ['villa-kose', 'dis-kapi', 'cam-bolme-tamam'], title: 'Doğrama işlerimiz', faq: [FAQ.pvcVsAlu, FAQ.small, FAQ.free] }
+};
+
+// A separately addressable advertising experiment, not an extra service.
+export const SHAPE_PAGE = {
+  path: 'cam-balkon-hesaplama',
+  title: 'I, L, U Balkon Fiyat Hesaplama | İzmir Balkon',
+  description: 'Balkonunuzun şeklini ve açık cephe ölçülerini seçin. Kalın profilli sürme cam balkon için yaklaşık fiyatı görün, ücretsiz keşif isteyin.',
+  h1Key: 'Balkonunuza göre fiyat hesaplayın',
+  h1Line: 'I, L veya U tipi. Ölçünüze özel teklif.'
 };

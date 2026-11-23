@@ -499,3 +499,18 @@ ol.doc-list { list-style: decimal; }
   .hero-inner { gap: .5rem; }
   .hero-copy .stats { display: none; }
 }
+/* Proof stays close to the offer without overlaying the mobile contact action. */
+.product-note { font-size:.85rem; color:var(--muted); margin-top:.4rem; }
+.measurement-inline { display:flex; align-items:flex-start; gap:.5rem; font-size:.75rem; line-height:1.45; color:var(--muted); padding:.6rem .25rem; }
+.measurement-inline[hidden] { display:none; }
+.measurement-inline input { flex:none; margin-top:.15rem; width:1rem; height:1rem; }
+.measurement-inline a { text-decoration:underline; }
+.hero-form { align-content:center; }
+@media (max-width:59.9375rem) {
+  .hero-copy { grid-row:1; }
+  .hero-photo { grid-row:2; height:9rem; }
+  .hero-quotes { grid-row:3; }
+  .hero-form { grid-row:4; }
+  .hero-quotes .quote-dot { display:none; }
+  .hero-quotes { font-size:.85rem; }
+}

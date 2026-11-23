@@ -2,6 +2,7 @@ import { DISTRICTS, SITE } from './facts.mjs';
 export const campaign = 'İzmir Balkon | Arama | Taslak';
 export const groups = [
   ['Cam balkon', '/cam-balkon', ['cam balkon','balkon kapatma','katlanır cam balkon','sürme cam balkon'], ['İzmir Cam Balkon','Katlanır Cam Balkon','Sürme Cam Balkon','Balkon Kapatma'], 'Cam balkon için ücretsiz keşif. Ölçünüze göre net fiyatı birlikte belirleyelim.'],
+  ['Cam balkon hesaplama', '/cam-balkon-hesaplama', ['cam balkon fiyat hesaplama','cam balkon m2 fiyatı'], ['Cam Balkon Fiyatını Hesapla','I, L, U Balkon Hesaplama','Kalın Profilli Sürme Sistem','İzmir Cam Balkon Teklifi'], 'Balkon şeklini ve ölçünü seç. Sürme sistem için yaklaşık fiyatı gör, ücretsiz keşif iste.'],
   ['Kış bahçesi', '/kis-bahcesi', ['kış bahçesi','cam kış bahçesi'], ['İzmir Kış Bahçesi','Teras İçin Kış Bahçesi','Bahçenize Camlı Alan','Kış Bahçesi Sistemleri'], 'Teras ve bahçeniz için kış bahçesi. İzmir genelinde ücretsiz keşif isteyin.'],
   ['Pergola', '/pergola', ['pergola','pergola sistemleri'], ['İzmir Pergola','Teras İçin Pergola','Bahçeniz İçin Pergola','Pergola Sistemleri'], 'Teras ve bahçeniz için pergola. Ölçü ve sistem seçimini ücretsiz keşifte konuşalım.'],
   ['Doğrama', '/dograma', ['pvc doğrama','alüminyum doğrama','pencere doğrama','kapı doğrama'], ['İzmir PVC Doğrama','Alüminyum Doğrama','Pencere ve Kapı Doğrama','İzmir Pencere ve Kapı'], 'PVC ve alüminyum doğrama. Pencere ve kapılarınız için ücretsiz keşif isteyin.'],

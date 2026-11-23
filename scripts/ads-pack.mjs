@@ -4,7 +4,7 @@ import { campaign, groups, negatives, sitelinks, callouts, snippets, images } fr
 const length = s => [...s].length;
 const check = (s,max,label) => assert.ok(s && length(s)<=max, `${label}: ${length(s)}/${max}: ${s}`);
 export function validate() {
-  assert.equal(groups.length,5); assert.equal(new Set(groups.map(g=>g.url)).size,5);
+  assert.equal(groups.length,6); assert.equal(new Set(groups.map(g=>g.url)).size,groups.length);
   for(const g of groups) {
     assert.ok(g.headlines.length>=3&&g.headlines.length<=15); assert.ok(g.descriptions.length>=2&&g.descriptions.length<=4);
     g.headlines.forEach(s=>check(s,30,'Headline')); g.descriptions.forEach(s=>check(s,90,'Description'));

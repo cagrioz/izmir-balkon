@@ -1,7 +1,8 @@
           <section class="wiz estimate" id="fiyat-hesapla" aria-labelledby="estimate-title" tabindex="-1" data-low="{{rateLow}}" data-high="{{rateHigh}}" data-unit="{{unit}}" data-tax="{{taxLabel}}" data-model="{{model}}">
             <div class="estimate-heading">
               <h2 id="estimate-title">{{estimateTitle}}</h2>{{estimateSubtitle}}</div>
-            <div id="estimate-input">
+            {{shapeInputs}}
+            <div id="estimate-input"{{areaHidden}}>
               <label for="quantity">{{quantityLabel}}</label>
               <div class="estimate-field"><input id="quantity" type="text" inputmode="{{inputMode}}" maxlength="9" placeholder="Örn. {{example}}" aria-describedby="estimate-help"><span>{{unit}}</span></div>
               <p id="estimate-help">{{hint}}</p>
@@ -12,6 +13,7 @@
               <p>{{resultNote}}</p>
             </div>
             <a class="btn btn-primary btn-lg" id="estimate-send" href="{{estimateWa}}" data-contact="whatsapp" data-position="wizard" target="_blank" rel="noopener noreferrer"><svg class="icon" aria-hidden="true"><use href="#i-whatsapp"/></svg>WhatsApp’tan teklif iste</a>
-            <p class="estimate-or">Ölçünüz yoksa fotoğraf gönderin.</p>
+            <a class="estimate-or" href="{{photoWa}}" data-contact="whatsapp" data-position="wizard" target="_blank" rel="noopener noreferrer">Ölçümü bilmiyorum, fotoğraf göndereyim</a>
+            {{variantLink}}
             {{rateDetails}}
           </section>

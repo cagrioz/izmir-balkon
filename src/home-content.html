@@ -1,3 +1,18 @@
+    <section id="yorumlar" class="section" aria-labelledby="reviews-title">
+      <div class="wrap">
+        <div class="section-head">
+          <h2 id="reviews-title">Müşteri yorumları</h2>
+          <p>Pencere, kapı, cam ve sineklik işlerimizden sonra bırakılan yorumlar.</p>
+        </div>
+        <div class="review-track">{{reviewsFeatured}}</div>
+        <details class="more-reviews">
+          <summary class="btn btn-outline">Tüm yorumları göster<svg class="icon" aria-hidden="true"><use href="#i-chevron-down"/></svg></summary>
+          <div class="review-grid">{{reviewsRest}}</div>
+        </details>
+      </div>
+    </section>
+
+
     <section class="voc on-dark" aria-labelledby="voc-title">
       <div class="wrap">
         <h2 id="voc-title">Bizi müşterilerimiz anlatsın</h2>
@@ -39,7 +54,8 @@
       <div class="wrap price">
         <div>
           <h2 id="price-title">Fiyat neye göre değişir?</h2>
-          <p class="price-lead">Tek bir metrekare fiyatı yanıltıcı olur. Net fiyatı dört şey belirler:</p>
+          <p class="price-lead">Kalın profilli sürme cam balkon: <strong>{{homePrice}} TL/m²</strong> yaklaşık aralık. Cam, profil, montaj ve KDV kapsamını yazılı teklifte netleştiririz.</p>
+          <a class="estimate-variant" href="/cam-balkon">Ölçünüzle yaklaşık fiyatı görün</a>
           <ol class="price-list">{{priceList}}</ol>
         </div>
         <aside class="price-card" aria-labelledby="ask-title">
@@ -61,19 +77,6 @@
       </div>
     </section>
 
-    <section id="yorumlar" class="section" aria-labelledby="reviews-title">
-      <div class="wrap">
-        <div class="section-head">
-          <h2 id="reviews-title">Müşteri yorumları</h2>
-          <p>Pencere, kapı, cam ve sineklik işlerimizden sonra bırakılan yorumlar.</p>
-        </div>
-        <div class="review-track">{{reviewsFeatured}}</div>
-        <details class="more-reviews">
-          <summary class="btn btn-outline">Tüm yorumları göster<svg class="icon" aria-hidden="true"><use href="#i-chevron-down"/></svg></summary>
-          <div class="review-grid">{{reviewsRest}}</div>
-        </details>
-      </div>
-    </section>
 
     <section id="sorular" class="section section-gray" aria-labelledby="faq-title">
       <div class="wrap faq">

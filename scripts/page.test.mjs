@@ -108,7 +108,8 @@ test('the hero rotates several real quotes, with one shown when JavaScript is of
 });
 
 test('the wizard offers a photo for every service and reserves room for its longest draft', () => {
-  for (const [key] of Object.entries(SERVICES)) assert.ok(new RegExp(`data-pick-service="${key}"[^>]*><img src="/assets/tiles/${key}\\.webp"`).test(home), key);
+  for (const [key] of Object.entries(SERVICES)) assert.ok(new RegExp(`data-pick-service="${key}"[^>]*><img src="/assets/(?:tiles|work)/[^" ]+"`).test(home), key);
+  assert.ok(home.includes('/assets/work/villa-surme-genis-thumb.webp'));
   const ui = readFileSync(new URL('../public/ui.js', import.meta.url), 'utf8');
   assert.ok(ui.includes('ücretsiz keşif ve fiyat almak istiyorum.'), 'draft wording');
   const ghost = home.match(/data-ghost="([^"]+)"/)[1];
@@ -201,5 +202,19 @@ test('all tracked pages have one closed, reachable footer preference panel', () 
     assert.match(footer, /aria-expanded="false" aria-controls="consent-banner"/);
     assert.match(footer, /id="consent-banner"[^>]+hidden>/);
     for (const provider of ['google', 'datafast']) assert.ok(footer.includes('id="allow-' + provider + '"'));
+  }
+});
+
+test('real review categories and finished sliding proof lead every offer page', () => {
+  for (const path of ['/index.html','/cam-balkon.html','/cam-balkon-hesaplama.html','/pergola.html','/kis-bahcesi.html']) {
+    const html=files.get(path);
+    assert.ok(html.indexOf('id="yorumlar"') < html.indexOf('id="islerimiz"'));
+    assert.ok(html.includes('data-google-consent'));
+    assert.ok(!html.includes('data-google-consent checked'));
+  }
+  for (const path of ['/cam-balkon.html','/cam-balkon-hesaplama.html']) {
+    const html=files.get(path);
+    assert.ok(html.includes('villa-kose-hero-mobile.avif'));
+    assert.ok(html.includes('Pencere, kapı ve sineklik işlerimizden.'));
   }
 });

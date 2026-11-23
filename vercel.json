@@ -4,7 +4,13 @@
   "framework": null,
   "cleanUrls": true,
   "trailingSlash": false,
-  "redirects": [{ "source": "/cambalkon", "destination": "/cam-balkon", "permanent": true }],
+  "redirects": [
+    {
+      "source": "/cambalkon",
+      "destination": "/cam-balkon",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",
@@ -187,6 +193,19 @@
         {
           "key": "Cache-Control",
           "value": "public, max-age=2592000"
+        }
+      ]
+    },
+    {
+      "source": "/cam-balkon-hesaplama",
+      "headers": [
+        {
+          "key": "Vary",
+          "value": "Accept"
+        },
+        {
+          "key": "Link",
+          "value": "<https://izmirbalkon.com/cam-balkon-hesaplama.md>; rel=\"alternate\"; type=\"text/markdown\""
         }
       ]
     }

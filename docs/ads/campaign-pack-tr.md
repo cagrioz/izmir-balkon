@@ -30,6 +30,34 @@ Son URL: https://izmirbalkon.com/cam-balkon
 
 Anahtar kelimeler: 124 ifade × sıralı ve tam eşleme. İzmir ve 30 ilçe varyantları keywords-editor.csv dosyasındadır. Marka grubunda yalnızca marka niyeti kullanılır.
 
+## Cam balkon hesaplama
+
+Son URL: https://izmirbalkon.com/cam-balkon-hesaplama
+
+### Başlıklar
+
+- Cam Balkon Fiyatını Hesapla (27/30)
+- I, L, U Balkon Hesaplama (24/30)
+- Kalın Profilli Sürme Sistem (27/30)
+- İzmir Cam Balkon Teklifi (24/30)
+- Ücretsiz Keşif (14/30)
+- Ölçüye Göre Net Fiyat (21/30)
+- İzmir’in 30 İlçesinde (21/30)
+- Yerinde Ölçü Alalım (19/30)
+- WhatsApp’tan Bize Yazın (23/30)
+- Keşif İçin Bizi Arayın (22/30)
+- Size Uygun Sistemi Seçelim (26/30)
+- İşinizi Birlikte Planlayalım (28/30)
+
+### Açıklamalar
+
+- Balkon şeklini ve ölçünü seç. Sürme sistem için yaklaşık fiyatı gör, ücretsiz keşif iste. (89/90)
+- İzmir’in 30 ilçesinde hizmet. Yerinde ölçü alalım, size uygun sistemi konuşalım. (80/90)
+- Yaklaşık ölçünüzü ve ilçenizi WhatsApp’tan yazın. Ücretsiz keşif için iletişime geçin. (86/90)
+- Ölçüye göre net fiyat. Projenizi konuşmak için arayın veya WhatsApp’tan yazın. (78/90)
+
+Anahtar kelimeler: 62 ifade × sıralı ve tam eşleme. İzmir ve 30 ilçe varyantları keywords-editor.csv dosyasındadır. Marka grubunda yalnızca marka niyeti kullanılır.
+
 ## Kış bahçesi
 
 Son URL: https://izmirbalkon.com/kis-bahcesi

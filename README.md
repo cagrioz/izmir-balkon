@@ -44,10 +44,16 @@ Content lives in `scripts/facts.mjs` and `public/reviews-data.js`. Templates liv
 
 Google Ads starts in cookieless, denied mode on a new visit. A saved refusal prevents loading it. Phone and wizard WhatsApp clicks are primary conversion actions; other WhatsApp clicks are secondary. DataFast uses cookieless measurement by default with separate contact and wizard progress goals. GA4 is not configured. See [docs/PILOT.md](docs/PILOT.md) for the activation steps and what counts as a conversion. Do not tell Sidely that a button click is a qualified lead or a sale.
 
-Set public IDs only in `public/tracking-config.js`. Full ad attribution is opt-in and cookieless DataFast can be switched off under the footer’s “Ölçüm tercihleri”. Never commit credentials, developer tokens, customer lists, or `.env` files.
+Set public IDs only in `public/tracking-config.js`. An optional checkbox below the quote card makes Google attribution consent reachable without an entry banner. Full ad attribution is opt-in and cookieless DataFast can be switched off under the footer’s “Ölçüm tercihleri”. Never commit credentials, developer tokens, customer lists, or `.env` files.
 
 The canonical domain is `izmirbalkon.com`, registered in the owner's GoDaddy account and connected to the Vercel project. Verify HTTPS and both domain variants before using the site as an ad destination.
 
 ## Assets
 
 Manrope is self-hosted under the SIL Open Font License; see `public/assets/OFL-Manrope.txt`. Photo and review provenance are documented in [docs/ASSETS.md](docs/ASSETS.md).
+
+## 23 November landing update
+
+The home wizard remains intact. Real completed sliding work now leads the cam balcony hero; reviews appear before the work gallery on the home and service pages. The owner-approved indicative sliding-system range is 5,000–6,500 TRY/m², with thick profiles; tax, glass and installation scope remain subject to the written quote.
+
+`/cam-balkon-hesaplama` is a separate I/L/U advertising variant. It sums only open facade widths and multiplies by glass height. Hidden sides never contribute, and changing shape does not change the form height. `/cam-balkon` keeps the short known-area calculator. Both offer a direct photo enquiry when measurements are unknown. Pergola and winter garden retain their explicitly scoped external comparison ranges; they are not guaranteed business quotes.

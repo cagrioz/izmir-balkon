@@ -41,6 +41,7 @@ Send each ad group to the page that matches it. The headline, hero photo and fir
 | Ad group | Final URL |
 | --- | --- |
 | Cam balkon, balkon kapatma | https://izmirbalkon.com/cam-balkon |
+| I/L/U cam balkon hesaplama denemesi | https://izmirbalkon.com/cam-balkon-hesaplama |
 | Kış bahçesi | https://izmirbalkon.com/kis-bahcesi |
 | Pergola | https://izmirbalkon.com/pergola |
 | PVC, alüminyum doğrama, pencere | https://izmirbalkon.com/dograma |
@@ -130,3 +131,13 @@ On 7 November the opening banner was removed. The footer on every landing page a
 The v4 preference records the two providers separately. A v3 grant retains its existing scope. A saved refusal (including v1/v2) blocks both providers. Older grants do not enable full measurement. Revocation stops an already-running vendor by reloading. Enhanced conversions and ad personalization remain off.
 
 References: [script configuration](https://datafa.st/docs/script-configuration), [custom goals](https://datafa.st/docs/custom-goals), [cookieless mode](https://datafa.st/docs/gdpr-cookieless-tracking).
+
+## 23 November 2026 measurement and landing repair
+
+- Existing three Google Ads actions retained; both active campaigns use account-default Contact goals. Phone and offer-area WhatsApp remain primary, other WhatsApp secondary, Count=One, no revenue value. No campaign or budget changes are part of this release.
+- New visits still use denied/cookieless Google mode and default cookieless DataFast. Saved refusals are preserved. An optional, unchecked Google attribution checkbox is now available directly below the quote card. It never blocks contact, is not a cookie banner, and does not silently enable DataFast after a refusal. Accepting updates ad_storage, analytics_storage and ad_user_data; ad_personalization remains denied. No enhanced conversions or customer-data upload.
+- A stalled hero image cannot indefinitely prevent the Google library from starting. Phone links allow up to 700 ms for delivery, with a one-shot callback/fallback; a blocked tag cannot strand the dialler. WhatsApp remains a normal new-tab draft link.
+- The photo shortcut inside an offer card is also a `wizard_whatsapp_click`. This now means an offer-area WhatsApp click, not necessarily a completed calculation. It is still not a sent message, qualified lead or sale.
+- The Ads account initially reported all three actions as Misconfigured/no recent pings. On 23 November the live Tag Assistant test showed the phone conversion sent to the correct existing action. A sent hit does not prove ad attribution or immediate recovery of the delayed account diagnostic. Final live verification is recorded separately.
+- QA sessions use `utm_source=qa&utm_medium=manual&utm_campaign=tracking-check-20261123`; exclude these from business results. Layout/calculator checks use `measurement=off` and emit nothing.
+- The I/L/U variant is included in the paused Ads Editor pack. Do not run duplicate matching campaigns as an uncontrolled comparison. Keep the general campaign budget unchanged; obtain a concrete new budget before raising the price campaign or launching pergola/winter garden/variant campaigns.

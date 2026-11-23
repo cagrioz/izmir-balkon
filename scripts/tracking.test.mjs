@@ -5,26 +5,27 @@ import { runInNewContext } from 'node:vm';
 const source = readFileSync(new URL('../public/app.js', import.meta.url), 'utf8');
 
 function setup(config = {}, stored = '', search = '', legacy = '', previous = '', current = '') {
-  const appended = [], events = [], handlers = new Map(), storage = new Map();
+  const appended = [], events = [], timers = [], handlers = new Map(), storage = new Map();
   if (legacy) storage.set('izmir_balkon_measurement_v1', legacy);
   if (previous) storage.set('izmir_balkon_measurement_v2', previous);
   if (stored) storage.set('izmir_balkon_measurement_v3', stored);
   if (current) storage.set('izmir_balkon_measurement_v4', current);
   const node = (name) => ({hidden:true, checked:false, focus(){}, scrollIntoView(){}, setAttribute(key,value){this[key]=value;}, addEventListener:(event, fn)=>handlers.set(name + ':' + event, fn)});
   const nodes = Object.fromEntries(['consent-banner','cookie-settings','accept-cookies','reject-cookies','allow-google','allow-datafast'].map(name=>[name,node(name)]));
+  const inline = {...node('inline'), closest:() => ({hidden:true})};
   const link = {getAttribute:()=> 'tel:+905423551213',dataset:{contact:'phone',position:'hero'}, addEventListener:(event,fn)=>handlers.set(event === 'click' ? 'phone' : 'phone:'+event,fn)};
   const whatsapp = {getAttribute:()=> 'https://wa.me/905423551213?text=private',dataset:{contact:'whatsapp',position:'wizard'}, addEventListener:(event,fn)=>handlers.set(event === 'click' ? 'wizard' : 'wizard:'+event,fn)};
   const other = {getAttribute:()=> 'https://wa.me/905423551213',dataset:{contact:'whatsapp',position:'footer'}, addEventListener:(event,fn)=>handlers.set(event === 'click' ? 'other' : 'other:'+event,fn)};
-  const window = {IZMIR_TRACKING:config, history:{state:null,replaceState:(_,__,url)=>events.push({url})}};
+  const window = {setTimeout:(fn, ms)=>timers.push({fn, ms}), IZMIR_TRACKING:config, history:{state:null,replaceState:(_,__,url)=>events.push({url})}};
   const document = {
     getElementById:id=>nodes[id] || null,
-    querySelectorAll:selector=>selector === '[data-contact]' ? [link,whatsapp,other] : [],
+    querySelectorAll:selector=>selector === '[data-contact]' ? [link,whatsapp,other] : selector === '[data-google-consent]' ? [inline] : [],
     dispatchEvent:event=>events.push(event.detail),
     createElement:()=>({attributes:{},setAttribute(key,value){this.attributes[key]=value;}}), head:{append:script=>appended.push(script)},
     addEventListener:(name,fn)=>handlers.set('document:'+name,fn)
   };
-  runInNewContext(source, {window, document, localStorage:{getItem:key=>storage.get(key),setItem:(key,value)=>storage.set(key,value)},location:{origin:'https://izmirbalkon.com',pathname:'/',search,reload:()=>events.push('reload')},CustomEvent:class{constructor(_,options){this.detail=options.detail}},Date,encodeURIComponent,URL,URLSearchParams});
-  return {window,nodes,appended,events,handlers,storage,whatsapp};
+  runInNewContext(source, {window, document, localStorage:{getItem:key=>storage.get(key),setItem:(key,value)=>storage.set(key,value)},location:{origin:'https://izmirbalkon.com',pathname:'/',search,assign:url=>events.push({navigation:url}),reload:()=>events.push('reload')},CustomEvent:class{constructor(_,options){this.detail=options.detail}},Date,encodeURIComponent,URL,URLSearchParams});
+  return {window,nodes,appended,events,handlers,storage,whatsapp,inline,timers};
 }
 function grantBoth(s) {
   s.nodes['allow-datafast'].checked = true;
@@ -260,4 +261,38 @@ test('separate provider choices and a saved refusal take precedence over earlier
     assert.equal(conversions(s).length, choice === 'google' || choice === 'both' ? 1 : 0);
     assert.equal(s.window.datafast?.q?.length || 0, choice === 'datafast' || choice === 'both' ? 1 : 0);
   }
+});
+
+test('inline opt-in updates Google consent without opting DataFast back in or forcing focus', () => {
+  const s=setup({...configured,datafastWebsiteId:'dfid_test123'}, '', '', '', '', 'none');
+  assert.equal(s.inline.checked,false);
+  s.inline.checked=true;
+  s.handlers.get('inline:change')();
+  assert.equal(s.storage.get('izmir_balkon_measurement_v4'),'google');
+  assert.equal(s.appended.length,1);
+  assert.equal(s.window.dataLayer.findLast(e=>e[0]==='consent')[2].ad_user_data,'granted');
+  s.inline.checked=false;
+  s.handlers.get('inline:change')();
+  assert.equal(s.storage.get('izmir_balkon_measurement_v4'),'none');
+  assert.ok(s.events.includes('reload'));
+});
+test('phone navigation has a deadline, sends one conversion, and callback cannot open dialler twice', () => {
+  const s=setup(configured,'granted');
+  let prevented=0;
+  s.handlers.get('phone')({preventDefault(){prevented++},stopPropagation(){}});
+  assert.equal(prevented,1);
+  assert.equal(conversions(s).length,1);
+  const conversion=conversions(s)[0];
+  conversion[2].event_callback();
+  s.timers.find(t=>t.ms===700).fn();
+  assert.equal(s.events.filter(e=>e.navigation).length,1);
+  const slow=setup(configured,'granted');
+  slow.handlers.get('phone')({preventDefault(){},stopPropagation(){}});
+  slow.timers.find(t=>t.ms===700).fn();
+  assert.equal(slow.events.filter(e=>e.navigation).length,1);
+});
+test('refused visitors keep ordinary phone navigation and no conversion', () => {
+  const s=setup(configured,'denied');
+  s.handlers.get('phone')({preventDefault(){throw new Error('must stay native')},stopPropagation(){}});
+  assert.equal(conversions(s).length,0);
 });

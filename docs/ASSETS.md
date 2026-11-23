@@ -104,3 +104,7 @@ Final prompt:
 
 ## November 9 service galleries
 Owner-supplied terrace photo: metal frame during assembly. Do not label it as a finished pergola or winter garden. WebP sizes: 360 and 768 pixels wide. Balcony clip: 19 silent seconds from the supplied minute-long demonstration, with a 320-pixel WebP cover. Only /cam-balkon links to the MP4, as a normal link: no embed, preload, autoplay, or player script.
+
+## 23 November 2026 product and proof update
+
+The owner confirmed thick-profile, upper-segment sliding systems and approved 5,000–6,500 TRY/m² as the indicative balcony range. No glass thickness, insulation specification, guarantee or tax inclusion was inferred. The existing optimized villa-kose hero and villa-detay gallery show actual completed sliding joinery; they are not relabelled as a different project. The pergola/winter-garden stock heroes remain illustrative marketing photography, not completed owned projects or ad image assets.

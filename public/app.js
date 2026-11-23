@@ -75,6 +75,8 @@
     document.head.append(script);
   }
   function loadGoogleAfterHero() {
+    // A stalled hero download must never prevent measurement from starting.
+    window.setTimeout?.(startGoogleScript, 1500);
     const hero = document.querySelector?.('.hero-img');
     if (!hero || !window.requestAnimationFrame || document.visibilityState === 'hidden') {
       startGoogleScript();
@@ -137,12 +139,18 @@
       document.head.append(script);
     }
   }
-  function chooseConsent(value) {
+  function syncInlineConsent() {
+    document.querySelectorAll('[data-google-consent]').forEach(input => {
+      input.checked = permits('google');
+    });
+  }
+  function chooseConsent(value, returnFocus = true) {
     preference = value;
     try { localStorage.setItem(preferenceKey, value); } catch {}
     if (banner) banner.hidden = true;
     settings?.setAttribute('aria-expanded', 'false');
-    settings?.focus();
+    if (returnFocus) settings?.focus();
+    syncInlineConsent();
     if ((googleLoaded && !permits('google')) || (datafastLoaded && !permits('datafast'))) {
       if (googleLoaded && !permits('google')) gtag('consent', 'update', googleConsent());
       // Reload to stop a running vendor. Retain allowed attribution if the other vendor was enabled.
@@ -152,7 +160,7 @@
     }
     configureTracking();
   }
-  function contactEvent(channel, position) {
+  function contactEvent(channel, position, onSent) {
     const event = channel === 'phone' ? 'phone_click' : 'whatsapp_click';
     // Ephemeral integration hook: a click is an intent signal, never a confirmed lead.
     document.dispatchEvent(new CustomEvent('izmir:contact', { detail: { event, position } }));
@@ -165,7 +173,7 @@
       : position === 'wizard' ? config.wizardWhatsappClickLabel : config.whatsappClickLabel;
     if (ga4Id) gtag('event', event, { send_to: ga4Id, contact_channel: channel, cta_position: position });
     if (adsId && /^[\w-]+$/.test(label || '')) {
-      gtag('event', 'conversion', { send_to: adsId + '/' + label, transport_type: 'beacon' });
+      gtag('event', 'conversion', { send_to: adsId + '/' + label, ...(onSent ? {event_callback: onSent, event_timeout: 650} : {}) });
     }
   }
 
@@ -174,6 +182,14 @@
     if (googleOption) googleOption.disabled = !googleId;
     if (datafastOption) datafastOption.disabled = !datafastId;
     configureTracking();
+    document.querySelectorAll('[data-google-consent]').forEach(input => {
+      input.closest('.measurement-inline').hidden = !googleId;
+      input.checked = permits('google');
+      input.addEventListener('change', () => {
+        const datafast = permits('datafast');
+        chooseConsent(input.checked ? (datafast ? 'both' : 'google') : (datafast ? 'datafast' : 'none'), false);
+      });
+    });
   }
   document.getElementById('accept-cookies')?.addEventListener('click', () => {
     const google = googleOption.checked && !!googleId;
@@ -202,7 +218,19 @@
     link.addEventListener('click', event => {
       if (datafastId) event.stopPropagation();
       if (!link.getAttribute('href')) return; // Unfinished wizard is not a contact.
-      contactEvent(link.dataset.contact, link.dataset.position);
+      // Give a telephone event a bounded delivery window before the dialler takes focus.
+      // WhatsApp opens a new tab and keeps its normal navigation.
+      if (link.dataset.contact === 'phone' && googleLoaded && (!preference || permits('google')) && event?.preventDefault && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey) {
+        event.preventDefault();
+        let navigated = false;
+        const navigate = () => {
+          if (navigated) return;
+          navigated = true;
+          location.assign(link.getAttribute('href'));
+        };
+        window.setTimeout(navigate, 700);
+        contactEvent(link.dataset.contact, link.dataset.position, navigate);
+      } else contactEvent(link.dataset.contact, link.dataset.position);
     });
   });
   // Wizard progress. Step names only: the visitor's service, size and district stay in the browser.

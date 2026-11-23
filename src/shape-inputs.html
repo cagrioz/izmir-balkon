@@ -1,0 +1,15 @@
+            <fieldset class="shape-picker">
+              <legend>Balkonunuzun şekli</legend>
+              <div class="shape-options">
+                <button type="button" data-shape="I" aria-pressed="true"><svg viewBox="0 0 64 40" aria-hidden="true"><path d="M8 32V8H56V32" class="shape-wall"/><path d="M8 32H56"/></svg><span>I · Tek cephe</span></button>
+                <button type="button" data-shape="L" aria-pressed="false"><svg viewBox="0 0 64 40" aria-hidden="true"><path d="M8 32V8H56" class="shape-wall"/><path d="M8 32H56V8"/></svg><span>L · İki cephe</span></button>
+                <button type="button" data-shape="U" aria-pressed="false"><svg viewBox="0 0 64 40" aria-hidden="true"><path d="M8 8H56" class="shape-wall"/><path d="M8 8V32H56V8"/></svg><span>U · Üç cephe</span></button>
+              </div>
+            </fieldset>
+            <div class="shape-dimensions">
+              <label>Ön cephe (m)<input data-dimension="front" inputmode="decimal" maxlength="6" placeholder="Örn. 3" aria-describedby="shape-help"></label>
+              <label>Cam yüksekliği (m)<input data-dimension="height" inputmode="decimal" maxlength="6" placeholder="Örn. 1,5" aria-describedby="shape-help"></label>
+              <label data-side="left" class="dimension-inactive">Yan cephe (m)<input data-dimension="left" inputmode="decimal" maxlength="6" placeholder="Örn. 1,5" disabled></label>
+              <label data-side="right" class="dimension-inactive">Diğer yan (m)<input data-dimension="right" inputmode="decimal" maxlength="6" placeholder="Örn. 1,5" disabled></label>
+            </div>
+            <p id="shape-help" class="shape-help">Mavi çizgiler camla kapanacak cephelerdir. Yalnızca açık cepheleri ölçün; duvarları dahil etmeyin.</p>
