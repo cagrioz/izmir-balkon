@@ -8,15 +8,16 @@ Production: https://izmirbalkon.com · Vercel fallback: https://izmir-balkon.ver
 
 ## Run
 
-Requires Node 22+. No package installation or runtime dependencies.
+Requires Node 22+. The static pages have no client framework dependencies. Vercel middleware uses the official DataFast AI crawler SDK.
 
 ```sh
+npm ci         # install the pinned server-side crawler SDK
 npm run dev     # http://127.0.0.1:4173
 npm test        # consent, conversion, page and review checks
 npm run build  # static output in dist/
 ```
 
-Import this repository into Vercel. `vercel.json` specifies the build command and output directory. The page also works on any static host.
+Import this repository into Vercel. `vercel.json` specifies the build command and output directory. The pages also work on any static host; AI crawler measurement and Markdown content negotiation require the Vercel middleware or an equivalent server integration.
 
 ## How the site is built
 
