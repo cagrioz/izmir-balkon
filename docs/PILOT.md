@@ -56,7 +56,7 @@ The site side is built, see the README. These parts need the owner, because AI a
 3. Add real profile links (Google Business Profile, Instagram, review profile) to `sameAs` in `businessNode()` in `scripts/render.mjs`.
 4. Keep name, phone and service area identical everywhere, and ask customers for Google reviews.
 
-Whether a real AI crawler reaches the site can only be confirmed in server logs. A curl test with a crawler's user agent does not prove it.
+Real crawler access can be checked in server logs and DataFast's IP-verified Bot traffic view. A curl test with a crawler's user agent does not prove it.
 
 ## Research used for page structure
 
@@ -141,3 +141,14 @@ References: [script configuration](https://datafa.st/docs/script-configuration),
 - The Ads account initially reported all three actions as Misconfigured/no recent pings. On 23 November the live Tag Assistant test showed the phone conversion sent to the correct existing action. A sent hit does not prove ad attribution or immediate recovery of the delayed account diagnostic. Final live verification is recorded separately.
 - QA sessions use `utm_source=qa&utm_medium=manual&utm_campaign=tracking-check-20261123`; exclude these from business results. Layout/calculator checks use `measurement=off` and emit nothing.
 - The I/L/U variant is included in the paused Ads Editor pack. Do not run duplicate matching campaigns as an uncontrolled comparison. Keep the general campaign budget unchanged; obtain a concrete new budget before raising the price campaign or launching pergola/winter garden/variant campaigns.
+
+
+## AI crawler measurement — 24 November 2026
+
+Vercel middleware uses the pinned official `@datafast/ai-crawl` SDK in the background via `waitUntil`. The public website ID is imported from `public/tracking-config.js`, shared with browser tracking. No browser JavaScript or page design changes are required.
+
+Only known crawler GET/HEAD requests on the production domain are sent. Static assets, API routes, previews and `measurement=off` QA are skipped. Discovery files, Markdown mirrors, the calculator and missing content paths are covered. All query parameters and fragments are removed; cookies, authorization, referrers and arbitrary forwarded-IP headers are not passed. Only Vercel's overwritten `x-vercel-forwarded-for` supplies the crawler IP. The request-only tracker does not invent an HTTP response status. Failures are best effort with a 1.5-second background timeout, never awaited by page delivery.
+
+DataFast retains its existing verified-crawlers-only setting and provider choices. An accepted ingestion request alone does not prove a genuine crawler visited: the vendor can ignore unverified requests while returning success. Bot counts do not count as visitors, leads or Google Ads conversions, and historical crawls cannot be backfilled. Optional authenticated ingestion is not enabled; its private token, if introduced later, must be stored only in server environment configuration.
+
+References: https://datafa.st/docs/bot-traffic-tracking and https://vercel.com/docs/headers/request-headers#x-vercel-forwarded-for.
