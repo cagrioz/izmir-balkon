@@ -112,3 +112,14 @@ The owner confirmed thick-profile, upper-segment sliding systems and approved 5,
 ## 23 November 2026 · Review presentation follow-up
 
 Original review data, ratings, dates, names and machine-readable quotations remain unchanged. Selected visible cards use exact, contiguous excerpts that emphasize service and workmanship; their full originals remain under “Yorumun aslını oku”. Sineklik subtypes display as “Sineklik”; Pimapen window/door records display as PVC joinery with the matching window/door type. The original service record remains available in the disclosure. No screen-only review is relabelled as glazing or joinery, and no singular customer statement is rewritten as praise for a company.
+
+## Owner photographs added 25 November 2026
+
+Selected from the new montage album the owner authorized us to read in WhatsApp. No messages were sent to the supplier. Two photos show the same winter garden during final installation, not two separate completed customer projects. No review is attributed to them.
+
+| Stem under `public/assets/work/` | Original | Use |
+| --- | --- | --- |
+| kis-bahcesi-cam-cati | WhatsApp Image 2026-11-25 at 19.22.27.jpeg | Winter garden hero, service card, gallery; glass roof and sliding facade |
+| kis-bahcesi-surme-cephe | WhatsApp Image 2026-11-25 at 19.22.25.jpeg | Winter garden gallery, side facade |
+
+Metadata-free derivatives preserve the original scene. Hero AVIF: 640px mobile (28,502 bytes), 800px and 1200px (108,927 bytes); gallery WebP loads lazily. No new videos, external embeds, or scripts. Winter-garden stock hero and card are replaced; pergola remains a licensed system illustration because the new album does not establish a finished pergola project. The actual terrace-frame photo keeps its installation-stage caption. The displayed panel-roof price comparison is explicitly distinguished from the photographed glass-roof system.

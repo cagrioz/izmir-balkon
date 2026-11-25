@@ -1,8 +1,8 @@
 // The single source for every fact the site states. HTML, Markdown, JSON-LD and llms.txt
 // all render from here, so people and AI agents always read the same thing.
 export const SITE = 'https://izmirbalkon.com';
-export const UPDATED = '2026-11-23';
-export const UPDATED_TR = '23 Kasım 2026';
+export const UPDATED = '2026-11-25';
+export const UPDATED_TR = '25 Kasım 2026';
 
 export const BUSINESS = {
   name: 'İzmir Balkon',
@@ -78,20 +78,20 @@ export const SERVICES = {
     label: 'Kış bahçesi', phrase: 'kış bahçesi', fact: 'Yaklaşık alan', photoNoun: 'Terasımın',
     title: 'İzmir Kış Bahçesi Fiyat Hesaplama | İzmir Balkon',
     description: 'Kış bahçenizin zemin alanına göre panel çatı ve sürme cam için yaklaşık bütçeyi görün. Ölçünüze özel teklif ve ücretsiz keşif isteyin.',
-    h1Key: 'İzmir’de kış bahçesi', h1Line: 'Teras ve bahçeler için cam kapama',
+    h1Key: 'İzmir’de kış bahçesi', h1Line: 'Terasınıza daha fazla yaşam alanı.',
     lead: 'Terasınız ya da bahçeniz yıl boyu oturma alanına dönüşsün. Ücretsiz keşifte ölçünüzü alır, net fiyatı söyleriz.',
     summary: 'Kış bahçesi, teras ya da bahçenin çatısı ve yanları camla kapatılarak yıl boyu kullanılabilen bir oturma alanına dönüştürülmesidir.',
     card: 'Terasınız ya da bahçeniz, çatısıyla birlikte camla kapalı bir oturma alanına dönüşür.',
     faqTitle: 'Kış bahçesi hakkında sık sorulanlar',
     faq: [FAQ.gardenWhat, FAQ.gardenPrice, FAQ.gardenVsPergola, FAQ.gardenPermit, ...COMMON],
-    hero: { lg: '/assets/stock/sunroom.webp', sm: '/assets/stock/sunroom-sm.webp', w: 1600, h: 1066, og: '/assets/stock/sunroom.jpg', ogW: 1200, ogH: 800, pos: '50% 90%', alt: 'Bahçeli evin yanına eklenmiş, açık renk çerçeveli camlı kış bahçesi; önünde çimen ve ağaçlar' },
-    cardImg: { src: '/assets/stock/sunroom-sm.webp', w: 800, h: 533, pos: '58% 60%' }
+    hero: { mobile: '/assets/work/kis-bahcesi-cam-cati-hero-mobile.avif', lg: '/assets/work/kis-bahcesi-cam-cati.avif', sm: '/assets/work/kis-bahcesi-cam-cati-sm.avif', w: 1200, h: 1600, og: '/assets/work/kis-bahcesi-cam-cati.jpg', ogW: 1200, ogH: 1600, pos: '50% 40%', alt: 'Kendi kış bahçesi uygulamamız: koyu profilli cam çatı ve sürme cam cephe, montajın son aşaması' },
+    cardImg: { src: '/assets/work/kis-bahcesi-cam-cati-sm.avif', w: 800, h: 1067, pos: '50% 40%' }
   },
   pergola: {
     label: 'Pergola', phrase: 'pergola', fact: 'Yaklaşık alan', photoNoun: 'Terasımın',
     title: 'İzmir Pergola Fiyat Hesaplama | İzmir Balkon',
     description: 'Terasınızın ölçüsünü girin, sabit pergola için yaklaşık fiyat aralığını görün. İzmir’de ücretsiz keşif ve net teklif için bize yazın.',
-    h1Key: 'İzmir’de pergola', h1Line: 'Teras ve bahçeler için gölgelendirme',
+    h1Key: 'İzmir’de pergola', h1Line: 'Terasınızda gölge, bahçenizde konfor.',
     lead: 'Teras ve bahçeniz için gölge ve yağmur koruması. Ücretsiz keşifte ölçünüzü alır, net fiyatı söyleriz.',
     summary: 'Pergola, teras ve bahçede gölge ve yağmur koruması sağlayan çatı sistemidir. Yanlar genellikle açık kalır.',
     card: 'Teras ve bahçeniz için gölge ve yağmur koruması.',
@@ -195,14 +195,16 @@ export const ESTIMATES = {
     scope: 'Kalın profilli sürme sistem için yaklaşık aralık. Cam, profil, montaj ve KDV kapsamı yazılı teklifte netleşir.'
   },
   pergola: {
-    title: 'Pergola kaç TL tutar?', model: 'Sabit pergola',
+    title: 'Pergola fiyatını hesaplayın', model: 'Sabit pergola',
+    resultNote: 'Piyasa örneği; motor ve yan camlar hariç.',
     label: 'Gölgelenecek alan', hint: 'Terasın eni × pergolanın açılacağı mesafe.',
     example: '15', unit: 'm²', low: 6000, high: 9000,
     source: 'İzmir Tente Branda', url: 'https://izmirtentebranda.com/izmir-tente-fiyatlari-2026/',
     scope: 'İzmir için yayımlanan 2026 sabit sistem örneği. Motorlu sistem ve yan camlar bu hesapta yok. KDV ve montaj kapsamı keşifte netleşir.'
   },
   'kis-bahcesi': {
-    title: 'Kış bahçesi kaç TL tutar?', model: 'Panel çatı ve tek camlı sürme cephe',
+    title: 'Kış bahçesi fiyatını hesaplayın', model: 'Panel çatı + tek camlı sürme cephe',
+    resultNote: 'Panel çatı için örnek aralık. Cam çatı ayrıca fiyatlanır.',
     label: 'Kapatılacak zemin alanı', hint: 'Zeminin eni × boyu.',
     example: '20', unit: 'm²', low: 3500, high: 5500,
     source: 'Kış Bahçesi İzmir', url: 'https://www.kisbahcesiizmir.com.tr/kis-bahcesi-fiyatlari-izmir/',
@@ -220,10 +222,14 @@ export const ESTIMATES = {
 // Page-specific selections keep related jobs distinct from finished examples of the service.
 export const TERRACE_FRAME = { file: 'teras-iskelet', sm: 360, w: 768, h: 960, title: 'Terasın taşıyıcı iskeleti', note: 'Montaj aşaması', alt: 'Taş cepheli evin terasına monte edilen siyah metal iskelet; üstü ve yanları henüz açık', vw: 32 };
 export const PANEL_VIDEO = { file: '/assets/work/kanat-acilisi.mp4', cover: '/assets/work/kanat-kapak.webp', title: 'Cam kanat nasıl açılır?', note: 'Videoyu izle · 19 sn', w: 320, h: 570 };
+export const SERVICE_PROJECTS = [
+  { file: 'kis-bahcesi-cam-cati', sm: 800, w: 1200, h: 1600, title: 'Cam çatı ve sürme cephe', note: 'Kış bahçesi uygulamamız · Montajın son aşaması', alt: 'Beyaz evin terasında koyu profilli cam çatı ve sürme cam cephe', vw: 45 },
+  { file: 'kis-bahcesi-surme-cephe', sm: 800, w: 1200, h: 1600, title: 'Sürme cam cephe detayı', note: 'Aynı uygulamadan · Yan görünüm', alt: 'Kış bahçemizin bahçeye açılan koyu profilli sürme cam cephesi', vw: 45 }
+];
 export const SERVICE_PROOF = {
   'cam-balkon': { files: ['villa-kose', 'villa-detay', 'video'], title: 'Tamamlanan sürme sistemlerimiz', faq: [FAQ.fold, FAQ.free, FAQ.send] },
   pergola: { files: ['teras-iskelet'], title: 'Teras montajından', faq: [FAQ.gardenVsPergola, FAQ.pergolaPrice, FAQ.free] },
-  'kis-bahcesi': { files: ['teras-iskelet', 'villa-kose'], title: 'Teras ve doğrama işlerimiz', faq: [FAQ.gardenVsPergola, FAQ.gardenPrice, FAQ.free] },
+  'kis-bahcesi': { files: ['kis-bahcesi-cam-cati', 'kis-bahcesi-surme-cephe'], title: 'Kendi kış bahçesi uygulamamız', faq: [FAQ.gardenVsPergola, FAQ.gardenPrice, FAQ.free] },
   dograma: { files: ['villa-kose', 'dis-kapi', 'cam-bolme-tamam'], title: 'Doğrama işlerimiz', faq: [FAQ.pvcVsAlu, FAQ.small, FAQ.free] }
 };
 

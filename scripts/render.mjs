@@ -1,7 +1,7 @@
 // Renders every page and machine-readable file from scripts/facts.mjs and public/reviews-data.js.
 import { readFileSync } from 'node:fs';
 import { runInNewContext } from 'node:vm';
-import { SITE, UPDATED, UPDATED_TR, BUSINESS, DISTRICTS, SUMMARY, SUMMARY_EN, PRICE_FACTORS, QUOTE_QUESTIONS, STEPS, SERVICES, ESTIMATES, HOME, ALL_FAQ, VOC, HERO_QUOTES, PROCESS_QUOTE, FEATURED_REVIEWS, REVIEW_EXCERPTS, REVIEW_SERVICE_LABELS, GALLERY, TERRACE_FRAME, PANEL_VIDEO, SERVICE_PROOF, SHAPE_PAGE } from './facts.mjs';
+import { SITE, UPDATED, UPDATED_TR, BUSINESS, DISTRICTS, SUMMARY, SUMMARY_EN, PRICE_FACTORS, QUOTE_QUESTIONS, STEPS, SERVICES, ESTIMATES, HOME, ALL_FAQ, VOC, HERO_QUOTES, PROCESS_QUOTE, FEATURED_REVIEWS, REVIEW_EXCERPTS, REVIEW_SERVICE_LABELS, GALLERY, TERRACE_FRAME, SERVICE_PROJECTS, PANEL_VIDEO, SERVICE_PROOF, SHAPE_PAGE } from './facts.mjs';
 
 const read = path => readFileSync(new URL(`../${path}`, import.meta.url), 'utf8');
 const context = { window: {} };
@@ -196,9 +196,9 @@ export function renderPage(key, shape = false) {
     estimateAssets: estimate ? '<script type="module" src="/estimate.js"></script>' : '',
     ...(estimate && {
       workTitle: esc(proof.title),
-      workItems: proof.files.map(id => id === 'video' ? videoItem(PANEL_VIDEO) : galleryItem([TERRACE_FRAME, ...GALLERY.flat()].find(item => item.file === id))).join(''),
-      resultNote: estimate.ownerRange ? 'Net teklif için ücretsiz keşif.' : 'Piyasa örneğidir. Net fiyat keşifte belirlenir.',
-      rateDetails: estimate.ownerRange ? `<details class="estimate-source"><summary>Bu fiyata hangi sistem karşılık geliyor?</summary><p>${esc(estimate.scope)}</p></details>` : `<details class="estimate-source"><summary>Fiyatın kaynağı</summary><p>${esc(estimate.scope)} <a href="${esc(estimate.url)}" target="_blank" rel="noopener noreferrer">${esc(estimate.source)}</a> · Kasım 2026.</p></details>`,
+      workItems: proof.files.map(id => id === 'video' ? videoItem(PANEL_VIDEO) : galleryItem([TERRACE_FRAME, ...SERVICE_PROJECTS, ...GALLERY.flat()].find(item => item.file === id))).join(''),
+      resultNote: estimate.resultNote ? esc(estimate.resultNote) : estimate.ownerRange ? 'Net teklif için ücretsiz keşif.' : 'Piyasa örneğidir. Net fiyat keşifte belirlenir.',
+      rateDetails: estimate.ownerRange ? `<details class="estimate-source"><summary>Bu fiyata hangi sistem karşılık geliyor?</summary><p>${esc(estimate.scope)}</p></details>` : `<details class="estimate-source"><summary>Kapsam ve fiyatın kaynağı</summary><p>${esc(estimate.scope)} <a href="${esc(estimate.url)}" target="_blank" rel="noopener noreferrer">${esc(estimate.source)}</a> · Kasım 2026.</p></details>`,
       estimateTitle: esc(estimate.title), estimateSubtitle: `<p>${esc(estimate.model)}</p>`, model: esc(estimate.model), quantityLabel: esc(estimate.label),
       inputMode: estimate.unit === 'adet' ? 'numeric' : 'decimal', example: esc(estimate.example),
       unit: esc(estimate.unit), hint: esc(estimate.hint),

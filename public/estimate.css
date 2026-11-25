@@ -65,3 +65,14 @@
   .shape-page #estimate-send { min-height:48px; padding:.65rem .5rem; font-size:.95rem; }
   .shape-page .estimate-or,.shape-page .estimate-variant { font-size:.75rem; padding:.3rem; }
 }
+
+/* Outdoor-service visitors see the project, then the short quote form. */
+@media (max-width:59.9375rem) {
+  :is([data-service="pergola"],[data-service="kis-bahcesi"]) .hero-form { grid-row:3; }
+  :is([data-service="pergola"],[data-service="kis-bahcesi"]) .hero-quotes { grid-row:4; }
+  :is([data-service="pergola"],[data-service="kis-bahcesi"]) .hero { padding-top:.75rem; }
+  :is([data-service="pergola"],[data-service="kis-bahcesi"]) .estimate { padding:1rem; gap:.55rem; }
+  :is([data-service="pergola"],[data-service="kis-bahcesi"]) .estimate h2 { font-size:1.35rem; }
+  :is([data-service="pergola"],[data-service="kis-bahcesi"]) .estimate-result { padding:.65rem .85rem; }
+  :is([data-service="pergola"],[data-service="kis-bahcesi"]) .estimate-result p { font-size:.875rem; }
+}
